@@ -37,10 +37,13 @@ All numbers, including negative results, are documented in `REPORT.md`.
 
 ## Data
 
-The NASA PCoE Battery Data Set [2] is not redistributed here. Download `B0005.mat`, `B0006.mat`,
-`B0007.mat` and `B0018.mat` from the NASA PCoE data set repository
-(<https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/>)
-into `data/raw/`, then build the CSVs as below.
+The NASA PCoE Battery Data Set [2] is not redistributed here, and neither are the processed CSVs:
+the data.nasa.gov catalogue record lists its licence as "not specified". Download `B0005.mat`,
+`B0006.mat`, `B0007.mat` and `B0018.mat` from the NASA PCoE data set repository (item 5, "Battery
+Data Set",
+<https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/>)
+into `data/raw/`, then build the CSVs as below. The repository asks publications that use its data
+to acknowledge the data donors; the data set citation it gives is [2].
 
 ## Setup
 
