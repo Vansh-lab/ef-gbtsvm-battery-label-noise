@@ -1,0 +1,20 @@
+[nasa_w3] 636 samples, 13 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=59.52 F1=57.50 AUC=66.10 fit=11.85s  {'purity': 0.95, 'n_hidden': 63, 'activation': 1, 'C1': 100}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=2 n_impure(<0.95)=2 min=0.679 mean=0.756
+run0 EF-GBTSVM-W   ACC=83.33 F1=79.10 AUC=92.57 fit=0.09s  {'purity': 0.65, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM     ACC=99.40 F1=99.53 AUC=100.00 fit=5.33s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.85 n_balls=52 n_impure(<0.95)=13 min=0.850 mean=0.972
+run1 EF-GBTSVM-W   ACC=97.62 F1=98.17 AUC=99.86 fit=3.95s  {'purity': 0.85, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+run2 EF-GBTSVM     ACC=27.98 F1=42.65 AUC=82.84 fit=3.47s  {'purity': 0.9, 'n_hidden': 103, 'activation': 2, 'C1': 0.001}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=6 n_impure(<0.95)=5 min=0.764 mean=0.822
+run2 EF-GBTSVM-W   ACC=48.21 F1=50.85 AUC=91.04 fit=0.48s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM     ACC=58.33 F1=9.84 AUC=53.29 fit=2.92s  {'purity': 0.95, 'n_hidden': 103, 'activation': 1, 'C1': 10}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=2 n_impure(<0.95)=2 min=0.691 mean=0.750
+run3 EF-GBTSVM-W   ACC=93.94 F1=92.59 AUC=99.95 fit=0.13s  {'purity': 0.65, 'n_hidden': 183, 'activation': 10, 'C1': 0.0001}
+
+=== Summary (mean ± std over runs) ===
+                       ACC           BACC           PREC            REC             F1          GMEAN           AUC   train_time
+model                                                                                                                           
+EF-GBTSVM    61.31 ± 29.29  66.06 ± 22.78  69.01 ± 36.88  68.49 ± 44.49  52.38 ± 37.21  48.94 ± 39.56  75.56 ± 20.3   5.89 ± 4.1
+EF-GBTSVM-W  80.78 ± 22.54  84.39 ± 14.48  77.33 ± 30.45    91.4 ± 9.71  80.18 ± 21.13  81.68 ± 19.34  95.86 ± 4.72  1.16 ± 1.87

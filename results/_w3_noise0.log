@@ -1,0 +1,20 @@
+[nasa_w3] 636 samples, 13 features, class balance [359 277], noise=0.0
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=86.90 F1=85.71 AUC=99.90 fit=1.14s  {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=1 min=0.796 mean=0.898
+run0 EF-GBTSVM-W   ACC=82.14 F1=81.48 AUC=99.97 fit=0.03s  {'purity': 0.75, 'n_hidden': 183, 'activation': 2, 'C1': 1}
+run1 EF-GBTSVM     ACC=92.26 F1=93.72 AUC=99.51 fit=0.76s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=4 n_impure(<0.95)=2 min=0.752 mean=0.882
+run1 EF-GBTSVM-W   ACC=89.29 F1=92.24 AUC=96.90 fit=0.05s  {'purity': 0.75, 'n_hidden': 23, 'activation': 4, 'C1': 0.01}
+run2 EF-GBTSVM     ACC=58.93 F1=56.60 AUC=95.19 fit=0.22s  {'purity': 0.925, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=1 min=0.896 mean=0.948
+run2 EF-GBTSVM-W   ACC=67.86 F1=62.50 AUC=99.04 fit=0.06s  {'purity': 0.75, 'n_hidden': 103, 'activation': 10, 'C1': 1}
+run3 EF-GBTSVM     ACC=94.70 F1=94.31 AUC=100.00 fit=0.06s  {'purity': 0.85, 'n_hidden': 63, 'activation': 3, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.85 n_balls=4 n_impure(<0.95)=2 min=0.883 mean=0.949
+run3 EF-GBTSVM-W   ACC=94.70 F1=94.31 AUC=100.00 fit=0.05s  {'purity': 0.85, 'n_hidden': 63, 'activation': 3, 'C1': 1e-05}
+
+=== Summary (mean ± std over runs) ===
+                      ACC           BACC           PREC           REC             F1          GMEAN           AUC   train_time
+model                                                                                                                         
+EF-GBTSVM     83.2 ± 16.5  87.42 ± 10.61  75.42 ± 25.77  97.45 ± 5.09  82.59 ± 17.76  85.79 ± 13.31  98.65 ± 2.31   0.55 ± 0.5
+EF-GBTSVM-W  83.5 ± 11.62    86.0 ± 7.07  72.43 ± 20.13  99.77 ± 0.46  82.63 ± 14.55   84.58 ± 8.29  98.98 ± 1.46  0.05 ± 0.01

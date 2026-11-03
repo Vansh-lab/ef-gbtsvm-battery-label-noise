@@ -1,0 +1,7 @@
+﻿python : OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+At line:1 char:462
++ ... _COUNT="4"; python run_experiments.py --data data/nasa_battery.csv -- ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (OpenBLAS error:...ies, giving up.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

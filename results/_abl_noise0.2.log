@@ -1,0 +1,11 @@
+[nasa_abl] 636 samples, 13 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM-L   ACC=82.74 F1=81.99 AUC=99.96 fit=0.53s  {'purity': 0.65, 'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+run1 EF-GBTSVM-L   ACC=97.62 F1=98.17 AUC=99.88 fit=1.08s  {'purity': 0.85, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+run2 EF-GBTSVM-L   ACC=48.21 F1=50.85 AUC=91.26 fit=0.20s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM-L   ACC=93.94 F1=92.59 AUC=99.95 fit=0.06s  {'purity': 0.65, 'n_hidden': 183, 'activation': 10, 'C1': 0.0001}
+
+=== Summary (mean ± std over runs) ===
+                       ACC           BACC           PREC           REC            F1          GMEAN           AUC   train_time
+model                                                                                                                         
+EF-GBTSVM-L  80.63 ± 22.52  85.14 ± 14.44  75.21 ± 30.69  96.32 ± 6.76  80.9 ± 21.13  82.14 ± 19.39  97.76 ± 4.34  0.47 ± 0.46

@@ -1,0 +1,25 @@
+[nasa_adaptive] 636 samples, 13 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=59.52 F1=57.50 AUC=66.10 fit=2.11s  {'purity': 0.95, 'n_hidden': 63, 'activation': 1, 'C1': 100}
+run0 EF-GBTSVM-L   ACC=82.74 F1=81.99 AUC=99.96 fit=0.02s  {'purity': 0.65, 'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+  [EF-GBTSVM-A diag] est_noise=0.2265 purity_used=0.7235 n_balls=14
+run0 EF-GBTSVM-A   ACC=78.57 F1=78.57 AUC=99.94 fit=0.27s  {'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM     ACC=99.40 F1=99.53 AUC=100.00 fit=1.59s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM-L   ACC=97.62 F1=98.17 AUC=99.88 fit=1.06s  {'purity': 0.85, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2500 purity_used=0.7000 n_balls=8
+run1 EF-GBTSVM-A   ACC=97.02 F1=97.72 AUC=99.92 fit=0.18s  {'n_hidden': 183, 'activation': 2, 'C1': 0.0001}
+run2 EF-GBTSVM     ACC=27.98 F1=42.65 AUC=82.84 fit=1.56s  {'purity': 0.9, 'n_hidden': 103, 'activation': 2, 'C1': 0.001}
+run2 EF-GBTSVM-L   ACC=48.21 F1=50.85 AUC=91.26 fit=0.11s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-A diag] est_noise=0.2308 purity_used=0.7192 n_balls=2
+run2 EF-GBTSVM-A   ACC=69.64 F1=63.83 AUC=96.96 fit=0.10s  {'n_hidden': 103, 'activation': 2, 'C1': 100}
+run3 EF-GBTSVM     ACC=58.33 F1=9.84 AUC=53.29 fit=1.71s  {'purity': 0.95, 'n_hidden': 103, 'activation': 1, 'C1': 10}
+run3 EF-GBTSVM-L   ACC=93.94 F1=92.59 AUC=99.95 fit=0.02s  {'purity': 0.65, 'n_hidden': 183, 'activation': 10, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2123 purity_used=0.7377 n_balls=7
+run3 EF-GBTSVM-A   ACC=93.18 F1=91.59 AUC=99.74 fit=0.21s  {'n_hidden': 183, 'activation': 3, 'C1': 1e-05}
+
+=== Summary (mean ± std over runs) ===
+                       ACC           BACC           PREC            REC             F1          GMEAN           AUC   train_time
+model                                                                                                                           
+EF-GBTSVM    61.31 ± 29.29  66.06 ± 22.78  69.01 ± 36.88  68.49 ± 44.49  52.38 ± 37.21  48.94 ± 39.56  75.56 ± 20.3  1.74 ± 0.25
+EF-GBTSVM-L  80.63 ± 22.52  85.14 ± 14.44  75.21 ± 30.69   96.32 ± 6.76   80.9 ± 21.13  82.14 ± 19.39  97.76 ± 4.34   0.3 ± 0.51
+EF-GBTSVM-A   84.6 ± 12.75   87.52 ± 8.01  76.99 ± 25.59   95.89 ± 7.62  82.93 ± 15.03   86.26 ± 9.29  99.14 ± 1.45  0.19 ± 0.07

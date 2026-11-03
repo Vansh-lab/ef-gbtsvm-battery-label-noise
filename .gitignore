@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+
+# NASA PCoE data is not redistributed: download the .mat files and rebuild the CSVs (see README).
+data/raw/
+data/*.mat
+data/*.csv

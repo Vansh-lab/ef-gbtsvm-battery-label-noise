@@ -1,0 +1,34 @@
+[nasa_bigsearch] 636 samples, 13 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=61.31 F1=5.80 AUC=22.34 fit=1.59s  {'purity': 0.95, 'n_hidden': 103, 'activation': 1, 'C1': 1}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=2 n_impure(<0.95)=2 min=0.679 mean=0.756
+run0 EF-GBTSVM-W   ACC=83.33 F1=79.10 AUC=92.57 fit=0.01s  {'purity': 0.65, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run0 EF-GBTSVM-L   ACC=82.74 F1=81.99 AUC=99.96 fit=0.02s  {'purity': 0.65, 'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+  [EF-GBTSVM-A diag] est_noise=0.2265 purity_used=0.7235 n_balls=14
+run0 EF-GBTSVM-A   ACC=78.57 F1=78.57 AUC=99.94 fit=0.22s  {'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM     ACC=97.62 F1=98.17 AUC=99.77 fit=1.30s  {'purity': 0.98, 'n_hidden': 183, 'activation': 1, 'C1': 0.001}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=8 n_impure(<0.95)=8 min=0.684 mean=0.750
+run1 EF-GBTSVM-W   ACC=98.81 F1=99.07 AUC=99.94 fit=0.09s  {'purity': 0.65, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM-L   ACC=98.81 F1=99.07 AUC=99.94 fit=0.04s  {'purity': 0.65, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-A diag] est_noise=0.2500 purity_used=0.7000 n_balls=8
+run1 EF-GBTSVM-A   ACC=95.83 F1=96.83 AUC=99.81 fit=0.13s  {'n_hidden': 103, 'activation': 2, 'C1': 0.0001}
+run2 EF-GBTSVM     ACC=52.98 F1=40.60 AUC=56.19 fit=1.18s  {'purity': 0.95, 'n_hidden': 143, 'activation': 1, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=6 n_impure(<0.95)=5 min=0.764 mean=0.822
+run2 EF-GBTSVM-W   ACC=48.21 F1=50.85 AUC=91.04 fit=0.09s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run2 EF-GBTSVM-L   ACC=48.21 F1=50.85 AUC=91.26 fit=0.09s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-A diag] est_noise=0.2308 purity_used=0.7192 n_balls=2
+run2 EF-GBTSVM-A   ACC=69.64 F1=63.83 AUC=96.96 fit=0.10s  {'n_hidden': 103, 'activation': 2, 'C1': 100}
+run3 EF-GBTSVM     ACC=87.88 F1=87.88 AUC=99.98 fit=1.50s  {'purity': 0.98, 'n_hidden': 103, 'activation': 1, 'C1': 0.001}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=7 n_impure(<0.95)=5 min=0.750 mean=0.853
+run3 EF-GBTSVM-W   ACC=93.18 F1=91.59 AUC=99.74 fit=0.08s  {'purity': 0.75, 'n_hidden': 183, 'activation': 3, 'C1': 0.0001}
+run3 EF-GBTSVM-L   ACC=93.18 F1=91.59 AUC=99.74 fit=0.07s  {'purity': 0.75, 'n_hidden': 183, 'activation': 3, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2123 purity_used=0.7377 n_balls=7
+run3 EF-GBTSVM-A   ACC=98.48 F1=98.28 AUC=99.93 fit=0.13s  {'n_hidden': 103, 'activation': 2, 'C1': 0.0001}
+
+=== Summary (mean ± std over runs) ===
+                       ACC           BACC           PREC            REC             F1          GMEAN            AUC   train_time
+model                                                                                                                            
+EF-GBTSVM    74.95 ± 21.21  73.11 ± 23.38  68.25 ± 28.04  65.53 ± 45.64  58.11 ± 42.95  64.47 ± 36.29  69.57 ± 37.62  1.39 ± 0.19
+EF-GBTSVM-W   80.88 ± 22.7  84.59 ± 14.82  77.78 ± 30.85  90.96 ± 10.05   80.15 ± 21.2  81.87 ± 19.63   95.82 ± 4.68  0.07 ± 0.04
+EF-GBTSVM-L  80.74 ± 22.68  85.34 ± 14.78  75.66 ± 31.13   95.89 ± 7.62   80.87 ± 21.2  82.33 ± 19.68   97.72 ± 4.31  0.05 ± 0.03
+EF-GBTSVM-A  85.63 ± 13.84   88.66 ± 9.28  76.14 ± 24.64   99.34 ± 0.83  84.38 ± 16.37  87.46 ± 10.63   99.16 ± 1.47  0.15 ± 0.05

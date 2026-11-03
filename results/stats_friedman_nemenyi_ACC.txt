@@ -1,0 +1,33 @@
+﻿model             EF-GBTSVM  EF-TSVM  GBTSVM  HF-GBTSVM    MLP   RVFL  RandomForest    SVM   TSVM  XGBoost
+dataset                                                                                                   
+nasa_hard_noise0      78.50    83.87   89.33      86.57  93.14  89.27         96.23  93.89  64.04    96.08
+nasa_noise0           83.20    92.29   65.57      73.77  88.77  86.04         93.84  94.13  77.61    92.36
+nasa_noise10          89.60    68.41   80.22      73.17  86.92  88.93         83.20  87.76  77.00    93.28
+nasa_noise20          61.31    61.70   75.27      69.14  85.13  88.72         73.53  90.81  73.78    86.50
+nasa_t70_noise0       48.21    73.21   57.74      46.43  70.24  52.68         87.50  79.17  81.25    84.23
+nasa_t85_noise0       82.05    96.94   90.22      87.16  92.13  92.55         94.24  94.82  95.16    90.88 
+
+Average ranks (1 = best):
+ model
+SVM             2.67
+XGBoost         3.00
+RandomForest    3.50
+MLP             5.00
+RVFL            5.00
+EF-TSVM         6.17
+TSVM            6.17
+GBTSVM          7.00
+EF-GBTSVM       7.83
+HF-GBTSVM       8.67 
+
+Friedman chi2 = 24.473, p = 0.003613  (N=6 datasets, k=10 models)
+Nemenyi critical difference (alpha=0.05) = 5.530
+  SVM vs XGBoost: rank diff 0.33 -> not significant
+  SVM vs RandomForest: rank diff 0.83 -> not significant
+  SVM vs MLP: rank diff 2.33 -> not significant
+  SVM vs RVFL: rank diff 2.33 -> not significant
+  SVM vs EF-TSVM: rank diff 3.50 -> not significant
+  SVM vs TSVM: rank diff 3.50 -> not significant
+  SVM vs GBTSVM: rank diff 4.33 -> not significant
+  SVM vs EF-GBTSVM: rank diff 5.17 -> not significant
+  SVM vs HF-GBTSVM: rank diff 6.00 -> significant

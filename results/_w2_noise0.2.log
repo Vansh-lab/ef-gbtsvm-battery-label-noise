@@ -1,0 +1,16 @@
+[nasa_w2] 636 samples, 13 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=59.52 F1=57.50 AUC=66.10 fit=1.96s  {'purity': 0.95, 'n_hidden': 63, 'activation': 1, 'C1': 100}
+run0 EF-GBTSVM-W   ACC=83.33 F1=79.10 AUC=92.57 fit=0.02s  {'purity': 0.65, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM     ACC=99.40 F1=99.53 AUC=100.00 fit=1.57s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM-W   ACC=97.62 F1=98.17 AUC=99.86 fit=3.43s  {'purity': 0.85, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+run2 EF-GBTSVM     ACC=27.98 F1=42.65 AUC=82.84 fit=9.71s  {'purity': 0.9, 'n_hidden': 103, 'activation': 2, 'C1': 0.001}
+run2 EF-GBTSVM-W   ACC=48.21 F1=50.85 AUC=91.04 fit=0.05s  {'purity': 0.75, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM     ACC=58.33 F1=9.84 AUC=53.29 fit=3.45s  {'purity': 0.95, 'n_hidden': 103, 'activation': 1, 'C1': 10}
+run3 EF-GBTSVM-W   ACC=93.94 F1=92.59 AUC=99.95 fit=0.08s  {'purity': 0.65, 'n_hidden': 183, 'activation': 10, 'C1': 0.0001}
+
+=== Summary (mean ± std over runs) ===
+                       ACC           BACC           PREC            REC             F1          GMEAN           AUC   train_time
+model                                                                                                                           
+EF-GBTSVM    61.31 ± 29.29  66.06 ± 22.78  69.01 ± 36.88  68.49 ± 44.49  52.38 ± 37.21  48.94 ± 39.56  75.56 ± 20.3  4.17 ± 3.78
+EF-GBTSVM-W  80.78 ± 22.54  84.39 ± 14.48  77.33 ± 30.45    91.4 ± 9.71  80.18 ± 21.13  81.68 ± 19.34  95.86 ± 4.72  0.89 ± 1.69
