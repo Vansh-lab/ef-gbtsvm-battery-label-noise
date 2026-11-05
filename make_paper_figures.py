@@ -1,8 +1,9 @@
-"""Figures and chart data for the paper (Phase C). Reads results only; trains nothing.
+"""Figures and chart data for the paper (Phase C). Trains nothing.
 
     python make_paper_figures.py      (after phase_b_analysis.py)
 
-Writes into paper_figures/ (new folder; results/ is never touched):
+Runs phase_b_analysis.py once to capture its output, which rewrites results/phase_b_* with the
+same values. Writes into paper_figures/:
   console_phase_b_analysis.txt   full stdout of `python phase_b_analysis.py`, captured verbatim
   console_*.png                  that captured stdout, cut into the blocks the paper shows and
                                  rendered in a monospace font ("terminal output" figures; the text
