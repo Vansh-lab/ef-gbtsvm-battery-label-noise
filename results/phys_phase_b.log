@@ -1,0 +1,274 @@
+=== Starting noise=0.0 ===
+[phys_phase_b] 636 samples, 12 features, class balance [359 277], noise=0.0
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=98.81 F1=98.51 AUC=99.96 fit=0.35s  {'purity': 0.9, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=0 min=0.959 mean=0.977
+run0 EF-GBTSVM-W   ACC=97.62 F1=96.92 AUC=99.96 fit=0.02s  {'purity': 0.75, 'n_hidden': 63, 'activation': 3, 'C1': 0.01}
+run0 EF-GBTSVM-L   ACC=97.62 F1=96.92 AUC=99.96 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 3, 'C1': 0.01}
+  [EF-GBTSVM-A diag] est_noise=0.0085 purity_used=0.9415 n_balls=2
+run0 EF-GBTSVM-A   ACC=97.62 F1=96.92 AUC=99.96 fit=0.07s  {'n_hidden': 63, 'activation': 3, 'C1': 1}
+run0 EF-GBTSVM-L8  ACC=97.62 F1=96.92 AUC=99.96 fit=0.02s  {'purity': 0.95, 'n_hidden': 63, 'activation': 3, 'C1': 10}
+run0 EF-GBTSVM-J   ACC=98.81 F1=98.51 AUC=99.96 fit=0.08s  {'purity_offset': -0.05, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run0 GBTSVM        ACC=95.83 F1=94.40 AUC=99.94 fit=0.02s  {'purity': 0.85, 'C1': 1}
+run0 HF-GBTSVM     ACC=99.40 F1=99.25 AUC=99.96 fit=0.06s  {'purity': 0.98, 'n_hidden': 23, 'activation': 2, 'C1': 0.001}
+run0 EF-TSVM       ACC=97.62 F1=96.88 AUC=99.99 fit=0.10s  {'n_hidden': 63, 'activation': 1, 'C1': 1e-05}
+run0 TSVM          ACC=97.62 F1=97.06 AUC=99.99 fit=0.12s  {'C1': 0.001}
+run0 SVM           ACC=97.62 F1=96.88 AUC=99.94 fit=0.01s  {'gamma': 0.003455107294592218, 'C': 0.3}
+run0 RVFL          ACC=97.62 F1=96.88 AUC=99.96 fit=0.01s  {'n_hidden': 63, 'activation': 2, 'C': 0.1}
+run0 RandomForest  ACC=98.21 F1=97.78 AUC=99.97 fit=0.97s  {'n_estimators': 300, 'min_samples_leaf': 4, 'max_features': 'log2', 'max_depth': 3}
+run0 MLP           ACC=98.21 F1=97.71 AUC=99.96 fit=0.19s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (16,), 'alpha': 1.0, 'activation': 'tanh'}
+run0 XGBoost       ACC=98.21 F1=97.78 AUC=99.97 fit=0.13s  {'subsample': 0.7, 'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.1}
+run1 EF-GBTSVM     ACC=97.02 F1=97.74 AUC=100.00 fit=0.03s  {'purity': 0.9, 'n_hidden': 143, 'activation': 3, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.95 n_balls=12 n_impure(<0.95)=0 min=1.000 mean=1.000
+run1 EF-GBTSVM-W   ACC=97.62 F1=98.18 AUC=99.95 fit=0.07s  {'purity': 0.95, 'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+run1 EF-GBTSVM-L   ACC=97.62 F1=98.18 AUC=99.95 fit=0.08s  {'purity': 0.95, 'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+  [EF-GBTSVM-A diag] est_noise=0.0107 purity_used=0.9393 n_balls=12
+run1 EF-GBTSVM-A   ACC=97.62 F1=98.18 AUC=99.95 fit=0.13s  {'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+run1 EF-GBTSVM-L8  ACC=97.02 F1=97.74 AUC=100.00 fit=0.04s  {'purity': 0.9, 'n_hidden': 143, 'activation': 3, 'C1': 1e-05}
+run1 EF-GBTSVM-J   ACC=97.62 F1=98.18 AUC=99.95 fit=0.13s  {'purity_offset': 0.1, 'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+run1 GBTSVM        ACC=95.83 F1=96.86 AUC=99.89 fit=0.03s  {'purity': 0.9, 'C1': 1e-05}
+run1 HF-GBTSVM     ACC=97.02 F1=97.74 AUC=100.00 fit=0.03s  {'purity': 0.9, 'n_hidden': 143, 'activation': 3, 'C1': 0.0001}
+run1 EF-TSVM       ACC=97.62 F1=98.18 AUC=100.00 fit=0.12s  {'n_hidden': 143, 'activation': 3, 'C1': 1}
+run1 TSVM          ACC=99.40 F1=99.53 AUC=100.00 fit=0.14s  {'C1': 100}
+run1 SVM           ACC=51.79 F1=41.73 AUC=96.56 fit=0.01s  {'gamma': 0.1193776641714437, 'C': 300}
+run1 RVFL          ACC=98.21 F1=98.63 AUC=100.00 fit=0.01s  {'n_hidden': 183, 'activation': 3, 'C': 1e-05}
+run1 RandomForest  ACC=97.62 F1=98.18 AUC=100.00 fit=0.39s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None}
+run1 MLP           ACC=98.21 F1=98.63 AUC=100.00 fit=1.50s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64, 32), 'alpha': 0.01, 'activation': 'relu'}
+run1 XGBoost       ACC=97.62 F1=98.18 AUC=100.00 fit=0.11s  {'subsample': 0.7, 'n_estimators': 200, 'max_depth': 2, 'learning_rate': 0.03}
+run2 EF-GBTSVM     ACC=91.07 F1=84.85 AUC=98.46 fit=0.02s  {'purity': 0.925, 'n_hidden': 103, 'activation': 1, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=0 min=0.975 mean=0.985
+run2 EF-GBTSVM-W   ACC=91.07 F1=84.85 AUC=98.46 fit=0.02s  {'purity': 0.75, 'n_hidden': 103, 'activation': 1, 'C1': 0.0001}
+run2 EF-GBTSVM-L   ACC=91.07 F1=84.85 AUC=98.46 fit=0.01s  {'purity': 0.75, 'n_hidden': 103, 'activation': 1, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.0064 purity_used=0.9436 n_balls=2
+run2 EF-GBTSVM-A   ACC=95.24 F1=90.24 AUC=100.00 fit=0.06s  {'n_hidden': 183, 'activation': 2, 'C1': 1}
+run2 EF-GBTSVM-L8  ACC=91.07 F1=84.85 AUC=98.46 fit=0.01s  {'purity': 0.65, 'n_hidden': 103, 'activation': 1, 'C1': 100}
+run2 EF-GBTSVM-J   ACC=100.00 F1=100.00 AUC=100.00 fit=0.10s  {'purity_offset': 0.1, 'n_hidden': 183, 'activation': 2, 'C1': 100}
+run2 GBTSVM        ACC=94.05 F1=87.50 AUC=100.00 fit=0.01s  {'purity': 0.85, 'C1': 1e-05}
+run2 HF-GBTSVM     ACC=97.02 F1=94.12 AUC=100.00 fit=0.01s  {'purity': 0.9, 'n_hidden': 183, 'activation': 3, 'C1': 1e-05}
+run2 EF-TSVM       ACC=95.24 F1=90.24 AUC=100.00 fit=0.08s  {'n_hidden': 23, 'activation': 3, 'C1': 1e-05}
+run2 TSVM          ACC=98.81 F1=97.73 AUC=100.00 fit=0.17s  {'C1': 1e-05}
+run2 SVM           ACC=97.02 F1=94.12 AUC=100.00 fit=0.01s  {'gamma': 0.00024244620170823283, 'C': 30}
+run2 RVFL          ACC=98.21 F1=96.77 AUC=100.00 fit=0.00s  {'n_hidden': 63, 'activation': 10, 'C': 10}
+run2 RandomForest  ACC=95.24 F1=90.24 AUC=100.00 fit=0.39s  {'n_estimators': 100, 'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 5}
+run2 MLP           ACC=97.02 F1=94.12 AUC=100.00 fit=0.48s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (32,), 'alpha': 1.0, 'activation': 'tanh'}
+run2 XGBoost       ACC=96.43 F1=92.86 AUC=99.91 fit=0.06s  {'subsample': 1.0, 'n_estimators': 200, 'max_depth': 2, 'learning_rate': 0.3}
+run3 EF-GBTSVM     ACC=92.42 F1=92.06 AUC=100.00 fit=0.01s  {'purity': 0.925, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.85 n_balls=2 n_impure(<0.95)=0 min=0.963 mean=0.977
+run3 EF-GBTSVM-W   ACC=94.70 F1=94.31 AUC=100.00 fit=0.01s  {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM-L   ACC=94.70 F1=94.31 AUC=100.00 fit=0.01s  {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-A diag] est_noise=0.0079 purity_used=0.9421 n_balls=2
+run3 EF-GBTSVM-A   ACC=92.42 F1=92.06 AUC=100.00 fit=0.06s  {'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM-L8  ACC=94.70 F1=94.31 AUC=100.00 fit=0.01s  {'purity': 0.925, 'n_hidden': 183, 'activation': 2, 'C1': 0.001}
+run3 EF-GBTSVM-J   ACC=92.42 F1=92.06 AUC=100.00 fit=0.06s  {'purity_offset': 0.0, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run3 GBTSVM        ACC=100.00 F1=100.00 AUC=100.00 fit=0.01s  {'purity': 0.9, 'C1': 1e-05}
+run3 HF-GBTSVM     ACC=92.42 F1=92.06 AUC=100.00 fit=0.01s  {'purity': 0.925, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run3 EF-TSVM       ACC=96.21 F1=95.87 AUC=100.00 fit=0.13s  {'n_hidden': 23, 'activation': 1, 'C1': 100}
+run3 TSVM          ACC=99.24 F1=99.15 AUC=100.00 fit=0.11s  {'C1': 0.01}
+run3 SVM           ACC=100.00 F1=100.00 AUC=100.00 fit=0.00s  {'gamma': 0.008376776400682925, 'C': 300}
+run3 RVFL          ACC=96.97 F1=96.43 AUC=99.98 fit=0.01s  {'n_hidden': 183, 'activation': 10, 'C': 10}
+run3 RandomForest  ACC=98.48 F1=98.25 AUC=99.99 fit=0.95s  {'n_estimators': 300, 'min_samples_leaf': 2, 'max_features': 'sqrt', 'max_depth': None}
+run3 MLP           ACC=96.97 F1=96.43 AUC=100.00 fit=0.37s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (128,), 'alpha': 0.0001, 'activation': 'relu'}
+run3 XGBoost       ACC=98.48 F1=98.25 AUC=100.00 fit=0.17s  {'subsample': 0.7, 'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.03}
+
+=== Summary (mean ± std over runs) ===
+                        ACC           BACC          PREC            REC             F1          GMEAN           AUC   train_time
+model                                                                                                                           
+EF-GBTSVM      94.83 ± 3.68   94.97 ± 3.18  88.93 ± 9.09   98.33 ± 3.33   93.29 ± 6.32   94.88 ± 3.22   99.6 ± 0.76   0.1 ± 0.16
+EF-GBTSVM-W    95.25 ± 3.11   95.24 ± 2.45  90.47 ± 9.34    97.2 ± 3.35   93.57 ± 6.03   95.19 ± 2.44  99.59 ± 0.75  0.03 ± 0.03
+EF-GBTSVM-L    95.25 ± 3.11   95.24 ± 2.45  90.47 ± 9.34    97.2 ± 3.35   93.57 ± 6.03   95.19 ± 2.44  99.59 ± 0.75  0.03 ± 0.03
+EF-GBTSVM-A    95.73 ± 2.47    94.56 ± 2.9  95.04 ± 6.66   94.42 ± 8.41    94.35 ± 3.8   94.38 ± 3.09  99.98 ± 0.03  0.08 ± 0.03
+EF-GBTSVM-L8    95.1 ± 2.97   95.03 ± 2.32  90.26 ± 9.16    97.2 ± 3.35   93.45 ± 5.92    94.97 ± 2.3   99.6 ± 0.76  0.02 ± 0.01
+EF-GBTSVM-J    97.21 ± 3.34    97.23 ± 3.0   94.7 ± 6.46    100.0 ± 0.0   97.19 ± 3.51   97.16 ± 3.12  99.98 ± 0.03  0.09 ± 0.03
+GBTSVM         96.43 ± 2.53   94.44 ± 4.54  98.48 ± 3.04   91.79 ± 10.6   94.69 ± 5.31   94.18 ± 4.83  99.96 ± 0.05  0.02 ± 0.01
+HF-GBTSVM      96.47 ± 2.92   95.76 ± 2.72  94.84 ± 6.63   97.22 ± 5.56   95.79 ± 3.29   95.63 ± 2.82  99.99 ± 0.02  0.03 ± 0.02
+EF-TSVM        96.67 ± 1.16   95.34 ± 2.83  97.12 ± 3.77   94.04 ± 8.38    95.29 ± 3.5   95.19 ± 3.02  100.0 ± 0.01  0.11 ± 0.02
+TSVM           98.77 ± 0.81   98.67 ± 0.89   98.15 ± 2.7   98.66 ± 2.11   98.37 ± 1.17    98.66 ± 0.9  100.0 ± 0.01  0.13 ± 0.03
+SVM           86.61 ± 23.25  88.29 ± 17.83  98.39 ± 3.23  77.42 ± 34.02  83.18 ± 27.74  85.54 ± 23.18  99.12 ± 1.71   0.01 ± 0.0
+RVFL           97.75 ± 0.59   97.45 ± 0.97  97.76 ± 2.96   96.76 ± 3.76   97.18 ± 0.99   97.41 ± 0.99  99.98 ± 0.02   0.01 ± 0.0
+RandomForest   97.39 ± 1.48   96.15 ± 3.46  98.02 ± 2.31   94.69 ± 8.47   96.11 ± 3.92   96.02 ± 3.66  99.99 ± 0.01  0.68 ± 0.33
+MLP             97.61 ± 0.7   96.62 ± 1.57  98.94 ± 1.31   94.74 ± 4.82   96.72 ± 1.96   96.56 ± 1.64  99.99 ± 0.02  0.63 ± 0.59
+XGBoost        97.69 ± 0.91    96.7 ± 2.39  98.02 ± 2.31    95.8 ± 6.31   96.77 ± 2.61    96.62 ± 2.5  99.97 ± 0.04  0.12 ± 0.05
+=== Finished noise=0.0 ===
+=== Starting noise=0.1 ===
+[phys_phase_b] 636 samples, 12 features, class balance [359 277], noise=0.1
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=85.12 F1=78.99 AUC=81.64 fit=0.91s  {'purity': 0.95, 'n_hidden': 63, 'activation': 10, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=2 min=0.873 mean=0.887
+run0 EF-GBTSVM-W   ACC=97.62 F1=96.92 AUC=99.96 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 3, 'C1': 0.01}
+run0 EF-GBTSVM-L   ACC=97.62 F1=96.92 AUC=99.96 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 3, 'C1': 0.01}
+  [EF-GBTSVM-A diag] est_noise=0.1154 purity_used=0.8346 n_balls=2
+run0 EF-GBTSVM-A   ACC=97.62 F1=96.92 AUC=99.96 fit=0.11s  {'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+run0 EF-GBTSVM-L8  ACC=98.21 F1=97.74 AUC=99.93 fit=0.14s  {'purity': 0.9, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run0 EF-GBTSVM-J   ACC=97.62 F1=96.92 AUC=99.96 fit=0.06s  {'purity_offset': -0.1, 'n_hidden': 63, 'activation': 3, 'C1': 1e-05}
+run0 GBTSVM        ACC=92.86 F1=90.62 AUC=98.93 fit=0.45s  {'purity': 0.925, 'C1': 1}
+run0 HF-GBTSVM     ACC=89.88 F1=85.95 AUC=87.70 fit=0.57s  {'purity': 0.95, 'n_hidden': 63, 'activation': 10, 'C1': 1e-05}
+run0 EF-TSVM       ACC=92.26 F1=90.37 AUC=98.51 fit=0.07s  {'n_hidden': 63, 'activation': 10, 'C1': 0.001}
+run0 TSVM          ACC=97.62 F1=96.92 AUC=99.94 fit=0.08s  {'C1': 0.1}
+run0 SVM           ACC=97.62 F1=96.88 AUC=99.94 fit=0.01s  {'gamma': 0.008376776400682925, 'C': 0.3}
+run0 RVFL          ACC=97.02 F1=96.06 AUC=99.94 fit=0.00s  {'n_hidden': 23, 'activation': 3, 'C': 0.01}
+run0 RandomForest  ACC=98.81 F1=98.51 AUC=99.96 fit=0.33s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 10}
+run0 MLP           ACC=97.62 F1=96.88 AUC=99.94 fit=0.55s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (32,), 'alpha': 1.0, 'activation': 'relu'}
+run0 XGBoost       ACC=97.62 F1=97.06 AUC=99.85 fit=0.15s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 6, 'learning_rate': 0.01}
+run1 EF-GBTSVM     ACC=75.60 F1=79.40 AUC=90.00 fit=0.60s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 10}
+  [EF-GBTSVM-W diag] purity_param=0.95 n_balls=61 n_impure(<0.95)=0 min=0.952 mean=0.997
+run1 EF-GBTSVM-W   ACC=97.62 F1=98.13 AUC=99.78 fit=0.88s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 10}
+run1 EF-GBTSVM-L   ACC=97.62 F1=98.13 AUC=99.78 fit=0.59s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 10}
+  [EF-GBTSVM-A diag] est_noise=0.1154 purity_used=0.8346 n_balls=7
+run1 EF-GBTSVM-A   ACC=95.83 F1=96.86 AUC=100.00 fit=0.08s  {'n_hidden': 143, 'activation': 2, 'C1': 0.0001}
+run1 EF-GBTSVM-L8  ACC=98.21 F1=98.63 AUC=100.00 fit=0.10s  {'purity': 0.9, 'n_hidden': 63, 'activation': 2, 'C1': 0.1}
+run1 EF-GBTSVM-J   ACC=88.10 F1=90.83 AUC=96.03 fit=0.42s  {'purity_offset': 0.1, 'n_hidden': 183, 'activation': 2, 'C1': 10}
+run1 GBTSVM        ACC=98.81 F1=99.08 AUC=100.00 fit=0.11s  {'purity': 0.9, 'C1': 1}
+run1 HF-GBTSVM     ACC=76.19 F1=80.00 AUC=90.54 fit=0.69s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 10}
+run1 EF-TSVM       ACC=50.00 F1=39.13 AUC=39.52 fit=0.12s  {'n_hidden': 63, 'activation': 3, 'C1': 1}
+run1 TSVM          ACC=95.83 F1=96.86 AUC=99.86 fit=0.08s  {'C1': 1e-05}
+run1 SVM           ACC=96.43 F1=97.30 AUC=100.00 fit=0.01s  {'gamma': 0.00024244620170823283, 'C': 3}
+run1 RVFL          ACC=84.52 F1=86.87 AUC=97.36 fit=0.01s  {'n_hidden': 143, 'activation': 2, 'C': 0.1}
+run1 RandomForest  ACC=97.62 F1=98.18 AUC=100.00 fit=0.30s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': None}
+run1 MLP           ACC=98.81 F1=99.08 AUC=100.00 fit=0.15s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32,), 'alpha': 0.1, 'activation': 'relu'}
+run1 XGBoost       ACC=97.62 F1=98.18 AUC=100.00 fit=0.08s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.01}
+run2 EF-GBTSVM     ACC=98.81 F1=97.73 AUC=100.00 fit=0.68s  {'purity': 0.95, 'n_hidden': 103, 'activation': 10, 'C1': 0.001}
+  [EF-GBTSVM-W diag] purity_param=0.95 n_balls=72 n_impure(<0.95)=0 min=0.952 mean=0.999
+run2 EF-GBTSVM-W   ACC=99.40 F1=98.88 AUC=100.00 fit=0.67s  {'purity': 0.95, 'n_hidden': 143, 'activation': 3, 'C1': 0.01}
+run2 EF-GBTSVM-L   ACC=99.40 F1=98.88 AUC=100.00 fit=0.67s  {'purity': 0.95, 'n_hidden': 143, 'activation': 3, 'C1': 0.01}
+  [EF-GBTSVM-A diag] est_noise=0.1090 purity_used=0.8410 n_balls=2
+run2 EF-GBTSVM-A   ACC=91.07 F1=84.85 AUC=98.46 fit=0.06s  {'n_hidden': 103, 'activation': 1, 'C1': 1e-05}
+run2 EF-GBTSVM-L8  ACC=97.02 F1=94.74 AUC=100.00 fit=0.62s  {'purity': 0.925, 'n_hidden': 63, 'activation': 3, 'C1': 1e-05}
+run2 EF-GBTSVM-J   ACC=97.62 F1=95.74 AUC=100.00 fit=0.70s  {'purity_offset': 0.1, 'n_hidden': 183, 'activation': 3, 'C1': 0.0001}
+run2 GBTSVM        ACC=99.40 F1=98.90 AUC=100.00 fit=0.58s  {'purity': 0.925, 'C1': 0.1}
+run2 HF-GBTSVM     ACC=98.81 F1=97.73 AUC=100.00 fit=0.70s  {'purity': 0.95, 'n_hidden': 103, 'activation': 10, 'C1': 0.001}
+run2 EF-TSVM       ACC=98.81 F1=97.73 AUC=100.00 fit=0.10s  {'n_hidden': 183, 'activation': 3, 'C1': 0.1}
+run2 TSVM          ACC=89.29 F1=75.00 AUC=100.00 fit=0.09s  {'C1': 0.1}
+run2 SVM           ACC=97.62 F1=95.35 AUC=100.00 fit=0.01s  {'gamma': 0.008376776400682925, 'C': 1}
+run2 RVFL          ACC=88.69 F1=73.24 AUC=99.93 fit=0.00s  {'n_hidden': 63, 'activation': 2, 'C': 0.1}
+run2 RandomForest  ACC=96.43 F1=92.86 AUC=100.00 fit=0.59s  {'n_estimators': 200, 'min_samples_leaf': 2, 'max_features': 'sqrt', 'max_depth': 3}
+run2 MLP           ACC=90.48 F1=78.38 AUC=100.00 fit=0.44s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (16,), 'alpha': 0.01, 'activation': 'relu'}
+run2 XGBoost       ACC=96.43 F1=92.86 AUC=97.41 fit=0.08s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.03}
+run3 EF-GBTSVM     ACC=87.12 F1=82.83 AUC=99.44 fit=0.69s  {'purity': 0.98, 'n_hidden': 183, 'activation': 2, 'C1': 100}
+  [EF-GBTSVM-W diag] purity_param=0.85 n_balls=2 n_impure(<0.95)=2 min=0.864 mean=0.887
+run3 EF-GBTSVM-W   ACC=94.70 F1=94.31 AUC=96.09 fit=0.01s  {'purity': 0.85, 'n_hidden': 183, 'activation': 10, 'C1': 0.01}
+run3 EF-GBTSVM-L   ACC=94.70 F1=94.31 AUC=96.09 fit=0.01s  {'purity': 0.85, 'n_hidden': 183, 'activation': 10, 'C1': 0.01}
+  [EF-GBTSVM-A diag] est_noise=0.1210 purity_used=0.8290 n_balls=2
+run3 EF-GBTSVM-A   ACC=95.45 F1=95.08 AUC=100.00 fit=0.06s  {'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+run3 EF-GBTSVM-L8  ACC=96.97 F1=96.67 AUC=100.00 fit=0.16s  {'purity': 0.9, 'n_hidden': 143, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-J   ACC=96.21 F1=95.87 AUC=100.00 fit=0.21s  {'purity_offset': 0.05, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run3 GBTSVM        ACC=100.00 F1=100.00 AUC=100.00 fit=0.01s  {'purity': 0.85, 'C1': 1e-05}
+run3 HF-GBTSVM     ACC=96.97 F1=96.67 AUC=100.00 fit=0.17s  {'purity': 0.9, 'n_hidden': 63, 'activation': 2, 'C1': 0.01}
+run3 EF-TSVM       ACC=98.48 F1=98.25 AUC=100.00 fit=0.13s  {'n_hidden': 183, 'activation': 3, 'C1': 0.1}
+run3 TSVM          ACC=98.48 F1=98.31 AUC=100.00 fit=0.11s  {'C1': 0.1}
+run3 SVM           ACC=96.21 F1=95.87 AUC=100.00 fit=0.01s  {'gamma': 0.020309176209047368, 'C': 0.1}
+run3 RVFL          ACC=90.15 F1=87.38 AUC=91.19 fit=0.01s  {'n_hidden': 183, 'activation': 10, 'C': 10}
+run3 RandomForest  ACC=96.97 F1=96.43 AUC=99.37 fit=0.34s  {'n_estimators': 100, 'min_samples_leaf': 4, 'max_features': None, 'max_depth': None}
+run3 MLP           ACC=95.45 F1=94.55 AUC=92.82 fit=0.66s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32, 16), 'alpha': 0.01, 'activation': 'tanh'}
+run3 XGBoost       ACC=96.97 F1=96.43 AUC=99.84 fit=0.43s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 6, 'learning_rate': 0.01}
+
+=== Summary (mean ± std over runs) ===
+                        ACC           BACC          PREC            REC             F1          GMEAN           AUC   train_time
+model                                                                                                                           
+EF-GBTSVM      86.66 ± 9.53   85.59 ± 8.92  93.87 ± 7.12  77.65 ± 11.98   84.74 ± 8.83   85.05 ± 9.05  92.77 ± 8.72  0.72 ± 0.13
+EF-GBTSVM-W    97.33 ± 1.95   97.29 ± 1.51  96.68 ± 5.01   97.61 ± 1.87    97.06 ± 2.0   97.26 ± 1.56  98.96 ± 1.92  0.39 ± 0.45
+EF-GBTSVM-L    97.33 ± 1.95   97.29 ± 1.51  96.68 ± 5.01   97.61 ± 1.87    97.06 ± 2.0   97.26 ± 1.56  98.96 ± 1.92  0.32 ± 0.36
+EF-GBTSVM-A    94.99 ± 2.78   94.78 ± 2.36  90.19 ± 8.87    97.2 ± 3.35   93.43 ± 5.78   94.71 ± 2.36   99.6 ± 0.76  0.08 ± 0.02
+EF-GBTSVM-L8    97.61 ± 0.7   97.76 ± 0.44  94.47 ± 3.43   99.62 ± 0.76   96.94 ± 1.68   97.73 ± 0.45  99.98 ± 0.04  0.26 ± 0.24
+EF-GBTSVM-J    94.89 ± 4.58   94.72 ± 5.42  93.08 ± 3.69   96.78 ± 4.03   94.84 ± 2.73   94.67 ± 5.48   99.0 ± 1.98  0.35 ± 0.28
+GBTSVM         97.77 ± 3.31   97.48 ± 3.73  97.39 ± 2.73   96.97 ± 6.06   97.15 ± 4.38   97.45 ± 3.78  99.73 ± 0.53  0.29 ± 0.27
+HF-GBTSVM     90.46 ± 10.26   90.01 ± 9.77  93.76 ± 5.35   87.1 ± 12.61   90.09 ± 8.57   89.86 ± 9.81  94.56 ± 6.39  0.53 ± 0.25
+EF-TSVM       84.89 ± 23.45  87.09 ± 18.26   94.6 ± 6.27  77.38 ± 34.97  81.37 ± 28.39  84.26 ± 23.84  84.51 ± 30.0   0.1 ± 0.02
+TSVM           95.31 ± 4.16   92.51 ± 8.55  97.25 ± 2.61  88.86 ± 19.36   91.77 ± 11.2   91.83 ± 9.77  99.95 ± 0.07  0.09 ± 0.01
+SVM            96.97 ± 0.75   96.04 ± 0.92   96.7 ± 3.96   96.26 ± 4.47    96.35 ± 0.9   95.95 ± 0.96  99.99 ± 0.03   0.01 ± 0.0
+RVFL             90.1 ± 5.2   87.59 ± 7.14  98.89 ± 2.22  76.85 ± 14.31   85.89 ± 9.43   86.61 ± 8.28  97.11 ± 4.12    0.0 ± 0.0
+RandomForest   97.46 ± 1.02   96.39 ± 2.34   98.37 ± 1.9    94.94 ± 6.4   96.49 ± 2.59    96.3 ± 2.43  99.83 ± 0.31  0.39 ± 0.13
+MLP            95.59 ± 3.68   93.09 ± 7.39  99.55 ± 0.91  87.01 ± 15.63   92.22 ± 9.41   92.55 ± 8.32  98.19 ± 3.58  0.45 ± 0.22
+XGBoost        97.16 ± 0.58   96.15 ± 1.99  97.68 ± 2.82    94.94 ± 6.4    96.13 ± 2.3   96.05 ± 2.09  99.27 ± 1.25  0.19 ± 0.16
+=== Finished noise=0.1 ===
+=== Starting noise=0.2 ===
+[phys_phase_b] 636 samples, 12 features, class balance [359 277], noise=0.2
+leave-one-group-out over 4 groups (group sizes [168 168 168 132]); --runs is ignored
+run0 EF-GBTSVM     ACC=97.02 F1=96.06 AUC=99.93 fit=1.92s  {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=2 n_impure(<0.95)=2 min=0.796 mean=0.797
+run0 EF-GBTSVM-W   ACC=98.81 F1=98.51 AUC=99.96 fit=0.01s  {'purity': 0.65, 'n_hidden': 63, 'activation': 10, 'C1': 0.0001}
+run0 EF-GBTSVM-L   ACC=98.81 F1=98.51 AUC=99.96 fit=0.02s  {'purity': 0.65, 'n_hidden': 63, 'activation': 10, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2393 purity_used=0.7107 n_balls=2
+run0 EF-GBTSVM-A   ACC=97.62 F1=96.92 AUC=99.96 fit=0.14s  {'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+run0 EF-GBTSVM-L8  ACC=98.81 F1=98.51 AUC=99.96 fit=0.02s  {'purity': 0.65, 'n_hidden': 63, 'activation': 10, 'C1': 0.1}
+run0 EF-GBTSVM-J   ACC=97.62 F1=96.88 AUC=99.69 fit=0.73s  {'purity_offset': 0.1, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run0 GBTSVM        ACC=97.02 F1=96.35 AUC=99.99 fit=1.70s  {'purity': 0.95, 'C1': 0.01}
+run0 HF-GBTSVM     ACC=97.02 F1=96.06 AUC=99.93 fit=1.09s  {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run0 EF-TSVM       ACC=70.83 F1=60.80 AUC=81.27 fit=0.14s  {'n_hidden': 183, 'activation': 10, 'C1': 0.001}
+run0 TSVM          ACC=86.90 F1=80.00 AUC=99.94 fit=0.18s  {'C1': 1}
+run0 SVM           ACC=98.21 F1=97.71 AUC=99.94 fit=0.02s  {'gamma': 0.008376776400682925, 'C': 1}
+run0 RVFL          ACC=97.62 F1=96.92 AUC=99.94 fit=0.01s  {'n_hidden': 63, 'activation': 3, 'C': 0.01}
+run0 RandomForest  ACC=97.62 F1=96.88 AUC=99.91 fit=0.32s  {'n_estimators': 100, 'min_samples_leaf': 4, 'max_features': 'sqrt', 'max_depth': 5}
+run0 MLP           ACC=97.62 F1=96.88 AUC=99.94 fit=0.21s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (64,), 'alpha': 1.0, 'activation': 'tanh'}
+run0 XGBoost       ACC=97.62 F1=96.88 AUC=99.84 fit=0.15s  {'subsample': 0.7, 'n_estimators': 300, 'max_depth': 2, 'learning_rate': 0.01}
+run1 EF-GBTSVM     ACC=94.05 F1=95.54 AUC=99.15 fit=0.78s  {'purity': 0.9, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=4 n_impure(<0.95)=4 min=0.720 mean=0.778
+run1 EF-GBTSVM-W   ACC=89.88 F1=92.70 AUC=99.92 fit=0.02s  {'purity': 0.65, 'n_hidden': 143, 'activation': 3, 'C1': 0.0001}
+run1 EF-GBTSVM-L   ACC=89.29 F1=92.31 AUC=99.92 fit=0.02s  {'purity': 0.65, 'n_hidden': 143, 'activation': 3, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2179 purity_used=0.7321 n_balls=7
+run1 EF-GBTSVM-A   ACC=97.02 F1=97.74 AUC=100.00 fit=0.10s  {'n_hidden': 183, 'activation': 3, 'C1': 1e-05}
+run1 EF-GBTSVM-L8  ACC=82.74 F1=88.16 AUC=96.94 fit=0.56s  {'purity': 0.85, 'n_hidden': 23, 'activation': 2, 'C1': 0.01}
+run1 EF-GBTSVM-J   ACC=98.81 F1=99.07 AUC=100.00 fit=0.23s  {'purity_offset': 0.05, 'n_hidden': 63, 'activation': 3, 'C1': 0.01}
+run1 GBTSVM        ACC=85.12 F1=87.18 AUC=94.27 fit=0.82s  {'purity': 0.95, 'C1': 1}
+run1 HF-GBTSVM     ACC=89.29 F1=92.31 AUC=100.00 fit=0.56s  {'purity': 0.85, 'n_hidden': 23, 'activation': 3, 'C1': 0.0001}
+run1 EF-TSVM       ACC=42.26 F1=18.49 AUC=72.92 fit=0.10s  {'n_hidden': 63, 'activation': 3, 'C1': 1}
+run1 TSVM          ACC=99.40 F1=99.53 AUC=100.00 fit=0.07s  {'C1': 1e-05}
+run1 SVM           ACC=97.02 F1=97.74 AUC=100.00 fit=0.01s  {'gamma': 0.0014251026703029992, 'C': 1}
+run1 RVFL          ACC=96.43 F1=97.30 AUC=100.00 fit=0.01s  {'n_hidden': 183, 'activation': 2, 'C': 0.001}
+run1 RandomForest  ACC=100.00 F1=100.00 AUC=100.00 fit=1.67s  {'n_estimators': 500, 'min_samples_leaf': 8, 'max_features': None, 'max_depth': 3}
+run1 MLP           ACC=97.62 F1=98.18 AUC=100.00 fit=0.23s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32,), 'alpha': 1.0, 'activation': 'tanh'}
+run1 XGBoost       ACC=98.81 F1=99.07 AUC=99.94 fit=1.00s  {'subsample': 0.7, 'n_estimators': 500, 'max_depth': 6, 'learning_rate': 0.01}
+run2 EF-GBTSVM     ACC=97.62 F1=95.35 AUC=100.00 fit=0.80s  {'purity': 0.85, 'n_hidden': 63, 'activation': 10, 'C1': 0.0001}
+  [EF-GBTSVM-W diag] purity_param=0.65 n_balls=2 n_impure(<0.95)=2 min=0.789 mean=0.795
+run2 EF-GBTSVM-W   ACC=91.07 F1=84.85 AUC=98.46 fit=0.01s  {'purity': 0.65, 'n_hidden': 103, 'activation': 1, 'C1': 100}
+run2 EF-GBTSVM-L   ACC=91.07 F1=84.85 AUC=98.46 fit=0.02s  {'purity': 0.65, 'n_hidden': 103, 'activation': 1, 'C1': 100}
+  [EF-GBTSVM-A diag] est_noise=0.2650 purity_used=0.6850 n_balls=2
+run2 EF-GBTSVM-A   ACC=91.07 F1=84.85 AUC=98.46 fit=0.07s  {'n_hidden': 103, 'activation': 1, 'C1': 1e-05}
+run2 EF-GBTSVM-L8  ACC=91.07 F1=84.85 AUC=98.46 fit=0.01s  {'purity': 0.65, 'n_hidden': 103, 'activation': 1, 'C1': 100}
+run2 EF-GBTSVM-J   ACC=91.07 F1=84.85 AUC=98.46 fit=0.06s  {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 1, 'C1': 0.0001}
+run2 GBTSVM        ACC=82.14 F1=50.00 AUC=99.98 fit=0.76s  {'purity': 0.85, 'C1': 0.01}
+run2 HF-GBTSVM     ACC=98.81 F1=97.73 AUC=99.98 fit=0.97s  {'purity': 0.9, 'n_hidden': 143, 'activation': 1, 'C1': 0.0001}
+run2 EF-TSVM       ACC=73.21 F1=0.00 AUC=99.58 fit=0.08s  {'n_hidden': 103, 'activation': 3, 'C1': 0.1}
+run2 TSVM          ACC=73.21 F1=0.00 AUC=99.98 fit=0.07s  {'C1': 0.1}
+run2 SVM           ACC=97.62 F1=95.35 AUC=100.00 fit=0.01s  {'gamma': 0.008376776400682925, 'C': 1}
+run2 RVFL          ACC=96.43 F1=92.86 AUC=100.00 fit=0.01s  {'n_hidden': 183, 'activation': 3, 'C': 1e-05}
+run2 RandomForest  ACC=96.43 F1=92.86 AUC=99.89 fit=0.34s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': None, 'max_depth': 3}
+run2 MLP           ACC=86.90 F1=67.65 AUC=100.00 fit=0.46s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (16,), 'alpha': 1e-05, 'activation': 'relu'}
+run2 XGBoost       ACC=97.02 F1=94.12 AUC=99.16 fit=0.13s  {'subsample': 1.0, 'n_estimators': 200, 'max_depth': 2, 'learning_rate': 0.01}
+run3 EF-GBTSVM     ACC=90.15 F1=87.38 AUC=99.95 fit=1.05s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 0.001}
+  [EF-GBTSVM-W diag] purity_param=0.75 n_balls=2 n_impure(<0.95)=2 min=0.769 mean=0.791
+run3 EF-GBTSVM-W   ACC=92.42 F1=92.06 AUC=100.00 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-L   ACC=92.42 F1=92.06 AUC=100.00 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+  [EF-GBTSVM-A diag] est_noise=0.2242 purity_used=0.7258 n_balls=2
+run3 EF-GBTSVM-A   ACC=94.70 F1=94.31 AUC=100.00 fit=0.06s  {'n_hidden': 183, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-L8  ACC=92.42 F1=92.06 AUC=100.00 fit=0.01s  {'purity': 0.75, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run3 EF-GBTSVM-J   ACC=93.94 F1=93.55 AUC=100.00 fit=0.24s  {'purity_offset': 0.05, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05}
+run3 GBTSVM        ACC=56.06 F1=0.00 AUC=97.74 fit=0.99s  {'purity': 0.9, 'C1': 0.01}
+run3 HF-GBTSVM     ACC=90.91 F1=88.46 AUC=99.98 fit=1.08s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 0.001}
+run3 EF-TSVM       ACC=99.24 F1=99.15 AUC=100.00 fit=0.09s  {'n_hidden': 183, 'activation': 3, 'C1': 0.1}
+run3 TSVM          ACC=96.21 F1=95.87 AUC=100.00 fit=0.10s  {'C1': 1e-05}
+run3 SVM           ACC=92.42 F1=92.06 AUC=100.00 fit=0.02s  {'gamma': 0.008376776400682925, 'C': 0.1}
+run3 RVFL          ACC=96.97 F1=96.67 AUC=100.00 fit=0.01s  {'n_hidden': 183, 'activation': 3, 'C': 1e-05}
+run3 RandomForest  ACC=96.97 F1=96.67 AUC=100.00 fit=0.98s  {'n_estimators': 300, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': None}
+run3 MLP           ACC=96.97 F1=96.67 AUC=100.00 fit=0.26s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32, 16), 'alpha': 1.0, 'activation': 'tanh'}
+run3 XGBoost       ACC=96.21 F1=95.87 AUC=99.95 fit=0.09s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.01}
+
+=== Summary (mean ± std over runs) ===
+                        ACC           BACC           PREC            REC             F1          GMEAN            AUC   train_time
+model                                                                                                                             
+EF-GBTSVM      94.71 ± 3.42   93.15 ± 3.43   98.06 ± 3.88   90.05 ± 9.01   93.58 ± 4.15   92.86 ± 3.72   99.76 ± 0.41  1.14 ± 0.53
+EF-GBTSVM-W    93.05 ± 3.98   92.47 ± 5.42   86.63 ± 7.94   98.33 ± 3.33    92.03 ± 5.6   92.11 ± 5.89   99.59 ± 0.75   0.02 ± 0.0
+EF-GBTSVM-L     92.9 ± 4.15   92.26 ± 5.76   86.46 ± 7.95   98.33 ± 3.33   91.93 ± 5.58   91.86 ± 6.31   99.59 ± 0.75  0.02 ± 0.01
+EF-GBTSVM-A     95.1 ± 2.97   95.03 ± 2.32   90.26 ± 9.16    97.2 ± 3.35   93.45 ± 5.92    94.97 ± 2.3    99.6 ± 0.76  0.09 ± 0.03
+EF-GBTSVM-L8   91.26 ± 6.61   89.97 ± 9.93   84.74 ± 8.86   98.33 ± 3.33    90.9 ± 5.87  88.92 ± 11.79   98.84 ± 1.45  0.15 ± 0.27
+EF-GBTSVM-J    95.36 ± 3.53   95.61 ± 3.13  91.41 ± 10.74   96.36 ± 3.24   93.58 ± 6.25   95.55 ± 3.15   99.54 ± 0.73  0.32 ± 0.29
+GBTSVM        80.09 ± 17.26  75.48 ± 21.31  72.66 ± 48.53  53.01 ± 44.96  58.38 ± 43.78  60.62 ± 43.79     98.0 ± 2.7  1.07 ± 0.43
+HF-GBTSVM      94.01 ± 4.62   92.16 ± 5.93   96.43 ± 7.14    91.82 ± 8.9   93.64 ± 4.13   91.65 ± 6.53   99.97 ± 0.03  0.93 ± 0.25
+EF-TSVM       71.39 ± 23.29  68.23 ± 22.15  65.68 ± 46.75  41.94 ± 46.13  44.61 ± 44.38  49.71 ± 43.09  88.44 ± 13.54   0.1 ± 0.03
+TSVM          88.93 ± 11.75  82.37 ± 22.71  73.02 ± 48.82  66.44 ± 46.92  68.85 ± 46.68  69.44 ± 46.95   99.98 ± 0.03  0.11 ± 0.05
+SVM            96.32 ± 2.64   95.66 ± 1.94   94.83 ± 6.62   97.02 ± 4.19   95.71 ± 2.68   95.55 ± 2.04   99.99 ± 0.03   0.01 ± 0.0
+RVFL           96.86 ± 0.57   95.72 ± 1.92   96.68 ± 3.04   95.53 ± 6.29   95.94 ± 2.07   95.61 ± 2.02   99.99 ± 0.03   0.01 ± 0.0
+RandomForest   97.75 ± 1.57    96.9 ± 2.74   98.39 ± 3.23   95.15 ± 6.34    96.6 ± 2.92   96.82 ± 2.84   99.95 ± 0.06  0.83 ± 0.64
+MLP            94.78 ± 5.26  91.62 ± 10.71   97.49 ± 3.12  86.26 ± 23.61  89.84 ± 14.81  90.57 ± 12.72   99.99 ± 0.03  0.29 ± 0.12
+XGBoost        97.42 ± 1.09   96.68 ± 1.75   97.78 ± 3.84   95.48 ± 5.14   96.48 ± 2.07   96.62 ± 1.82   99.72 ± 0.38  0.34 ± 0.44
+=== Finished noise=0.2 ===
+ALL NOISE LEVELS DONE

@@ -1,0 +1,239 @@
+[phase A base] 636 cycles, 13 features, n_iter=150, noise=[0.0, 0.1, 0.2]
+fold0 test=B0005 noise=0.0 val=B0006 EF-GBTSVM     BACC= 87.04 (clean  87.04)   28.8s {'purity': 0.98, 'n_hidden': 23, 'activation': 2, 'C1': 0.001} tau=0.980 balls=14
+fold0 test=B0005 noise=0.0 val=B0006 EF-GBTSVM-J   BACC= 87.04 (clean  87.04)    2.9s {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 2, 'C1': 0.001} tau=0.980 balls=14 est_noise=0.007
+fold0 test=B0005 noise=0.0 val=B0006 EF-GBTSVM-M   BACC= 99.07 (clean  99.07)    1.8s {'purity': 0.95, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 2, 'C1': 0.0001} tau=0.950 balls=14
+fold0 test=B0005 noise=0.0 val=B0006 EF-GBTSVM-JM  BACC= 99.07 (clean  99.07)    2.9s {'purity_offset': -0.05, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 2, 'C1': 0.0001} tau=0.893 balls=14 est_noise=0.007
+fold0 test=B0005 noise=0.0 val=B0006 SVM           BACC= 99.07 (clean  99.07)    0.7s {'gamma': 0.0014251026703029992, 'C': 1}
+fold0 test=B0005 noise=0.0 val=B0006 Stump         BACC= 95.83 (clean  95.83)    0.0s {} feature=v_mean
+fold0 test=B0005 noise=0.0 val=B0007 EF-GBTSVM     BACC= 86.18 (clean  86.18)    1.4s {'purity': 0.9, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05} tau=0.900 balls=2
+fold0 test=B0005 noise=0.0 val=B0007 EF-GBTSVM-J   BACC= 86.18 (clean  86.18)    2.4s {'purity_offset': -0.1, 'n_hidden': 63, 'activation': 2, 'C1': 10} tau=0.830 balls=2 est_noise=0.020
+fold0 test=B0005 noise=0.0 val=B0007 EF-GBTSVM-M   BACC= 87.40 (clean  87.40)    1.6s {'purity': 0.95, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 2, 'C1': 0.0001} tau=0.950 balls=12
+fold0 test=B0005 noise=0.0 val=B0007 EF-GBTSVM-JM  BACC= 86.18 (clean  86.18)    2.4s {'purity_offset': -0.1, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 2, 'C1': 0.01} tau=0.830 balls=2 est_noise=0.020
+fold0 test=B0005 noise=0.0 val=B0007 SVM           BACC= 79.27 (clean  79.27)    0.6s {'gamma': 0.008376776400682925, 'C': 0.3}
+fold0 test=B0005 noise=0.0 val=B0007 Stump         BACC= 85.56 (clean  85.56)    0.0s {} feature=time_to_v3p5
+fold0 test=B0005 noise=0.0 val=B0018 EF-GBTSVM     BACC= 56.08 (clean  56.08)    1.0s {'purity': 0.9, 'n_hidden': 143, 'activation': 10, 'C1': 0.001} tau=0.900 balls=4
+fold0 test=B0005 noise=0.0 val=B0018 EF-GBTSVM-J   BACC= 56.08 (clean  56.08)    2.2s {'purity_offset': -0.05, 'n_hidden': 143, 'activation': 10, 'C1': 0.001} tau=0.888 balls=4 est_noise=0.012
+fold0 test=B0005 noise=0.0 val=B0018 EF-GBTSVM-M   BACC= 98.65 (clean  98.65)    1.0s {'purity': 0.85, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 0.0001} tau=0.850 balls=4
+fold0 test=B0005 noise=0.0 val=B0018 EF-GBTSVM-JM  BACC= 96.62 (clean  96.62)    2.4s {'purity_offset': 0.05, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 0.0001} tau=0.980 balls=8 est_noise=0.012
+fold0 test=B0005 noise=0.0 val=B0018 SVM           BACC= 87.84 (clean  87.84)    0.8s {'gamma': 0.008376776400682925, 'C': 30}
+fold0 test=B0005 noise=0.0 val=B0018 Stump         BACC= 93.92 (clean  93.92)    0.0s {} feature=time_to_v3p5
+fold0 test=B0005 noise=0.1 val=B0006 EF-GBTSVM     BACC= 72.53 (clean  83.80)    6.1s {'purity': 0.98, 'n_hidden': 23, 'activation': 3, 'C1': 1e-05} tau=0.980 balls=48
+fold0 test=B0005 noise=0.1 val=B0006 EF-GBTSVM-J   BACC= 86.66 (clean  99.07)    4.5s {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 3, 'C1': 1e-05} tau=0.947 balls=33 est_noise=0.103
+fold0 test=B0005 noise=0.1 val=B0006 EF-GBTSVM-M   BACC= 72.53 (clean  83.80)    6.0s {'purity': 0.98, 'n_hidden': 23, 'mass_power': 0.0, 'activation': 3, 'C1': 0.0001} tau=0.980 balls=48
+fold0 test=B0005 noise=0.1 val=B0006 EF-GBTSVM-JM  BACC= 85.49 (clean  99.17)    4.7s {'purity_offset': 0.1, 'n_hidden': 63, 'mass_power': 1.0, 'activation': 10, 'C1': 0.001} tau=0.947 balls=33 est_noise=0.103
+fold0 test=B0005 noise=0.1 val=B0006 SVM           BACC= 85.38 (clean  99.07)    0.7s {'gamma': 0.020309176209047368, 'C': 0.3}
+fold0 test=B0005 noise=0.1 val=B0006 Stump         BACC= 84.79 (clean  95.83)    0.0s {} feature=v_mean
+fold0 test=B0005 noise=0.1 val=B0007 EF-GBTSVM     BACC= 87.15 (clean  97.78)    7.5s {'purity': 0.95, 'n_hidden': 183, 'activation': 2, 'C1': 0.001} tau=0.950 balls=49
+fold0 test=B0005 noise=0.1 val=B0007 EF-GBTSVM-J   BACC= 81.63 (clean  86.18)    3.6s {'purity_offset': -0.05, 'n_hidden': 63, 'activation': 2, 'C1': 100} tau=0.777 balls=2 est_noise=0.123
+fold0 test=B0005 noise=0.1 val=B0007 EF-GBTSVM-M   BACC= 86.61 (clean  92.68)    6.7s {'purity': 0.9, 'n_hidden': 63, 'mass_power': 1.0, 'activation': 10, 'C1': 0.001} tau=0.900 balls=17
+fold0 test=B0005 noise=0.1 val=B0007 EF-GBTSVM-JM  BACC= 81.63 (clean  86.18)    3.7s {'purity_offset': -0.1, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 2, 'C1': 0.01} tau=0.727 balls=2 est_noise=0.123
+fold0 test=B0005 noise=0.1 val=B0007 SVM           BACC= 76.64 (clean  79.67)    0.7s {'gamma': 0.0014251026703029992, 'C': 3}
+fold0 test=B0005 noise=0.1 val=B0007 Stump         BACC= 79.49 (clean  85.56)    0.0s {} feature=time_to_v3p5
+fold0 test=B0005 noise=0.1 val=B0018 EF-GBTSVM     BACC= 61.90 (clean  62.93)    7.9s {'purity': 0.925, 'n_hidden': 103, 'activation': 3, 'C1': 0.001} tau=0.925 balls=42
+fold0 test=B0005 noise=0.1 val=B0018 EF-GBTSVM-J   BACC= 55.07 (clean  54.73)    4.5s {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 2, 'C1': 0.01} tau=0.822 balls=4 est_noise=0.128
+fold0 test=B0005 noise=0.1 val=B0018 EF-GBTSVM-M   BACC= 85.13 (clean  93.10)    7.2s {'purity': 0.9, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 0.0001} tau=0.900 balls=21
+fold0 test=B0005 noise=0.1 val=B0018 EF-GBTSVM-JM  BACC= 91.55 (clean  98.65)    4.4s {'purity_offset': -0.1, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 0.0001} tau=0.722 balls=4 est_noise=0.128
+fold0 test=B0005 noise=0.1 val=B0018 SVM           BACC= 88.65 (clean  95.95)    0.8s {'gamma': 0.020309176209047368, 'C': 0.3}
+fold0 test=B0005 noise=0.1 val=B0018 Stump         BACC= 86.47 (clean  93.92)    0.0s {} feature=time_to_v3p5
+fold0 test=B0005 noise=0.2 val=B0006 EF-GBTSVM     BACC= 65.59 (clean  81.67)   10.4s {'purity': 0.9, 'n_hidden': 23, 'activation': 10, 'C1': 1e-05} tau=0.900 balls=47
+fold0 test=B0005 noise=0.2 val=B0006 EF-GBTSVM-J   BACC= 73.88 (clean  95.37)    4.5s {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 2, 'C1': 0.001} tau=0.823 balls=26 est_noise=0.227
+fold0 test=B0005 noise=0.2 val=B0006 EF-GBTSVM-M   BACC= 78.03 (clean  92.50)   10.7s {'purity': 0.98, 'n_hidden': 23, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.980 balls=56
+fold0 test=B0005 noise=0.2 val=B0006 EF-GBTSVM-JM  BACC= 73.88 (clean  95.37)    4.3s {'purity_offset': 0.1, 'n_hidden': 23, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.823 balls=26 est_noise=0.227
+fold0 test=B0005 noise=0.2 val=B0006 SVM           BACC= 75.09 (clean  99.54)    0.7s {'gamma': 0.00024244620170823283, 'C': 10}
+fold0 test=B0005 noise=0.2 val=B0006 Stump         BACC= 71.53 (clean  91.67)    0.0s {} feature=time_to_tmax
+fold0 test=B0005 noise=0.2 val=B0007 EF-GBTSVM     BACC= 50.00 (clean  50.00)   11.5s {'purity': 0.9, 'n_hidden': 63, 'activation': 10, 'C1': 0.0001} tau=0.900 balls=52
+fold0 test=B0005 noise=0.2 val=B0007 EF-GBTSVM-J   BACC= 73.54 (clean  86.18)    3.5s {'purity_offset': -0.05, 'n_hidden': 63, 'activation': 2, 'C1': 100} tau=0.647 balls=2 est_noise=0.253
+fold0 test=B0005 noise=0.2 val=B0007 EF-GBTSVM-M   BACC= 50.00 (clean  50.00)   11.3s {'purity': 0.9, 'n_hidden': 63, 'mass_power': 0.0, 'activation': 10, 'C1': 1e-05} tau=0.900 balls=52
+fold0 test=B0005 noise=0.2 val=B0007 EF-GBTSVM-JM  BACC= 73.24 (clean  91.06)    3.2s {'purity_offset': -0.05, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 0.0001} tau=0.647 balls=2 est_noise=0.253
+fold0 test=B0005 noise=0.2 val=B0007 SVM           BACC= 72.66 (clean  93.09)    0.7s {'gamma': 0.020309176209047368, 'C': 0.3}
+fold0 test=B0005 noise=0.2 val=B0007 Stump         BACC= 71.92 (clean  85.56)    0.0s {} feature=time_to_v3p5
+fold0 test=B0005 noise=0.2 val=B0018 EF-GBTSVM     BACC= 48.00 (clean  46.62)   12.7s {'purity': 0.85, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05} tau=0.850 balls=38
+fold0 test=B0005 noise=0.2 val=B0018 EF-GBTSVM-J   BACC= 54.81 (clean  56.08)    3.9s {'purity_offset': 0.0, 'n_hidden': 143, 'activation': 10, 'C1': 0.001} tau=0.709 balls=4 est_noise=0.241
+fold0 test=B0005 noise=0.2 val=B0018 EF-GBTSVM-M   BACC= 59.93 (clean  69.11)   12.4s {'purity': 0.85, 'n_hidden': 23, 'mass_power': 0.5, 'activation': 2, 'C1': 0.001} tau=0.850 balls=38
+fold0 test=B0005 noise=0.2 val=B0018 EF-GBTSVM-JM  BACC= 75.40 (clean  87.93)    3.4s {'purity_offset': 0.05, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 2, 'C1': 0.0001} tau=0.759 balls=16 est_noise=0.241
+fold0 test=B0005 noise=0.2 val=B0018 SVM           BACC= 83.24 (clean  97.97)    0.7s {'gamma': 0.0001, 'C': 30}
+fold0 test=B0005 noise=0.2 val=B0018 Stump         BACC= 79.01 (clean  93.92)    0.0s {} feature=time_to_tmax
+fold1 test=B0006 noise=0.0 val=B0005 EF-GBTSVM     BACC= 78.34 (clean  78.34)    1.9s {'purity': 0.95, 'n_hidden': 143, 'activation': 10, 'C1': 0.001} tau=0.950 balls=14
+fold1 test=B0006 noise=0.0 val=B0005 EF-GBTSVM-J   BACC= 78.34 (clean  78.34)    2.8s {'purity_offset': 0.05, 'n_hidden': 143, 'activation': 10, 'C1': 0.001} tau=0.980 balls=14 est_noise=0.017
+fold1 test=B0006 noise=0.0 val=B0005 EF-GBTSVM-M   BACC= 93.14 (clean  93.14)    1.9s {'purity': 0.9, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 0.0001} tau=0.900 balls=14
+fold1 test=B0006 noise=0.0 val=B0005 EF-GBTSVM-JM  BACC= 85.29 (clean  85.29)    2.7s {'purity_offset': -0.1, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.833 balls=8 est_noise=0.017
+fold1 test=B0006 noise=0.0 val=B0005 SVM           BACC= 98.75 (clean  98.75)    0.7s {'gamma': 0.0014251026703029992, 'C': 1}
+fold1 test=B0006 noise=0.0 val=B0005 Stump         BACC= 85.61 (clean  85.61)    0.0s {} feature=v_mean
+fold1 test=B0006 noise=0.0 val=B0007 EF-GBTSVM     BACC= 28.32 (clean  28.32)    2.0s {'purity': 0.925, 'n_hidden': 63, 'activation': 4, 'C1': 0.01} tau=0.925 balls=12
+fold1 test=B0006 noise=0.0 val=B0007 EF-GBTSVM-J   BACC= 65.85 (clean  65.85)    2.9s {'purity_offset': -0.1, 'n_hidden': 63, 'activation': 1, 'C1': 0.001} tau=0.830 balls=5 est_noise=0.020
+fold1 test=B0006 noise=0.0 val=B0007 EF-GBTSVM-M   BACC= 55.56 (clean  55.56)    2.0s {'purity': 0.85, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=5
+fold1 test=B0006 noise=0.0 val=B0007 EF-GBTSVM-JM  BACC= 79.67 (clean  79.67)    3.0s {'purity_offset': -0.1, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 10, 'C1': 0.01} tau=0.830 balls=5 est_noise=0.020
+fold1 test=B0006 noise=0.0 val=B0007 SVM           BACC= 86.59 (clean  86.59)    0.6s {'gamma': 0.0014251026703029992, 'C': 1}
+fold1 test=B0006 noise=0.0 val=B0007 Stump         BACC= 91.87 (clean  91.87)    0.0s {} feature=discharge_time
+fold1 test=B0006 noise=0.0 val=B0018 EF-GBTSVM     BACC= 68.97 (clean  68.97)    1.9s {'purity': 0.98, 'n_hidden': 23, 'activation': 3, 'C1': 100} tau=0.980 balls=11
+fold1 test=B0006 noise=0.0 val=B0018 EF-GBTSVM-J   BACC= 68.97 (clean  68.97)    3.0s {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 3, 'C1': 100} tau=0.980 balls=11 est_noise=0.015
+fold1 test=B0006 noise=0.0 val=B0018 EF-GBTSVM-M   BACC= 62.16 (clean  62.16)    1.8s {'purity': 0.85, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=8
+fold1 test=B0006 noise=0.0 val=B0018 EF-GBTSVM-JM  BACC= 62.16 (clean  62.16)    2.9s {'purity_offset': -0.1, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 1e-05} tau=0.835 balls=8 est_noise=0.015
+fold1 test=B0006 noise=0.0 val=B0018 SVM           BACC= 97.97 (clean  97.97)    0.7s {'gamma': 0.00024244620170823283, 'C': 10}
+fold1 test=B0006 noise=0.0 val=B0018 Stump         BACC= 94.59 (clean  94.59)    0.0s {} feature=time_to_v3p5
+fold1 test=B0006 noise=0.1 val=B0005 EF-GBTSVM     BACC= 50.00 (clean  50.00)    7.3s {'purity': 0.98, 'n_hidden': 23, 'activation': 2, 'C1': 0.0001} tau=0.980 balls=51
+fold1 test=B0006 noise=0.1 val=B0005 EF-GBTSVM-J   BACC= 78.09 (clean  86.63)    5.5s {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 2, 'C1': 0.0001} tau=0.940 balls=42 est_noise=0.110
+fold1 test=B0006 noise=0.1 val=B0005 EF-GBTSVM-M   BACC= 89.93 (clean  99.02)    6.7s {'purity': 0.98, 'n_hidden': 63, 'mass_power': 0.0, 'activation': 3, 'C1': 0.0001} tau=0.980 balls=51
+fold1 test=B0006 noise=0.1 val=B0005 EF-GBTSVM-JM  BACC= 82.01 (clean  89.71)    4.8s {'purity_offset': -0.05, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 0.0001} tau=0.790 balls=12 est_noise=0.110
+fold1 test=B0006 noise=0.1 val=B0005 SVM           BACC= 83.90 (clean  93.18)    0.7s {'gamma': 0.020309176209047368, 'C': 10}
+fold1 test=B0006 noise=0.1 val=B0005 Stump         BACC= 77.32 (clean  85.61)    0.0s {} feature=v_mean
+fold1 test=B0006 noise=0.1 val=B0007 EF-GBTSVM     BACC= 50.00 (clean  50.00)    5.7s {'purity': 0.98, 'n_hidden': 23, 'activation': 2, 'C1': 0.01} tau=0.980 balls=55
+fold1 test=B0006 noise=0.1 val=B0007 EF-GBTSVM-J   BACC= 83.90 (clean  97.15)    4.2s {'purity_offset': -0.1, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.757 balls=5 est_noise=0.093
+fold1 test=B0006 noise=0.1 val=B0007 EF-GBTSVM-M   BACC= 77.00 (clean  86.67)    4.5s {'purity': 0.85, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=8
+fold1 test=B0006 noise=0.1 val=B0007 EF-GBTSVM-JM  BACC= 78.54 (clean  86.99)    3.9s {'purity_offset': 0.05, 'n_hidden': 103, 'mass_power': 1.0, 'activation': 1, 'C1': 0.001} tau=0.907 balls=26 est_noise=0.093
+fold1 test=B0006 noise=0.1 val=B0007 SVM           BACC= 74.19 (clean  82.93)    0.7s {'gamma': 0.0001, 'C': 10}
+fold1 test=B0006 noise=0.1 val=B0007 Stump         BACC= 67.56 (clean  75.56)    0.0s {} feature=time_to_tmax
+fold1 test=B0006 noise=0.1 val=B0018 EF-GBTSVM     BACC= 90.53 (clean  96.25)    7.2s {'purity': 0.925, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05} tau=0.925 balls=44
+fold1 test=B0006 noise=0.1 val=B0018 EF-GBTSVM-J   BACC= 91.17 (clean  98.46)    4.8s {'purity_offset': -0.1, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.731 balls=8 est_noise=0.119
+fold1 test=B0006 noise=0.1 val=B0018 EF-GBTSVM-M   BACC= 61.25 (clean  63.51)    6.1s {'purity': 0.85, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=12
+fold1 test=B0006 noise=0.1 val=B0018 EF-GBTSVM-JM  BACC= 90.60 (clean  96.55)    4.3s {'purity_offset': -0.1, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.731 balls=8 est_noise=0.119
+fold1 test=B0006 noise=0.1 val=B0018 SVM           BACC= 85.04 (clean  91.89)    0.7s {'gamma': 0.0014251026703029992, 'C': 3}
+fold1 test=B0006 noise=0.1 val=B0018 Stump         BACC= 90.17 (clean  97.30)    0.0s {} feature=time_to_v3p5
+fold1 test=B0006 noise=0.2 val=B0005 EF-GBTSVM     BACC= 69.39 (clean  80.39)   11.7s {'purity': 0.9, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05} tau=0.900 balls=49
+fold1 test=B0006 noise=0.2 val=B0005 EF-GBTSVM-J   BACC= 26.43 (clean  13.24)    2.8s {'purity_offset': 0.0, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05} tau=0.673 balls=8 est_noise=0.277
+fold1 test=B0006 noise=0.2 val=B0005 EF-GBTSVM-M   BACC= 61.43 (clean  65.69)   11.6s {'purity': 0.85, 'n_hidden': 183, 'mass_power': 1.0, 'activation': 2, 'C1': 0.01} tau=0.850 balls=36
+fold1 test=B0006 noise=0.2 val=B0005 EF-GBTSVM-JM  BACC= 45.31 (clean  34.94)    2.5s {'purity_offset': 0.0, 'n_hidden': 143, 'mass_power': 0.5, 'activation': 3, 'C1': 1e-05} tau=0.673 balls=8 est_noise=0.277
+fold1 test=B0006 noise=0.2 val=B0005 SVM           BACC= 74.59 (clean  91.67)    0.7s {'gamma': 0.020309176209047368, 'C': 3}
+fold1 test=B0006 noise=0.2 val=B0005 Stump         BACC= 63.16 (clean  79.55)    0.0s {} feature=discharge_time
+fold1 test=B0006 noise=0.2 val=B0007 EF-GBTSVM     BACC= 57.30 (clean  65.56)    9.6s {'purity': 0.95, 'n_hidden': 63, 'activation': 3, 'C1': 1} tau=0.950 balls=58
+fold1 test=B0006 noise=0.2 val=B0007 EF-GBTSVM-J   BACC= 69.05 (clean  92.28)    3.4s {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 3, 'C1': 10} tau=0.730 balls=5 est_noise=0.220
+fold1 test=B0006 noise=0.2 val=B0007 EF-GBTSVM-M   BACC= 47.46 (clean  41.54)    9.9s {'purity': 0.98, 'n_hidden': 63, 'mass_power': 1.0, 'activation': 3, 'C1': 10} tau=0.980 balls=58
+fold1 test=B0006 noise=0.2 val=B0007 EF-GBTSVM-JM  BACC= 69.05 (clean  92.28)    3.2s {'purity_offset': -0.05, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 3, 'C1': 0.1} tau=0.680 balls=5 est_noise=0.220
+fold1 test=B0006 noise=0.2 val=B0007 SVM           BACC= 64.92 (clean  83.33)    0.7s {'gamma': 0.0001, 'C': 10}
+fold1 test=B0006 noise=0.2 val=B0007 Stump         BACC= 70.16 (clean  91.06)    0.0s {} feature=discharge_time
+fold1 test=B0006 noise=0.2 val=B0018 EF-GBTSVM     BACC= 50.00 (clean  50.00)   12.7s {'purity': 0.925, 'n_hidden': 63, 'activation': 3, 'C1': 0.001} tau=0.925 balls=67
+fold1 test=B0006 noise=0.2 val=B0018 EF-GBTSVM-J   BACC= 50.52 (clean  52.03)    5.2s {'purity_offset': 0.05, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05} tau=0.744 balls=7 est_noise=0.256
+fold1 test=B0006 noise=0.2 val=B0018 EF-GBTSVM-M   BACC= 50.00 (clean  50.00)   13.1s {'purity': 0.98, 'n_hidden': 63, 'mass_power': 0.0, 'activation': 3, 'C1': 0.0001} tau=0.980 balls=67
+fold1 test=B0006 noise=0.2 val=B0018 EF-GBTSVM-JM  BACC= 50.52 (clean  52.03)    3.3s {'purity_offset': 0.05, 'n_hidden': 23, 'mass_power': 0.0, 'activation': 1, 'C1': 1e-05} tau=0.744 balls=7 est_noise=0.256
+fold1 test=B0006 noise=0.2 val=B0018 SVM           BACC= 75.77 (clean  90.54)    0.7s {'gamma': 0.003455107294592218, 'C': 3}
+fold1 test=B0006 noise=0.2 val=B0018 Stump         BACC= 78.02 (clean  97.30)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.0 val=B0005 EF-GBTSVM     BACC= 89.71 (clean  89.71)    1.5s {'purity': 0.925, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=2
+fold2 test=B0007 noise=0.0 val=B0005 EF-GBTSVM-J   BACC= 90.20 (clean  90.20)    2.4s {'purity_offset': -0.1, 'n_hidden': 103, 'activation': 3, 'C1': 100} tau=0.833 balls=2 est_noise=0.017
+fold2 test=B0007 noise=0.0 val=B0005 EF-GBTSVM-M   BACC= 89.71 (clean  89.71)    1.5s {'purity': 0.85, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.850 balls=2
+fold2 test=B0007 noise=0.0 val=B0005 EF-GBTSVM-JM  BACC= 90.20 (clean  90.20)    2.5s {'purity_offset': -0.1, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 3, 'C1': 10} tau=0.833 balls=2 est_noise=0.017
+fold2 test=B0007 noise=0.0 val=B0005 SVM           BACC= 89.22 (clean  89.22)    0.7s {'gamma': 0.008376776400682925, 'C': 0.3}
+fold2 test=B0007 noise=0.0 val=B0005 Stump         BACC= 96.97 (clean  96.97)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.0 val=B0006 EF-GBTSVM     BACC= 98.70 (clean  98.70)    1.6s {'purity': 0.925, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=13
+fold2 test=B0007 noise=0.0 val=B0006 EF-GBTSVM-J   BACC= 98.70 (clean  98.70)    2.6s {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.933 balls=13 est_noise=0.017
+fold2 test=B0007 noise=0.0 val=B0006 EF-GBTSVM-M   BACC= 96.67 (clean  96.67)    1.7s {'purity': 0.85, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.850 balls=4
+fold2 test=B0007 noise=0.0 val=B0006 EF-GBTSVM-JM  BACC= 96.67 (clean  96.67)    2.5s {'purity_offset': -0.1, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 2, 'C1': 1e-05} tau=0.833 balls=4 est_noise=0.017
+fold2 test=B0007 noise=0.0 val=B0006 SVM           BACC= 99.17 (clean  99.17)    0.6s {'gamma': 0.0014251026703029992, 'C': 1}
+fold2 test=B0007 noise=0.0 val=B0006 Stump         BACC= 80.09 (clean  80.09)    0.0s {} feature=discharge_time
+fold2 test=B0007 noise=0.0 val=B0018 EF-GBTSVM     BACC= 56.90 (clean  56.90)    1.0s {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 0.001} tau=0.950 balls=7
+fold2 test=B0007 noise=0.0 val=B0018 EF-GBTSVM-J   BACC= 56.90 (clean  56.90)    2.1s {'purity_offset': 0.05, 'n_hidden': 143, 'activation': 2, 'C1': 0.001} tau=0.980 balls=7 est_noise=0.018
+fold2 test=B0007 noise=0.0 val=B0018 EF-GBTSVM-M   BACC= 93.97 (clean  93.97)    1.0s {'purity': 0.925, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=7
+fold2 test=B0007 noise=0.0 val=B0018 EF-GBTSVM-JM  BACC= 93.97 (clean  93.97)    2.0s {'purity_offset': 0.0, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.932 balls=7 est_noise=0.018
+fold2 test=B0007 noise=0.0 val=B0018 SVM           BACC= 93.97 (clean  93.97)    0.6s {'gamma': 0.003455107294592218, 'C': 30}
+fold2 test=B0007 noise=0.0 val=B0018 Stump         BACC= 96.62 (clean  96.62)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.1 val=B0005 EF-GBTSVM     BACC= 81.85 (clean  90.20)    5.4s {'purity': 0.925, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=35
+fold2 test=B0007 noise=0.1 val=B0005 EF-GBTSVM-J   BACC= 81.85 (clean  90.20)    3.5s {'purity_offset': -0.1, 'n_hidden': 103, 'activation': 3, 'C1': 100} tau=0.730 balls=2 est_noise=0.120
+fold2 test=B0007 noise=0.1 val=B0005 EF-GBTSVM-M   BACC= 87.32 (clean  97.06)    5.4s {'purity': 0.925, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=35
+fold2 test=B0007 noise=0.1 val=B0005 EF-GBTSVM-JM  BACC= 81.85 (clean  90.20)    3.4s {'purity_offset': -0.1, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 3, 'C1': 10} tau=0.730 balls=2 est_noise=0.120
+fold2 test=B0007 noise=0.1 val=B0005 SVM           BACC= 81.85 (clean  90.20)    0.7s {'gamma': 0.008376776400682925, 'C': 0.1}
+fold2 test=B0007 noise=0.1 val=B0005 Stump         BACC= 88.64 (clean  98.48)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.1 val=B0006 EF-GBTSVM     BACC= 65.20 (clean  68.24)    6.4s {'purity': 0.9, 'n_hidden': 183, 'activation': 1, 'C1': 0.0001} tau=0.900 balls=29
+fold2 test=B0007 noise=0.1 val=B0006 EF-GBTSVM-J   BACC= 90.46 (clean  98.70)    3.6s {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 2, 'C1': 1e-05} tau=0.823 balls=15 est_noise=0.127
+fold2 test=B0007 noise=0.1 val=B0006 EF-GBTSVM-M   BACC= 87.57 (clean  94.91)    6.8s {'purity': 0.925, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 10, 'C1': 1e-05} tau=0.925 balls=47
+fold2 test=B0007 noise=0.1 val=B0006 EF-GBTSVM-JM  BACC= 90.95 (clean  99.17)    3.6s {'purity_offset': 0.0, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.823 balls=15 est_noise=0.127
+fold2 test=B0007 noise=0.1 val=B0006 SVM           BACC= 88.95 (clean  97.04)    0.7s {'gamma': 0.0005878016072274912, 'C': 3}
+fold2 test=B0007 noise=0.1 val=B0006 Stump         BACC= 73.13 (clean  80.09)    0.0s {} feature=discharge_time
+fold2 test=B0007 noise=0.1 val=B0018 EF-GBTSVM     BACC= 71.62 (clean  79.31)    5.0s {'purity': 0.925, 'n_hidden': 63, 'activation': 1, 'C1': 1e-05} tau=0.925 balls=29
+fold2 test=B0007 noise=0.1 val=B0018 EF-GBTSVM-J   BACC= 58.32 (clean  62.93)    3.5s {'purity_offset': 0.05, 'n_hidden': 63, 'activation': 1, 'C1': 0.001} tau=0.896 balls=15 est_noise=0.104
+fold2 test=B0007 noise=0.1 val=B0018 EF-GBTSVM-M   BACC= 66.26 (clean  72.41)    5.2s {'purity': 0.95, 'n_hidden': 183, 'mass_power': 1.0, 'activation': 2, 'C1': 0.0001} tau=0.950 balls=43
+fold2 test=B0007 noise=0.1 val=B0018 EF-GBTSVM-JM  BACC= 83.20 (clean  93.97)    3.5s {'purity_offset': 0.0, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.846 balls=7 est_noise=0.104
+fold2 test=B0007 noise=0.1 val=B0018 SVM           BACC= 55.73 (clean  60.34)    0.7s {'gamma': 0.0001, 'C': 300}
+fold2 test=B0007 noise=0.1 val=B0018 Stump         BACC= 84.32 (clean  96.62)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.2 val=B0005 EF-GBTSVM     BACC= 49.10 (clean  53.25)   10.8s {'purity': 0.9, 'n_hidden': 143, 'activation': 4, 'C1': 1} tau=0.900 balls=38
+fold2 test=B0007 noise=0.2 val=B0005 EF-GBTSVM-J   BACC= 76.74 (clean  90.20)    2.3s {'purity_offset': 0.0, 'n_hidden': 103, 'activation': 3, 'C1': 1} tau=0.680 balls=2 est_noise=0.270
+fold2 test=B0007 noise=0.2 val=B0005 EF-GBTSVM-M   BACC= 48.28 (clean  53.74)   10.7s {'purity': 0.9, 'n_hidden': 143, 'mass_power': 0.5, 'activation': 4, 'C1': 10} tau=0.900 balls=38
+fold2 test=B0007 noise=0.2 val=B0005 EF-GBTSVM-JM  BACC= 76.74 (clean  90.20)    2.5s {'purity_offset': 0.05, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 3, 'C1': 0.01} tau=0.730 balls=2 est_noise=0.270
+fold2 test=B0007 noise=0.2 val=B0005 SVM           BACC= 76.27 (clean  89.71)    0.7s {'gamma': 0.003455107294592218, 'C': 0.3}
+fold2 test=B0007 noise=0.2 val=B0005 Stump         BACC= 82.11 (clean  98.53)    0.0s {} feature=time_to_v3p5
+fold2 test=B0007 noise=0.2 val=B0006 EF-GBTSVM     BACC= 69.76 (clean  87.22)   10.3s {'purity': 0.85, 'n_hidden': 143, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=37
+fold2 test=B0007 noise=0.2 val=B0006 EF-GBTSVM-J   BACC= 69.59 (clean  85.37)    2.9s {'purity_offset': 0.05, 'n_hidden': 143, 'activation': 2, 'C1': 0.001} tau=0.737 balls=9 est_noise=0.263
+fold2 test=B0007 noise=0.2 val=B0006 EF-GBTSVM-M   BACC= 69.76 (clean  87.22)    9.8s {'purity': 0.85, 'n_hidden': 143, 'mass_power': 0.0, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=37
+fold2 test=B0007 noise=0.2 val=B0006 EF-GBTSVM-JM  BACC= 75.82 (clean  95.37)    2.9s {'purity_offset': -0.05, 'n_hidden': 143, 'mass_power': 0.5, 'activation': 2, 'C1': 0.001} tau=0.637 balls=4 est_noise=0.263
+fold2 test=B0007 noise=0.2 val=B0006 SVM           BACC= 76.55 (clean  96.20)    0.7s {'gamma': 0.0005878016072274912, 'C': 3}
+fold2 test=B0007 noise=0.2 val=B0006 Stump         BACC= 68.07 (clean  80.09)    0.0s {} feature=discharge_time
+fold2 test=B0007 noise=0.2 val=B0018 EF-GBTSVM     BACC= 70.39 (clean  90.54)   10.5s {'purity': 0.9, 'n_hidden': 183, 'activation': 3, 'C1': 1e-05} tau=0.900 balls=42
+fold2 test=B0007 noise=0.2 val=B0018 EF-GBTSVM-J   BACC= 52.22 (clean  54.31)    3.6s {'purity_offset': 0.05, 'n_hidden': 143, 'activation': 2, 'C1': 0.001} tau=0.780 balls=8 est_noise=0.220
+fold2 test=B0007 noise=0.2 val=B0018 EF-GBTSVM-M   BACC= 54.36 (clean  63.79)   59.6s {'purity': 0.925, 'n_hidden': 63, 'mass_power': 0.5, 'activation': 2, 'C1': 0.001} tau=0.925 balls=49
+fold2 test=B0007 noise=0.2 val=B0018 EF-GBTSVM-JM  BACC= 69.22 (clean  86.21)   30.0s {'purity_offset': 0.0, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 1e-05} tau=0.730 balls=4 est_noise=0.220
+fold2 test=B0007 noise=0.2 val=B0018 SVM           BACC= 60.26 (clean  75.86)    4.8s {'gamma': 0.00024244620170823283, 'C': 100}
+fold2 test=B0007 noise=0.2 val=B0018 Stump         BACC= 73.51 (clean  95.95)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.0 val=B0005 EF-GBTSVM     BACC= 79.41 (clean  79.41)    7.2s {'purity': 0.95, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.950 balls=9
+fold3 test=B0018 noise=0.0 val=B0005 EF-GBTSVM-J   BACC= 79.41 (clean  79.41)   14.2s {'purity_offset': 0.05, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.980 balls=9 est_noise=0.009
+fold3 test=B0018 noise=0.0 val=B0005 EF-GBTSVM-M   BACC= 49.51 (clean  49.51)    8.8s {'purity': 0.95, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 2, 'C1': 100} tau=0.950 balls=9
+fold3 test=B0018 noise=0.0 val=B0005 EF-GBTSVM-JM  BACC= 49.51 (clean  49.51)   11.1s {'purity_offset': 0.05, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 2, 'C1': 100} tau=0.980 balls=9 est_noise=0.009
+fold3 test=B0018 noise=0.0 val=B0005 SVM           BACC= 91.67 (clean  91.67)    0.8s {'gamma': 0.008376776400682925, 'C': 30}
+fold3 test=B0018 noise=0.0 val=B0005 Stump         BACC= 96.57 (clean  96.57)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.0 val=B0006 EF-GBTSVM     BACC= 99.07 (clean  99.07)    9.0s {'purity': 0.925, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=13
+fold3 test=B0018 noise=0.0 val=B0006 EF-GBTSVM-J   BACC= 99.07 (clean  99.07)    4.9s {'purity_offset': 0.0, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.935 balls=13 est_noise=0.015
+fold3 test=B0018 noise=0.0 val=B0006 EF-GBTSVM-M   BACC= 97.22 (clean  97.22)   13.0s {'purity': 0.9, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 3, 'C1': 0.001} tau=0.900 balls=13
+fold3 test=B0018 noise=0.0 val=B0006 EF-GBTSVM-JM  BACC= 97.22 (clean  97.22)   23.9s {'purity_offset': -0.05, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 3, 'C1': 0.001} tau=0.885 balls=13 est_noise=0.015
+fold3 test=B0018 noise=0.0 val=B0006 SVM           BACC= 99.54 (clean  99.54)    3.9s {'gamma': 0.00024244620170823283, 'C': 10}
+fold3 test=B0018 noise=0.0 val=B0006 Stump         BACC= 99.17 (clean  99.17)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.0 val=B0007 EF-GBTSVM     BACC= 83.33 (clean  83.33)    5.5s {'purity': 0.95, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.950 balls=8
+fold3 test=B0018 noise=0.0 val=B0007 EF-GBTSVM-J   BACC= 83.33 (clean  83.33)   11.4s {'purity_offset': 0.05, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.979 balls=8 est_noise=0.021
+fold3 test=B0018 noise=0.0 val=B0007 EF-GBTSVM-M   BACC= 83.33 (clean  83.33)    7.3s {'purity': 0.925, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 1e-05} tau=0.925 balls=8
+fold3 test=B0018 noise=0.0 val=B0007 EF-GBTSVM-JM  BACC= 83.33 (clean  83.33)   11.2s {'purity_offset': 0.0, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 1e-05} tau=0.929 balls=8 est_noise=0.021
+fold3 test=B0018 noise=0.0 val=B0007 SVM           BACC= 80.89 (clean  80.89)    2.3s {'gamma': 0.003455107294592218, 'C': 30}
+fold3 test=B0018 noise=0.0 val=B0007 Stump         BACC= 94.44 (clean  94.44)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.1 val=B0005 EF-GBTSVM     BACC= 81.23 (clean  86.27)   41.5s {'purity': 0.85, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001} tau=0.850 balls=8
+fold3 test=B0018 noise=0.1 val=B0005 EF-GBTSVM-J   BACC= 76.39 (clean  80.39)   26.2s {'purity_offset': 0.0, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.813 balls=8 est_noise=0.137
+fold3 test=B0018 noise=0.1 val=B0005 EF-GBTSVM-M   BACC= 84.76 (clean  89.71)   32.1s {'purity': 0.85, 'n_hidden': 63, 'mass_power': 1.0, 'activation': 2, 'C1': 0.001} tau=0.850 balls=8
+fold3 test=B0018 noise=0.1 val=B0005 EF-GBTSVM-JM  BACC= 38.25 (clean  37.57)    4.5s {'purity_offset': 0.0, 'n_hidden': 23, 'mass_power': 0.5, 'activation': 2, 'C1': 1} tau=0.813 balls=8 est_noise=0.137
+fold3 test=B0018 noise=0.1 val=B0005 SVM           BACC= 85.27 (clean  90.20)    0.7s {'gamma': 0.0014251026703029992, 'C': 1}
+fold3 test=B0018 noise=0.1 val=B0005 Stump         BACC= 89.37 (clean  96.57)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.1 val=B0006 EF-GBTSVM     BACC= 80.43 (clean  93.33)    6.4s {'purity': 0.925, 'n_hidden': 103, 'activation': 3, 'C1': 0.001} tau=0.925 balls=21
+fold3 test=B0018 noise=0.1 val=B0006 EF-GBTSVM-J   BACC= 83.19 (clean  96.20)   24.4s {'purity_offset': 0.0, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001} tau=0.840 balls=13 est_noise=0.110
+fold3 test=B0018 noise=0.1 val=B0006 EF-GBTSVM-M   BACC= 85.27 (clean  98.33)   34.8s {'purity': 0.925, 'n_hidden': 63, 'mass_power': 0.0, 'activation': 3, 'C1': 0.0001} tau=0.925 balls=21
+fold3 test=B0018 noise=0.1 val=B0006 EF-GBTSVM-JM  BACC= 86.41 (clean  99.54)   16.2s {'purity_offset': -0.05, 'n_hidden': 103, 'mass_power': 1.0, 'activation': 3, 'C1': 0.0001} tau=0.790 balls=7 est_noise=0.110
+fold3 test=B0018 noise=0.1 val=B0006 SVM           BACC= 83.99 (clean  97.04)    0.7s {'gamma': 0.0001, 'C': 30}
+fold3 test=B0018 noise=0.1 val=B0006 Stump         BACC= 86.41 (clean  99.54)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.1 val=B0007 EF-GBTSVM     BACC= 52.68 (clean  55.15)    6.0s {'purity': 0.925, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001} tau=0.925 balls=33
+fold3 test=B0018 noise=0.1 val=B0007 EF-GBTSVM-J   BACC= 76.79 (clean  82.93)    3.8s {'purity_offset': 0.0, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.831 balls=10 est_noise=0.119
+fold3 test=B0018 noise=0.1 val=B0007 EF-GBTSVM-M   BACC= 81.70 (clean  91.06)    8.3s {'purity': 0.85, 'n_hidden': 183, 'mass_power': 1.0, 'activation': 2, 'C1': 0.001} tau=0.850 balls=10
+fold3 test=B0018 noise=0.1 val=B0007 EF-GBTSVM-JM  BACC= 65.62 (clean  72.76)   22.2s {'purity_offset': 0.1, 'n_hidden': 143, 'mass_power': 1.0, 'activation': 2, 'C1': 0.001} tau=0.931 balls=38 est_noise=0.119
+fold3 test=B0018 noise=0.1 val=B0007 SVM           BACC= 80.80 (clean  90.24)    2.2s {'gamma': 0.0005878016072274912, 'C': 100}
+fold3 test=B0018 noise=0.1 val=B0007 Stump         BACC= 77.68 (clean  87.78)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.2 val=B0005 EF-GBTSVM     BACC= 57.80 (clean  66.67) 1952.7s {'purity': 0.95, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.950 balls=58
+fold3 test=B0018 noise=0.2 val=B0005 EF-GBTSVM-J   BACC= 72.83 (clean  84.80)    4.2s {'purity_offset': 0.0, 'n_hidden': 23, 'activation': 2, 'C1': 1e-05} tau=0.721 balls=4 est_noise=0.229
+fold3 test=B0018 noise=0.2 val=B0005 EF-GBTSVM-M   BACC= 66.13 (clean  82.58)   13.5s {'purity': 0.98, 'n_hidden': 183, 'mass_power': 1.0, 'activation': 1, 'C1': 0.001} tau=0.980 balls=57
+fold3 test=B0018 noise=0.2 val=B0005 EF-GBTSVM-JM  BACC= 69.94 (clean  76.47)    4.0s {'purity_offset': 0.0, 'n_hidden': 23, 'mass_power': 1.0, 'activation': 1, 'C1': 0.001} tau=0.721 balls=4 est_noise=0.229
+fold3 test=B0018 noise=0.2 val=B0005 SVM           BACC= 76.52 (clean  88.24)    1.1s {'gamma': 0.008376776400682925, 'C': 0.3}
+fold3 test=B0018 noise=0.2 val=B0005 Stump         BACC= 79.41 (clean  96.57)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.2 val=B0006 EF-GBTSVM     BACC= 75.12 (clean  97.04)   38.3s {'purity': 0.98, 'n_hidden': 143, 'activation': 2, 'C1': 0.001} tau=0.980 balls=64
+fold3 test=B0018 noise=0.2 val=B0006 EF-GBTSVM-J   BACC= 66.41 (clean  79.17)   96.3s {'purity_offset': 0.0, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001} tau=0.745 balls=11 est_noise=0.205
+fold3 test=B0018 noise=0.2 val=B0006 EF-GBTSVM-M   BACC= 72.18 (clean  92.50)   51.5s {'purity': 0.9, 'n_hidden': 103, 'mass_power': 1.0, 'activation': 10, 'C1': 0.001} tau=0.900 balls=41
+fold3 test=B0018 noise=0.2 val=B0006 EF-GBTSVM-JM  BACC= 75.72 (clean  99.07)    4.1s {'purity_offset': -0.05, 'n_hidden': 103, 'mass_power': 1.0, 'activation': 3, 'C1': 0.0001} tau=0.695 balls=10 est_noise=0.205
+fold3 test=B0018 noise=0.2 val=B0006 SVM           BACC= 73.08 (clean  96.20)    0.7s {'gamma': 0.0001, 'C': 30}
+fold3 test=B0018 noise=0.2 val=B0006 Stump         BACC= 75.90 (clean  99.17)    0.0s {} feature=time_to_v3p5
+fold3 test=B0018 noise=0.2 val=B0007 EF-GBTSVM     BACC= 69.10 (clean  79.67)   13.8s {'purity': 0.85, 'n_hidden': 103, 'activation': 1, 'C1': 1e-05} tau=0.850 balls=47
+fold3 test=B0018 noise=0.2 val=B0007 EF-GBTSVM-J   BACC= 69.84 (clean  82.52)    3.8s {'purity_offset': 0.05, 'n_hidden': 183, 'activation': 2, 'C1': 1e-05} tau=0.750 balls=2 est_noise=0.250
+fold3 test=B0018 noise=0.2 val=B0007 EF-GBTSVM-M   BACC= 69.77 (clean  78.05)   12.7s {'purity': 0.85, 'n_hidden': 103, 'mass_power': 0.5, 'activation': 1, 'C1': 0.0001} tau=0.850 balls=47
+fold3 test=B0018 noise=0.2 val=B0007 EF-GBTSVM-JM  BACC= 70.79 (clean  83.33)    3.4s {'purity_offset': 0.0, 'n_hidden': 103, 'mass_power': 0.0, 'activation': 2, 'C1': 1e-05} tau=0.700 balls=2 est_noise=0.250
+fold3 test=B0018 noise=0.2 val=B0007 SVM           BACC= 70.45 (clean  84.15)    0.6s {'gamma': 0.008376776400682925, 'C': 100}
+fold3 test=B0018 noise=0.2 val=B0007 Stump         BACC= 74.59 (clean  94.44)    0.0s {} feature=time_to_v3p5
+
+=== Mean validation BACC (noisy labels) by fold, model and noise ===
+fold              0                    1                    2                    3              
+noise           0.0    0.1    0.2    0.0    0.1    0.2    0.0    0.1    0.2    0.0    0.1    0.2
+model                                                                                           
+EF-GBTSVM     76.43  73.86  54.53  58.54  63.51  58.90  81.77  72.89  63.09  87.27  71.45  67.34
+EF-GBTSVM-J   76.43  74.45  67.41  71.05  84.38  48.67  81.93  76.88  66.18  87.27  78.79  69.69
+EF-GBTSVM-JM  93.96  86.22  74.17  75.71  83.72  54.96  93.61  85.34  73.93  76.69  63.43  72.15
+EF-GBTSVM-M   95.04  81.42  62.65  70.28  76.06  52.96  93.45  80.38  57.47  76.69  83.91  69.36
+SVM           88.73  83.55  76.99  94.44  81.04  71.76  94.12  75.51  71.03  90.70  83.35  73.35
+Stump         91.77  83.58  74.15  90.69  78.35  70.45  91.23  82.03  74.56  96.73  84.49  76.63
+
+=== Selection (mean over validation cells and noise levels) ===
+ fold test_cell     selected  score  EF-GBTSVM  EF-GBTSVM-J  EF-GBTSVM-JM  EF-GBTSVM-M
+    0     B0005 EF-GBTSVM-JM  84.78      68.28        72.77         84.78        79.71
+    1     B0006 EF-GBTSVM-JM  71.46      60.32        68.03         71.46        66.44
+    2     B0007 EF-GBTSVM-JM  84.29      72.58        75.00         84.29        77.10
+    3     B0018  EF-GBTSVM-J  78.59      75.35        78.59         70.76        76.65
+
+real	53m51.945s
+user	0m0.015s
+sys	0m0.046s

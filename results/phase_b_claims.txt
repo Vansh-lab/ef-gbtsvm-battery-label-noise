@@ -1,0 +1,59 @@
+=== Claims (computed from results/*.csv; nothing tuned on test) ===
+Primary EF-GBTSVM-PF: per-fold variant (B0005: EF-GBTSVM-L8, B0006: EF-GBTSVM-J, B0007: EF-GBTSVM-L8, B0018: EF-GBTSVM-L8)
+
+(a) EF-GBTSVM-PF vs original EF-GBTSVM (mean over 4 folds; fold wins = PF > EF):
+  noise  0%: ACC 95.25 vs 94.83 (diff +0.42); BACC 95.24 vs 94.97 (diff +0.27); fold wins/losses/ties 2/1/1
+  noise 10%: ACC 95.08 vs 86.66 (diff +8.41); BACC 95.05 vs 85.59 (diff +9.46); fold wins/losses/ties 3/1/0
+  noise 20%: ACC 95.28 vs 94.71 (diff +0.57); BACC 95.78 vs 93.15 (diff +2.63); fold wins/losses/ties 3/1/0
+
+(b) [MAIN k=15] EF-GBTSVM-PF rank inside the GB/TSVM family (9 models), by mean ACC:
+  noise  0%: rank 6/9  (PF 95.25; best other: TSVM 98.77, gap -3.52)
+  noise 10%: rank 5/9  (PF 95.08; best other: GBTSVM 97.77, gap -2.69)
+  noise 20%: rank 1/9  (PF 95.28; best other: EF-GBTSVM-A 95.10, gap +0.18)
+  pooled Friedman avg rank within all 15: PF 7.833 -> 2 of 9 in family (family best: TSVM 6.958)
+
+(c) [MAIN k=15] EF-GBTSVM-PF among all 15, by mean ACC:
+  noise  0%: rank 11/15; PF 95.25; top TSVM 98.77 (gap -3.52); SVM 86.61 (gap +8.64); Stump-fair 96.94 (gap -1.69); [Stump-oracle upper bound 98.73]
+  noise 10%: rank 10/15; PF 95.08; top GBTSVM 97.77 (gap -2.69); SVM 96.97 (gap -1.89); Stump-fair 95.16 (gap -0.08); [Stump-oracle upper bound 98.35]
+  noise 20%: rank 6/15; PF 95.28; top RandomForest 97.75 (gap -2.48); SVM 96.32 (gap -1.04); Stump-fair 96.85 (gap -1.57); [Stump-oracle upper bound 98.20]
+  pooled Friedman avg rank: PF 7.833 -> position 7 of 15; best RandomForest 5.292
+  *** EF-GBTSVM-PF is rank 1 overall at: NO noise level ***
+  -> 'best overall' claim is NOT supported by this data.
+
+(b) [SENSITIVITY k=17] EF-GBTSVM-PF rank inside the GB/TSVM family (11 models), by mean ACC:
+  noise  0%: rank 7/11  (PF 95.25; best other: TSVM 98.77, gap -3.52)
+  noise 10%: rank 6/11  (PF 95.08; best other: GBTSVM 97.77, gap -2.69)
+  noise 20%: rank 2/11  (PF 95.28; best other: EF-GBTSVM-J 95.36, gap -0.08)
+  pooled Friedman avg rank within all 17: PF 8.792 -> 3 of 11 in family (family best: TSVM 7.875)
+
+(c) [SENSITIVITY k=17] EF-GBTSVM-PF among all 17, by mean ACC:
+  noise  0%: rank 12/17; PF 95.25; top TSVM 98.77 (gap -3.52); SVM 86.61 (gap +8.64); Stump-fair 96.94 (gap -1.69); [Stump-oracle upper bound 98.73]
+  noise 10%: rank 11/17; PF 95.08; top GBTSVM 97.77 (gap -2.69); SVM 96.97 (gap -1.89); Stump-fair 95.16 (gap -0.08); [Stump-oracle upper bound 98.35]
+  noise 20%: rank 7/17; PF 95.28; top RandomForest 97.75 (gap -2.48); SVM 96.32 (gap -1.04); Stump-fair 96.85 (gap -1.57); [Stump-oracle upper bound 98.20]
+  pooled Friedman avg rank: PF 8.792 -> position 8 of 17; best RandomForest 5.917
+  *** EF-GBTSVM-PF is rank 1 overall at: NO noise level ***
+  -> 'best overall' claim is NOT supported by this data.
+
+Non-primary reference (global majority choice; each test cell's labels influence it): L8-on-all-folds 0%: 95.10; L8-on-all-folds 10%: 97.61; L8-on-all-folds 20%: 91.26
+
+Train-vs-test gap (refit with logged params; train ACC on TRUE train labels minus test ACC):
+noise_pct        0      10     20
+model                            
+EF-GBTSVM      2.39   9.78  -0.56
+EF-GBTSVM-A    1.50   2.36   2.38
+EF-GBTSVM-J    0.17   2.69   0.27
+EF-GBTSVM-L    1.48  -0.02   3.42
+EF-GBTSVM-L8   2.21  -0.54   2.33
+EF-GBTSVM-PF   1.48   2.21   0.88
+EF-GBTSVM-W    1.48  -0.02   3.27
+EF-TSVM        2.70  13.11  25.27
+GBTSVM         0.79  -1.40  13.43
+HF-GBTSVM      1.35   6.92   0.67
+MLP            1.81   3.15   3.53
+RVFL           1.50   8.42   0.93
+RandomForest   2.45   1.68  -0.09
+SVM           12.12   0.76   0.86
+Stump-fair     2.11   3.96   1.31
+TSVM           0.54   1.52   5.67
+XGBoost        2.16   2.16  -1.66
+  gap > 5 pp (flag): SVM@0%=12.1; EF-GBTSVM@10%=9.8; EF-TSVM@10%=13.1; HF-GBTSVM@10%=6.9; RVFL@10%=8.4; EF-TSVM@20%=25.3; GBTSVM@20%=13.4; TSVM@20%=5.7

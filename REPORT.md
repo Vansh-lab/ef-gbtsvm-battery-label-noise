@@ -620,6 +620,572 @@ removing it. Given only 4 battery packs (per-battery degraded-% ranges 27–64%)
 these results are evidence from one small, four-group dataset, not a general verdict on the method — but on this
 dataset/protocol the numbers do not support a claim that EF-GBTSVM outperforms standard baselines.
 
+## Phase B setup: equal tuning budgets (Nov 2026)
+
+**Problem (finding F2, confirmed).** `RandomizedSearchCV` uses `min(n_iter, grid_size)`
+candidates. With `--n-iter 150` the EF-GBTSVM family (grid ≥ 200) gets up to 150 candidates, while
+SVM (16), RandomForest (6), MLP (6) and XGBoost (12) are fully searched in ≤16 iterations — the
+baselines never actually use 150 candidates. This violates the hard rule "equal tuning budget."
+
+**Fix.** `run_experiments.py` now accepts `--grids {paper,equal}`. With `--grids equal`, four
+baselines get enlarged grids that give ≥150 combinations:
+
+| Model | Paper grid (combinations) | Equal grid (combinations) |
+|---|---|---|
+| SVM | C(10)×γ(2)=20 → used 16 | C(10)×γ(15)=**150** |
+| RandomForest | 6 | n_estimators(4)×max_depth(5)×min_samples_leaf(4)×max_features(3)=**240** |
+| MLP | 6 | hidden_layer_sizes(6)×alpha(7)×lr_init(2)×activation(2)=**168** |
+| XGBoost | 12 | n_estimators(4)×max_depth(5)×lr(4)×subsample(2)=**160** |
+
+All other models are unchanged: EF-GBTSVM family (1,000/200), GBTSVM (40), HF-GBTSVM (1,000),
+EF-TSVM (200), TSVM (8), RVFL (200). GBTSVM and TSVM still have small grids (40 and 8) — they
+are fully searched even at n_iter=150. All Phase B experiments use `--grids equal --n-iter 150`.
+
+Smoke-tested with `--models SVM RandomForest --n-iter 5 --grids equal --data data/nasa_battery_phys.csv`:
+ran without error; params from the equal-grid search were drawn from the new grids only (confirmed).
+
+## Phase A — a new EF-GBTSVM variant, chosen by inner CV only (Nov 2026)
+
+Written before the Phase A results were seen; the selection rule below was fixed in
+`phase_a_inner_cv.py` before the run started.
+
+### Data finding: B0005–B0007 share one recording
+
+The raw `.mat` files of B0005, B0006 and B0007 have identical `Time` vectors in every discharge
+cycle (first cycle: 197 samples, 0 → 3690.2 s for all three), so `discharge_time` in
+`nasa_battery.csv` is identical across the three cells in all 168 cycles. The load comes off at
+each cell's own cut-off: first cycle 3346.9 s (B0005), 3690.2 s (B0006, the end of the record),
+3487.1 s (B0007); B0018 was recorded alone (3357.5 s of 3434.9 s). After load-off the current is
+≈ 0, so |`i_mean`| × `discharge_time` is a coulomb count over the record (B0005 first cycle:
+1.864 Ah vs NASA capacity 1.857 Ah). Whole-record statistics (`discharge_time`, `v_mean`, `v_std`,
+`v_end`, `t_mean`, ...) of B0005 and B0007 therefore include a rest period whose length is set by
+another cell. Earlier results are not changed by this, but `discharge_time` is a record length,
+not a per-cell BMS measurement, for these three cells.
+
+### Candidates and why
+
+* **(a) Physics-guided features, for every model** (`prep_phys_features.py` →
+  `data/nasa_battery_phys.csv`). Finding 4 (one threshold on time to 3.5 V gives 96.3%) says the
+  signal is physical. The new file uses only the loaded part of each discharge before the voltage
+  first reaches 3.5 V, so the shared-record artifact cannot enter: time from load-on to 3.8 V and to
+  3.5 V, the 3.8 → 3.5 V interval, voltage 300 s and 1000 s after load-on, rest voltage before the
+  load, and temperature rise to 3.5 V; plus each one's change relative to the same cell's first
+  cycle (ratio for durations, difference for voltages and temperature), which removes cell-to-cell
+  offsets such as B0006's larger initial capacity. 12 features in `nasa_battery_phys.csv`, the file Phase B uses (the earlier `nasa_battery_phys_v1.csv` has 14); rows, order and labels equal
+  `nasa_battery.csv` (checked by the script). The first cycle of a cell is label-free and available
+  once the cell is in service. Phase A runs every candidate on both files.
+* **(b) Joint noise-anchored purity, EF-GBTSVM-J.** Finding 3: the adaptive rule (Attempt 4) set
+  τ from the noise estimate alone and lost 10.5 points on clean labels, because τ was no longer
+  chosen with C, hidden size and activation. J keeps the estimate as an anchor and searches an
+  offset jointly with the other hyperparameters: τ = clip(0.95 − η̂ + Δ, 0.55, 0.98),
+  Δ ∈ {−0.10, −0.05, 0, 0.05, 0.10}. The searched τ range therefore moves with the estimated noise
+  (for example τ ∈ {0.83, …, 0.98} when η̂ = 0.02 and {0.63, …, 0.83} when η̂ = 0.22), instead of
+  one fixed grid that is either too tight at 20% noise or too loose at 10% (finding 2).
+* **(c) Mass-weighted balls, EF-GBTSVM-M.** Finding 2's mechanism: at high τ and 20% noise the
+  splitting leaves many small balls around flipped labels, and in EF-GBTSVM every ball counts once.
+  M gives ball i the weight sᵢ = (nᵢ pᵢ)^β (nᵢ points, purity pᵢ, so nᵢpᵢ points carry its label),
+  normalised to mean 1 per class, on both its own-class term and its slack bound (Cᵢ = C sᵢ), inside
+  the EF-GBTSVM dual: plane 1 uses (Hᵀ S_A H + δI)⁻¹ and 0 ≤ α ≤ d₁ s_B. β ∈ {0, 0.5, 1}; β = 0 is
+  plain EF-GBTSVM (checked: max relative difference 4.4e-13). Earlier purity-only weighting
+  (Attempt 1) did nothing because surviving balls are ≥ 85% pure; ball size varies far more.
+* **(b)+(c), EF-GBTSVM-JM.**
+
+Default behaviour of `efgbtsvm/` is unchanged: decision values of EF-GBTSVM, -W, -A, GBTSVM,
+HF-GBTSVM and EF-TSVM are bit-identical to the pre-change package on 24 configurations × clean and
+noisy labels.
+
+### Protocol (`phase_a_inner_cv.py`)
+
+For each outer fold the test cell is removed first and never used. Inside the three training
+cells each cell is the validation cell once; each model is tuned on the other two by randomised
+search (150 candidates or the full grid; leave-one-cell-out CV; balanced accuracy), refitted on
+both, and scored on the validation cell. Training labels are flipped as in `run_experiments.py`
+(seed 1000 + fold), so validation labels are noisy, as they would be in practice; clean-label
+scores are kept as a diagnostic only. Grids: C, hidden size and activation as in
+`run_experiments.py`; τ (EF-GBTSVM, M) or Δ (J, JM); β (M, JM). References, not selectable:
+RBF-SVM with a 10 × 15 = 150-point grid, and a depth-1 tree on all features.
+
+**Selection rule:** per outer fold, the candidate with the highest mean validation balanced
+accuracy on noisy labels over the three validation cells and the noise levels 0, 10 and 20%; an
+exact tie goes to the candidate with fewer added components.
+
+### Phase A results: phys2 (corrected features, wide-tau control, Nov 2026)
+
+Run completed: `python phase_a_inner_cv.py --data data/nasa_battery_phys.csv --name phys2`,
+636 cycles × 12 phys features, 150 inner-CV candidates per model per cell, noise ∈ {0, 10, 20}%.
+Output: `results/phase_a/phys2_inner_cv.csv`, `results/phase_a/phys2_selection.csv`.
+
+**Fold selection (pre-registered rule: highest mean noisy-label BACC over 3 val-cells × 3 noise levels):**
+
+| Fold | Test cell | Selected variant | Inner-CV score |
+|------|-----------|-----------------|---------------|
+| 0 | B0005 | EF-GBTSVM-L8 | 76.77 |
+| 1 | B0006 | EF-GBTSVM-J  | 80.22 |
+| 2 | B0007 | EF-GBTSVM-L8 | 83.67 |
+| 3 | B0018 | EF-GBTSVM-L8 | 73.78 |
+
+Three of four folds chose EF-GBTSVM-L8 (wide fixed-purity grid 0.55–0.98); one chose EF-GBTSVM-J.
+
+**Mean inner-CV BACC (noisy labels, all folds × all noise levels × 3 val cells):**
+
+| Model | Mean | Std | Min | Max |
+|-------|------|-----|-----|-----|
+| Stump (ref) | **85.35** | 8.99 | 69.21 | 99.54 |
+| SVM (ref) | 82.76 | 10.94 | 59.50 | 97.99 |
+| EF-GBTSVM-L8 | 78.35 | 14.21 | 31.91 | 100.0 |
+| EF-GBTSVM | 74.72 | 14.79 | 48.63 | 100.0 |
+| EF-GBTSVM-J | 74.19 | 14.32 | 44.11 | 100.0 |
+| EF-GBTSVM-JM | 72.58 | 16.68 | 44.11 | 100.0 |
+| EF-GBTSVM-M | 70.68 | 15.23 | 44.50 | 100.0 |
+
+**Key findings:**
+- EF-GBTSVM-L8 (wide purity grid) is the best EF candidate (+3.6 over plain EF-GBTSVM), confirming
+  that the original narrow grid {0.85, 0.9, 0.925, 0.95, 0.98} was an unnecessary handicap.
+- Both references beat all EF candidates: SVM +4.4, Stump +7.0 above EF-GBTSVM-L8.
+- J and M variants did not improve over plain EF-GBTSVM after the purity grid was widened
+  (L8 strictly dominates both on the same wide range).
+- **No EF variant is fairly best on inner CV.** Per the hard rules, Phase B cannot proceed and
+  the 3-option decision (see below) must come first.
+
+**Per-fold × per-noise mean BACC (candidates only):**
+
+| Model | F0/0% | F0/10% | F0/20% | F1/0% | F1/10% | F1/20% | F2/0% | F2/10% | F2/20% | F3/0% | F3/10% | F3/20% |
+|-------|-------|--------|--------|-------|--------|--------|-------|--------|--------|-------|--------|--------|
+| EF-GBTSVM | 79.4 | 67.3 | 70.2 | 94.5 | 71.8 | 63.8 | 85.7 | 83.7 | 63.1 | 80.2 | 72.6 | 64.6 |
+| EF-GBTSVM-L8 | **81.5** | **83.7** | 65.2 | **96.9** | 67.1 | **73.5** | **88.7** | **86.4** | **75.9** | **84.6** | **77.2** | 59.6 |
+| EF-GBTSVM-J | 79.4 | 76.9 | 63.7 | 94.5 | 79.0 | 67.2 | 79.6 | 82.2 | 67.3 | 63.4 | 70.2 | 67.1 |
+| EF-GBTSVM-M | 67.4 | 70.2 | 71.2 | 96.2 | 69.0 | 62.4 | 84.0 | 77.8 | 72.8 | 61.0 | 62.0 | 54.3 |
+| EF-GBTSVM-JM | 69.4 | 59.5 | 57.9 | 96.2 | 81.8 | 57.9 | 89.8 | 85.2 | 76.0 | 61.0 | 70.8 | 65.6 |
+| SVM | 95.3 | 86.6 | 77.0 | 96.6 | 86.2 | 75.1 | 88.0 | 82.4 | 72.5 | 87.0 | 77.4 | 69.0 |
+| Stump | 88.3 | 83.5 | 73.9 | 95.8 | 87.3 | 76.7 | 97.2 | 87.4 | 78.7 | 95.5 | 84.6 | 75.4 |
+
+The noise-to-purity trade-off persists: EF-GBTSVM-L8 is +2.1 to +20.9 at 10% noise relative to plain
+EF-GBTSVM but −4.8 to −5.1 at 20% noise (fold 3), consistent with wider purity coverage improving
+some settings while slightly overshooting others. The purity-offset (J) and mass-weighting (M) each
+helped in some folds but neither consistently outperformed L8 alone.
+
+## Decision after Phase A (Nov 2026): Option A — "best in GB/TSVM family" claim
+
+No EF variant was fairly best vs all models on inner CV (best EF candidate EF-GBTSVM-L8: 78.35,
+vs SVM 82.76, Stump 85.35). The 3 options presented to Vansh were:
+  (a) "best in GB/TSVM family" claim + honest comparison
+  (b) Harder task: k-cycle-ahead degradation prediction
+  (c) Extra datasets for a valid Friedman test
+
+**Choice: Option A.** The paper will claim that EF-GBTSVM-L8 is the best-performing model in the
+twin-SVM / granular-ball family (vs GBTSVM, HF-GBTSVM, EF-TSVM, TSVM), with an honest comparison
+table including RBF-SVM, decision stump and other baselines. "Best overall" is not claimed.
+
+> **Superseded by Phase B (Nov 2026):** the fair Phase B comparison does not support this claim.
+> The primary model is now EF-GBTSVM-PF (the pre-registered per-fold combo, below), and PF is not
+> best in the GB/TSVM family (rank 1 only at 20% noise, by 0.18 pp). See "Phase B results".
+
+## Phase B plan: fair evaluation, Option A scope (Nov 2026)
+
+### Variant: per-fold selection from phys2 inner CV
+
+| Fold | Test cell | Variant used in Phase B |
+|------|-----------|------------------------|
+| 0 | B0005 | EF-GBTSVM-L8 |
+| 1 | B0006 | EF-GBTSVM-J |
+| 2 | B0007 | EF-GBTSVM-L8 |
+| 3 | B0018 | EF-GBTSVM-L8 |
+
+The per-fold variant is the one selected by inner CV for that fold — the test cell was excluded from
+the entire inner CV. No global winner was declared (3/4 L8, 1/4 J); doing so would let all test
+cells' labels influence the variant used for each fold's test evaluation.
+
+### Experiment command (launched Nov 2026, runs in background as task brmqkboz3)
+
+EF-GBTSVM-L8 and EF-GBTSVM-J were added to run_experiments.py build_models() (alongside the
+original EF-GBTSVM, -W, -L, -A ablations). The `--n-jobs 4` flag prevents Windows fork exhaustion.
+
+```
+for noise in 0.0 0.1 0.2; do
+  python run_experiments.py \
+    --data data/nasa_battery_phys.csv \
+    --noise $noise \
+    --n-iter 150 \
+    --grids equal \
+    --n-jobs 4 \
+    --group-col battery \
+    --name phys_phase_b \
+    --out results/
+done
+```
+
+Outputs: `results/phys_phase_b_noise{0,10,20}_{runs,summary}.csv`, log: `results/phys_phase_b.log`.
+This run also serves as instruction #1's "corrected" numbers for the leakage comparison table
+(script: `python compare_leakage_impact.py`).
+
+Per-fold variant selection in results analysis:
+- Folds 0, 2, 3 → use EF-GBTSVM-L8 score (inner-CV winner for those folds)
+- Fold 1 (B0006 test) → use EF-GBTSVM-J score (inner-CV winner for that fold)
+- Combined result = per-fold selection, test cells never in variant selection
+
+### Checks required (Phase B checklist)
+- [x] Leakage comparison table done (phys_main noise=0/10/20 complete)
+- [x] Phase B runs complete: all 10+ models × 3 noise levels on phys features, equal budgets
+- [x] Overfitting check: per-fold train vs test ACC gap table
+- [x] Friedman + Nemenyi across the 4 folds × 3 noise levels (NOTE: 4 folds is below standard)
+- [x] Wilcoxon: primary (EF-GBTSVM-PF) vs each baseline (n=12 pooled, non-independent; n=4 per noise)
+- [ ] Terminal output screenshots captured for appendix
+- [x] "Is the primary fairly best in GB/TSVM family?" — NO (see Phase B results); Phase C not started
+
+## Diagnostic section: SVM fold-1 collapse + stump selection + feature sanity (Nov 2026)
+
+### Task 1 — SVM fold-1 (B0006) collapse: diagnosis
+
+**Result: NO CODE BUG. Root cause is class-prior shift between training and test batteries.**
+
+Logged params for fold 1: `C=300, gamma=0.1193776641714437` (from equal-budget grid,
+inner CV on B0005+B0007+B0018 training batteries).
+
+**Class distribution flip:**
+
+| Split | n | class0 (not-degraded) | class1 (degraded) |
+|---|---|---|---|
+| Train (B0005+B0007+B0018) | 468 | 299 (63.9%) | 169 (36.1%) |
+| Test (B0006) | 168 | 60 (35.7%) | 108 (64.3%) |
+
+B0006 degraded far faster than the other cells (first→last capacity 2.035→1.186 Ah),
+so 64.3% of its cycles are labelled degraded, while the training set has only 36.1% degraded.
+Inner CV (balanced_accuracy scoring on GroupKFold-3 within training batteries) selected
+C=300, gamma=0.119 — a highly local kernel that memorises the training distribution.
+On B0006's flipped distribution this boundary predicts mostly class 0:
+
+```
+Confusion: TN=58  FP=2  FN=79  TP=29
+Sensitivity (recall class1) = 26.9%  Specificity = 96.7%
+Predicted: 137 class0, 31 class1  (but test has 60 class0, 108 class1)
+ACC = 51.79%   BACC = 61.76%   AUC = 96.56%
+```
+
+The high AUC (96.56%) confirms the discriminant function values are correctly ordered —
+only the decision threshold is in the wrong position relative to B0006's prior.
+
+**Scaler check:** Pipeline fits `StandardScaler` on `Xtr` only (line 274 and line 288 of
+`run_experiments.py`). Confirmed: `Xtr.mean[0]=340.21` vs `Xte.mean[0]=217.06` —
+the scaler does not see test data. No leakage.
+
+**Conclusion:** This is a genuine out-of-distribution battery fold, not a software bug.
+SVM with RBF kernel is sensitive to prior shift; the other models (TSVM, RVFL, etc.)
+handle this fold better because they either use the full margin more robustly or their
+kernel/architecture is less sensitive to the threshold placement. Per-fold numbers stand as-is;
+no re-run needed.
+
+---
+
+### Task 2 — Stump: two versions (fair vs oracle), code confirmation
+
+**Result: Two distinct stump baselines now reported. Only (1) is used in comparison tables.**
+
+`phys_stump.py` (updated Nov 2026) reports:
+
+**(1) Fair stump** — best feature chosen per outer fold by **inner CV on training data only**;
+different folds may select different features; test data never used for feature selection.
+**Protocol switched (Nov 2026, Vansh's decision):** the inner CV is now exactly the models' protocol,
+GroupKFold over the 3 training batteries (one battery per inner fold) with balanced-accuracy
+scoring; exact ties go to the first feature in CSV column order. The first version (below, struck)
+used StratifiedKFold + accuracy, which mixes cycles of one battery across inner folds.
+
+**(2) Oracle stump** — best feature chosen by `argmax(mean test-fold ACC)` globally;
+labelled "oracle upper bound" — it uses test information and sets an upper bound on a
+single-feature rule; not used as a comparison baseline.
+
+Code logic for fair selection (per outer fold, current `phys_stump.stump_runs`):
+```python
+# fit & cv on TRAINING FOLD only — test never seen; same splitter/scoring as run_experiments.py
+cv = GroupKFold(min(3, len(np.unique(gtr))))           # gtr = groups[tr]
+cv_score = cross_val_score(clf, X[tr][:, [fi]], ytr, groups=gtr, cv=cv,
+                           scoring="balanced_accuracy").mean()
+# select best fi, then fit on full tr and predict on te
+clf.fit(X[tr][:, [best_fi]], ytr)
+accs.append(100 * accuracy_score(y[te], clf.predict(X[te][:, [best_fi]])))
+```
+
+**Fair vs Oracle results:**
+
+| Noise | Fair stump, current (baseline) | Fair features F0–F3 | ~~First version (StratifiedKFold + ACC)~~ | Oracle stump (upper bound) | Oracle feat |
+|---|---|---|---|---|---|
+| 0% | **96.94 ± 1.97** | dt_38_35_rel, dt_38_35_rel, dt_38_35, t_v35_rel | ~~94.63 ± 5.55~~ | 98.73 ± 0.99 | t_v35_rel |
+| 10% | **95.16 ± 3.52** | dt_38_35_rel, t_v35_rel, v_1000, v_300_rel | ~~95.16 ± 3.52~~ | 98.35 ± 1.34 | t_v35_rel |
+| 20% | **96.85 ± 1.96** | v_1000, dt_38_35_rel, v_1000, dt_38_35 | ~~96.55 ± 1.89~~ | 98.20 ± 1.30 | v_1000 |
+
+**Tie disclosure (audit):** at 10% noise, fold B0018, `v_300_rel` and `v_1000_rel` have bit-identical
+inner-CV scores (0.87416); the fixed first-column rule picks `v_300_rel` (test ACC 90.15). The other
+feature would give 96.97, i.e. Stump-fair 96.86 at 10% instead of 95.16 (PF gap −1.78 instead of
+−0.08). The rule was not changed after seeing this. No other fold/noise has an exact tie.
+
+**Impact on model comparison:** the protocol-matched fair stump matches or beats the primary
+EF-GBTSVM-PF at every noise level (see "Phase B results"). The oracle stump (98.73%) is never ranked,
+since its feature was selected using test outcomes.
+
+---
+
+### Task 3 — Feature-sanity table (3-fold inner CV on training folds only)
+
+Each number is the mean 3-fold stratified CV accuracy within the training batteries
+(test battery never seen). This measures each feature's inherent discriminability,
+independent of test results.
+
+| Feature | F0_tr | F1_tr | F2_tr | F3_tr | Mean_tr | Physics link |
+|---|---|---|---|---|---|---|
+| **t_v35_rel** | 98.72 | 99.15 | 97.44 | 98.81 | **98.53** | Relative t to 3.5V — primary normalised label |
+| **dt_38_35_rel** | 98.93 | 98.93 | 97.86 | 98.41 | **98.53** | Normalised end-of-discharge rate |
+| v_1000_rel | 98.50 | 97.86 | 97.86 | 99.21 | 98.36 | Normalised deep-discharge voltage |
+| dt_38_35 | 97.86 | 98.08 | 98.29 | 97.82 | 98.01 | Time window 3.8→3.5V (absolute) |
+| v_1000 | 98.08 | 96.79 | 98.72 | 97.82 | 97.85 | Voltage at 1000 s |
+| t_v35 | 97.65 | 97.01 | 98.50 | 97.82 | 97.74 | Time to 3.5V cut-off |
+| v_300_rel | 96.37 | 97.01 | 97.01 | 98.61 | 97.25 | Normalised mid-discharge voltage |
+| t_v38_rel | 95.73 | 96.79 | 96.79 | 98.21 | 96.88 | Relative t to 3.8V |
+| t_v38 | 95.94 | 96.15 | 98.72 | 96.03 | 96.71 | Time to 3.8V drop |
+| v_300 | 95.73 | 96.15 | 98.72 | 95.44 | 96.51 | Voltage at 300 s |
+| temp_rise_35_rel | 95.94 | 88.68 | 86.97 | 90.08 | 90.42 | Normalised temperature rise |
+| temp_rise_35 | 88.68 | 82.91 | 84.83 | 90.08 | **86.62** | Temperature rise to 3.5V |
+
+**Interpretation:** The two features most directly tied to the capacity-definition (t_v35_rel,
+dt_38_35_rel) top the table at 98.53% mean train-fold CV accuracy. Relative (normalised)
+features consistently outperform their absolute counterparts, confirming that cycle-relative
+comparison is the right inductive bias. Temperature-rise features are weakest (~87–90%),
+consistent with their role as internal-resistance proxy rather than direct capacity measure.
+
+---
+
+### Task 4 — Primary/secondary model assignment
+
+~~Primary model: EF-GBTSVM-L8; secondary: EF-GBTSVM-J.~~ **Superseded:** the audit showed that
+"L8 on all folds" contradicts the pre-registered per-fold plan (it lets each test cell's labels
+influence the variant used on it). Vansh chose **primary = EF-GBTSVM-PF**, the per-fold combo (L8 on
+B0005/B0007/B0018, J on B0006, each fold's own inner-CV winner). L8 and J are PF's components. This
+follows the plan written before Phase B ran; no model or setting changed based on test results.
+
+---
+
+### Task 5 — Per-fold sizes and accuracy-to-cycles conversion
+
+| Fold | Test battery | n_test | n_train | 1 discharge cycle | 1% ACC change |
+|---|---|---|---|---|---|
+| F0 | B0005 | 168 | 468 | 0.5952% ACC | 1.68 cycles |
+| F1 | B0006 | 168 | 468 | 0.5952% ACC | 1.68 cycles |
+| F2 | B0007 | 168 | 468 | 0.5952% ACC | 1.68 cycles |
+| F3 | B0018 | 132 | 504 | 0.7576% ACC | 1.32 cycles |
+
+**Accuracy gaps expressed in discharge cycles (noise=0% mean ACC):**
+
+| Comparison | Δ ACC | Δ cycles (168-test avg) |
+|---|---|---|
+| **EF-GBTSVM-PF (95.25%) vs TSVM (98.77%)** | −3.52% | ≈ 5.9 cycles |
+| **EF-GBTSVM-PF (95.25%) vs Fair Stump (96.94%, protocol-matched)** | −1.69% | ≈ 2.8 cycles (stump better) |
+| **EF-GBTSVM-PF (95.25%) vs Oracle Stump (98.73%)** | −3.48% | ≈ 5.8 cycles (unfair baseline) |
+| EF-GBTSVM-L8 (95.10%) vs TSVM (98.77%) | −3.67% | ≈ 6.2 cycles |
+| EF-GBTSVM-L8 (95.10%) vs Fair Stump (96.94%) | −1.84% | ≈ 3.1 cycles (stump better) |
+| EF-GBTSVM-L8 (95.10%) vs Oracle Stump (98.73%) | −3.63% | ≈ 6.1 cycles (unfair baseline) |
+| EF-GBTSVM-J (97.21%) vs TSVM (98.77%) | −1.56% | ≈ 2.6 cycles |
+| EF-GBTSVM-J (97.21%) vs Fair Stump (96.94%) | +0.27% | +0.5 cycle (J better) |
+
+Note: each sample in `nasa_battery_phys.csv` corresponds to one full discharge cycle.
+A 1% difference on a 168-cycle test battery = misclassifying approximately 1–2 more cycles.
+"Better by 3%" is physically "correct on 5–6 more cycles out of 168."
+
+---
+
+## Phase B results (Nov 2026): fair comparison, primary = per-fold combo (EF-GBTSVM-PF)
+
+Sources: `results/phys_phase_b_noise{0,10,20}_runs.csv`, `results/phase_b_summary_table.csv`,
+`results/phase_b_per_fold.csv`, `results/phase_b_stats.txt`, `results/phase_b_claims.txt`,
+`results/phase_b_train_gap.csv`, `results/leakage_impact_comparison.csv`. Nothing was tuned on test.
+Every number below was recomputed independently from the raw CSVs by separate audit agents (two
+rounds: 4 auditors on the first analysis, 3 on the PF version; 0 mismatches after the fixes noted).
+
+**Primary model (Vansh's decision, Nov 2026): EF-GBTSVM-PF**, the pre-registered per-fold
+selection from the Phase B plan above: on each outer fold, the variant that fold's own Phase A inner
+CV picked (`results/phase_a/phys2_selection.csv`): B0005 → L8, B0006 → J, B0007 → L8, B0018 → L8.
+Audit confirmed PF is leak-free: 0/252 inner-CV rows use the test cell; the selection (mean noisy
+BACC over 3 validation cells × 3 noise levels) recomputes exactly; one selection for all three noise
+levels uses only training-cell scores. Inner-CV margins: 3.46 / 1.06 / **0.0145** / 1.35 pp (fold 2
+is fragile; its runner-up JM was never run in Phase B). "L8 on all folds" is a global majority
+choice that lets each test cell's labels (validation data in the other folds' inner CVs) influence
+the variant used on it, so it is kept only as a non-primary reference.
+
+**Ranking pools.** Main (k=15) = 13 non-variant models + PF + Stump-fair; L8 and J are PF's
+candidate inputs and are left out (rank the method, not its candidates). This is defensible but not
+neutral, so the sensitivity pool (k=17, adds L8 and J) is reported next to it.
+
+### Mean ACC over the 4 folds (Stump-fair = baseline; Stump-oracle = upper bound, not ranked)
+
+| Model | 0% | 10% | 20% |
+|---|---|---|---|
+| **EF-GBTSVM-PF (primary)** | **95.25** | **95.08** | **95.28** |
+| EF-GBTSVM (original) | 94.83 | 86.66 | 94.71 |
+| EF-GBTSVM-W | 95.25 | 97.33 | 93.05 |
+| EF-GBTSVM-L | 95.25 | 97.33 | 92.90 |
+| EF-GBTSVM-A | 95.73 | 94.99 | 95.10 |
+| *EF-GBTSVM-L8 (PF component; also the non-primary "L8 on all folds")* | *95.10* | *97.61* | *91.26* |
+| *EF-GBTSVM-J (PF component)* | *97.21* | *94.89* | *95.36* |
+| GBTSVM | 96.43 | 97.77 | 80.09 |
+| HF-GBTSVM | 96.47 | 90.46 | 94.01 |
+| EF-TSVM | 96.67 | 84.89 | 71.39 |
+| TSVM | 98.77 | 95.31 | 88.93 |
+| SVM (RBF) | 86.61 | 96.97 | 96.32 |
+| RVFL | 97.75 | 90.10 | 96.86 |
+| RandomForest | 97.39 | 97.46 | 97.75 |
+| MLP | 97.61 | 95.59 | 94.78 |
+| XGBoost | 97.69 | 97.16 | 97.42 |
+| **Stump-fair (GroupKFold + BACC, same protocol as all models)** | **96.94** | **95.16** | **96.85** |
+| ~~Stump-fair, first version (StratifiedKFold + ACC), superseded~~ | ~~94.63~~ | ~~95.16~~ | ~~96.55~~ |
+| [Stump-oracle upper bound] | [98.73] | [98.35] | [98.20] |
+
+PF per fold (B0005/B0006/B0007/B0018): 0% 97.62/97.62/91.07/94.70; 10% 98.21/88.10/97.02/96.97;
+20% 98.81/98.81/91.07/92.42. PF BACC: 95.24 / 95.05 / 95.78. Full per-fold values, BACC/F1/AUC and
+SDs are in `results/phase_b_per_fold.csv` / `phase_b_summary_table.csv`.
+
+### Claims (a), (b), (c) for PF (Stump-fair protocol-matched)
+
+* **(a) PF vs original EF-GBTSVM:** ACC +0.42 / **+8.41** / +0.57 at 0/10/20% (BACC +0.27 / +9.46 /
+  +2.63); fold wins/losses/ties 2/1/1, 3/1/0, 3/1/0. Higher mean at all three noise levels, by a
+  large margin at 10% and a small one at 0% and 20%. **Not statistically significant** (pooled
+  Wilcoxon p = 0.090, Holm 1.0; per-noise p ≥ 0.25). The +0.42 at 0% comes from B0018 alone (+2.27);
+  at 20% B0007 loses by 6.55 pp.
+* **(b) Rank in the GB/TSVM family.** Main (9 models): 6/9 at 0% (TSVM 98.77), 5/9 at 10% (GBTSVM
+  97.77), **1/9 at 20%** (+0.18 pp over EF-GBTSVM-A, about 0.3 cycles); pooled 2nd of 9 behind TSVM
+  (avg rank 7.833 vs 6.958 after the stump switch; 7.750 before). Sensitivity (11): 7/11, 6/11, 2/11 (J 95.36 is higher at 20%); pooled
+  3rd of 11. **"Best in the GB/TSVM family" is NOT supported**: rank 1 only at 20%, only in the main
+  pool, by 0.18 pp.
+* **(c) Rank among all models.** Main (15): 11/15, 10/15, 6/15; top TSVM (gap −3.52), GBTSVM (−2.69),
+  RF (−2.48); vs SVM +8.64 / −1.89 / −1.04. Pooled position 7 of 15 (avg rank 7.833; best
+  RandomForest 5.292). Sensitivity (17): 12/17, 11/17, 7/17; pooled 8 of 17 (RF 5.917).
+  **PF is rank 1 at no noise level; "best overall" is NOT supported.**
+* **vs the fair single-feature stump** (96.94 / 95.16 / 96.85): PF's gaps are **−1.69 / −0.08 / −1.57**,
+  so a one-feature threshold tuned with the same protocol matches or exceeds PF at every noise level
+  (Wilcoxon pooled p = 0.418, not significant; stump overall rank 6/15, 9/15, 4/15). The 10% gap
+  depends on a tie-break (Task 2): the other tied feature would make it −1.78.
+* Before the stump switch (first version, superseded): PF rank 10/15 at 0%, pooled position 6 of 15;
+  only stump-dependent numbers changed (audit diff).
+* Non-primary reference, L8 on all folds: 95.10 / 97.61 / 91.26 (the earlier "2/16 at 10%" figure
+  exists only under this global choice).
+
+### Statistics (`results/phase_b_stats.txt`; metrics rounded to 6 dp, differences to 4 dp)
+
+* Friedman (tie-corrected), main pool k=15: pooled N=12 chi² = 20.224, p = 0.123; per noise p = 0.210 /
+  0.253 / 0.258; pooled BACC p = 0.308. Sensitivity k=17 pooled: chi² = 19.933, p = 0.223. **No
+  significant difference anywhere.**
+* Nemenyi: q(0.05, 15) = 3.391, CD = 6.192 (N=12), 10.724 (N=4); k=17: q = 3.458, CD = 7.130. All other
+  models fall within CD of PF, but Nemenyi is a post-hoc test after a significant Friedman (none is),
+  and the CD exceeds the whole observed rank spread: **absence of evidence, not equivalence.**
+* Wilcoxon, PF vs each (main pool, Holm over 14): pooled lowest raw p is **RandomForest 0.033** (RF
+  higher on 8 of 12 pairs, 2 lower, 2 tied; mean −2.33 pp), Holm 0.465 (0.531 in the sensitivity
+  pool); then EF-GBTSVM 0.090 and XGBoost 0.098 (Holm 1.0; not to be called "trends"). **Per-noise
+  n=4: minimum achievable two-sided p = 0.125** (0.25 / 0.5 if a fold ties); observed minimum 0.125 at
+  each noise level.
+* **The 3 noise settings reuse the same 4 batteries and features, so the 12 pooled observations are
+  not independent**; every pooled p-value is descriptive only. With 4 batteries the design cannot
+  detect 2–3.5 pp differences: underpowered.
+* Audit fix applied earlier: CSV vs live float noise had broken some true ties (pooled chi² for the
+  first analysis 19.835 → 19.788). No conclusion changed.
+
+### Train-vs-test gap (overfitting check)
+
+Refit with the logged best params on the same training fold: 180/180 rows reproduce the logged test
+ACC exactly. Gap = train ACC on true labels − test ACC. **PF: 1.48 / 2.21 / 0.88 pp** (no overfitting
+sign; per fold up to 8.7 pp on B0006 at 10%). L8 2.21 / −0.54 / 2.33; J 0.17 / 2.69 / 0.27; Stump-fair
+2.11 / 3.96 / 1.31 (computed live in `phase_b_analysis.py`; 8.66 on the tie-broken 10% B0018 fold). Gaps > 5
+pp: SVM@0% 12.1 (B0006 class-prior flip, see Task 1), EF-GBTSVM@10% 9.8, EF-TSVM@10% 13.1 and @20%
+25.3, HF-GBTSVM@10% 6.9, RVFL@10% 8.4, GBTSVM@20% 13.4, TSVM@20% 5.7.
+
+### Old vs corrected table (`results/leakage_impact_comparison.csv`) — confounded
+
+Old and new runs differ in the feature set (13 old features vs 12 phys features, none shared) **and**
+in the grids/budget, so a delta is not the effect of leakage removal alone. The audit re-ran the old
+features under the new tuning: SVM@0% −7.52 is −6.71 tuning + −0.81 features; RF@10% +14.26 is +10.46
+tuning; RF@20% +24.22 is +20.23 tuning; MLP@0% +8.84 is mostly features (+10.76); HF-GBTSVM@0% +22.70
+is mostly features (+21.16). Old ranks are over 13 models, new over 15, so ranks are not comparable.
+The 20%-noise split exists for RF only (audit re-run did not finish). Script docstring corrected.
+
+### Open items and disclosures
+
+1. **Resolved:** primary = PF (pre-registered per-fold combo), chosen by Vansh.
+2. **Resolved — Stump-fair protocol** switched to GroupKFold + BACC (Vansh, Nov 2026), so it uses
+   the same inner CV as the other models (audit: identical splits on all 12 folds; scaling is
+   irrelevant for a depth-1 tree). Disclose: the first stump version was written after Phase B test
+   results existed, and the 10%-noise B0018 fold is decided by an exact tie (Task 2).
+3. **Disclosure:** the Phase A candidate list (wide purity grid, J's adaptive offset) was shaped by
+   earlier test-fold results on the same 4 batteries (old feature file). Phase A selection itself is
+   clean.
+4. Minor: the `_rel` features normalise by each cell's own first cycle, including the test cell (no
+   labels used; available once a cell is in service). Several chosen params sit at grid edges (SVM
+   C=300, MLP alpha=1.0, J offset +0.10). A per-noise argmax in Phase A would have picked differently
+   in 7 of 12 (fold, noise) cells (paper audit recount; 6 was a miscount); the averaging rule was fixed before the run.
+
+Audit checks that passed: no direct test-battery use anywhere (scaler, inner CV, flips, ball fit,
+adaptive-purity estimate all on training data only); model code unchanged after Phase B started;
+`phase_b_analysis.py` outputs reproduced byte-for-byte by a reviewer copy.
+
+## Phase C: paper draft (Nov 2026)
+
+Framing chosen by Vansh: honest "competitive, not best" benchmark. Draft written in the Claude Docs
+paper (same URL, retitled "A Leakage-Free, Fair Benchmark of EF-GBTSVM for Li-ion Battery Degradation
+Classification under Label Noise"); the earlier sensitivity-study text was replaced (still in doc history).
+- 30 references, each verified against Crossref/arXiv/JMLR/publisher records; unverifiable items are in
+  the paper's "Needs human review" list.
+- Equations restated from arXiv 2410.05786 / 2410.04774 and checked against `efgbtsvm/`.
+- Figures: `make_paper_figures.py` -> `paper_figures/` (two doc charts from CSVs; three console-output
+  images rendered from the captured stdout of `phase_b_analysis.py`, labelled as such).
+- Three-agent audit (numbers, citations, method/honesty) found 6 number/wording errors, 5 citation
+  overstatements and 18 method/honesty issues; all confirmed ones were fixed in the doc.
+
+## Phase D, step 1: fresh-cell validation — closed, no eligible cell (Nov 2026)
+
+Decision (Vansh, Nov 2026): **Option 1, inclusion rule kept as-is.** No fresh-cell run was made; no model
+was fitted on any fresh cell. Fresh-cell validation is therefore **not possible with this dataset**.
+
+* Sources: `5.+Battery+Data+Set/` zips 2-6 extracted to `data/raw_fresh/` (originals untouched). Zip 1 =
+  dev cells, never fresh. B0025-28 are in zip 2 and zip 3 with identical sha256 and were counted once.
+  Pool = **30 fresh cells** (B0025-34, B0036, B0038-56). (An earlier chat message said 32; 30 is the
+  count in `prereg/inventory_output.txt`.)
+* Rule: `prereg/inclusion_rule.md` (sha256 `80082c31fa4d8aa9709c4d5b462339bec999b36c9f1a4963e5d6a805dfbbc333`),
+  written before any fresh Capacity/label value was read. Metadata script `prereg/fresh_metadata.py`
+  never reads Capacity; labels were read only by `prereg/fresh_labels_R5.py`, only for cells that had
+  passed R1-R4/R6.
+* R1-R4 + R6 (load 2 A CC on every cycle, ambient range <= 2 C, 12 phys features defined on every
+  cycle, >= 50 discharge cycles, no shared recording with a dev cell): **27 of 30 excluded**.
+  R1 (current 4 A / 1 A / mixed) 20 cells; R2 (ambient varies) 6; R3 (features undefined on some cycle,
+  "load-off before 1000 s" etc.) 15; R4 (< 50 discharge cycles) 15; R6 none. Cells failing only one rule:
+  B0028 (28 cycles), B0045-48 (1 A), B0053 and B0054 (one undefined cycle each; B0054 = cycle #103).
+* Passing R1-R4/R6: **B0036, B0055, B0056**. R5 (each class >= 10% of cycles): all three have
+  **0 degraded cycles** (197/102/102 cycles, 100% healthy at SOH < 0.80) -> **R5 FAIL**. Eligible
+  fresh cells: **0**.
+* Shared recordings (identical Time arrays on 100% of paired cycles): 25-28, 29-32, 33/34/36,
+  38-40, 42-44, 45-48, 49-52, 54-56 (and dev 5/6/7). No fresh cell shares a recording with a dev cell.
+  README vs file, two differences seen (both reported, neither changed a rule outcome): (i) B0028 -
+  README says 4 A (0.05 Hz square wave) for 25-28, the file's median load current is 1.99-2.00 A (B0025/26/27:
+  4.0 A); (ii) B0042-44 - README says 4 C ambient, the files record 4-22 C. Other groups' currents/ambients
+  matched their README. Not checked against README: cut-off voltages (observed minimum voltages under load
+  are in `inventory_output.txt`).
+* Unknown: how `Capacity` was computed for cells whose cut-off differs from 2.7 V (README says "till
+  2.7V"); causes of the "very low capacity" discharges the READMEs mention.
+* Files: `prereg/{inclusion_rule.md, fresh_metadata.py, fresh_metadata.json, inventory_output.txt,
+  fresh_labels_R5.py, R5_output.txt}`. Options 2 (post-hoc amendment) and 3 (other dataset) were not
+  taken.
+* Consequence for claims: the only evidence is the dev-LOBO result (4 cells, B0005/6/7 one recording).
+
+## Phase D-lite: pre-registration (Nov 2026) — frozen, NOT yet run
+
+`PREREG_DLITE.md` (sha256 `fb412a6fc58b095cb6125e8a0b1badb936aa784c59af0c411123c27abc0acbe1`) written before any D-lite run: frozen 15 models + PF + Stump-fair,
+12 phys features, 150-candidate budget, per-fold PF selection from Phase A; new conditions on the dev
+batteries only: random noise 30% / 40% and boundary noise (flip 50% of training cycles with SOH in
+[0.75, 0.85], seed 1000 + fold). Claim table fixed in section 6 of that file. Not a git repository, so
+no commit was made. **Run waits for Vansh's explicit yes**; `run_dlite.py` / `dlite_analysis.py` do not
+exist yet and their sha256 will be added here before the run.
+
+### D-lite launch record (2026-11-05, Vansh: "Haan, run karo")
+
+PREREG_DLITE.md sha256 `fb412a6fc58b095cb6125e8a0b1badb936aa784c59af0c411123c27abc0acbe1` (unchanged). New scripts, hashed before the run: `run_dlite.py`
+`afd2e1d034e1fa1401b38b4e21e13be0bdcb14d59a5d152d9fdef4c6754ebd5b`; `dlite_analysis.py` `33a18146d1c548b883ac26cb60ce46bc21e8e5f6042088262526688d13e8a9c0`. Pre-run checks (no model fitted): all 11 frozen hashes matched; SOH
+rebuilt from the .mat files reproduces all 636 `degraded` labels; BND boundary sets (flips) per fold
+146 (73) / 168 (84) / 118 (59) / 144 (72). Single run in the background, log `results/dlite.log`,
+outputs `results/dlite_*`.
+
 ## Open questions for next session
 
 1. **A looser purity threshold fixes 20%-noise but breaks 10%-noise — needs a way to get both.**

@@ -25,3 +25,13 @@ def estimate_label_noise(X, y, k=5, random_state=0):
 def purity_from_noise(noise, alpha=1.0, lo=0.55, hi=0.95):
     """purity = clip(hi - alpha * noise, lo, hi)."""
     return float(np.clip(hi - alpha * noise, lo, hi))
+
+
+def purity_from_noise_offset(noise, offset, alpha=1.0, anchor=0.95, lo=0.55, hi=0.98):
+    """purity = clip(anchor - alpha * noise + offset, lo, hi).
+
+    The offset is a searched hyperparameter (tuned jointly with C, hidden size and
+    activation), so the noise estimate only sets where the purity search is centred.
+    hi = 0.98 matches the top of the default purity grid.
+    """
+    return float(np.clip(anchor - alpha * noise + offset, lo, hi))

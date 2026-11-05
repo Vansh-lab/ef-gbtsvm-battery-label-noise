@@ -39,6 +39,11 @@ H_GRID = [23, 63, 103, 143, 183]
 ACT_GRID = [1, 2, 3, 4, 10]            # selu, relu, sigmoid, sin, tanh
 PUR_GRID = [0.85, 0.9, 0.925, 0.95, 0.98]
 PUR_GRID_W = [0.55, 0.65, 0.75, 0.85, 0.95]  # EF-GBTSVM-W only: looser, so the
+# Phase B Phase-A winners: EF-GBTSVM-L8 uses all 8 purity values covering the full
+# range J can reach (review F3: confounding wide range vs adaptive offset).
+# EF-GBTSVM-J uses adaptive_offset; purity_offset searched jointly with C1/n_hidden/activation.
+PUR_GRID_L8 = [0.55, 0.65, 0.75, 0.85, 0.9, 0.925, 0.95, 0.98]  # 8 values, Phase A inner-CV winner (3/4 folds)
+OFFSET_GRID = [-0.10, -0.05, 0.0, 0.05, 0.10]                     # Phase A inner-CV winner (fold 1 / B0006)
                                               # purity-weighting has impure balls
                                               # to act on (attempt 2, see REPORT.md)
 
@@ -91,7 +96,27 @@ def load_dataset(path, label_col=None, drop=(), header="infer", sep=",", group_c
     return X.values, y, groups
 
 
-def build_models(seed, include=None):
+# --grids equal (Phase B): every baseline with two or more hyperparameters gets a grid of
+# at least 150 points, so with --n-iter 150 it evaluates 150 candidates like the
+# EF-GBTSVM family; single-hyperparameter models keep their full grid. --grids paper
+# (default) keeps the grids of all earlier runs unchanged.
+EQUAL_GRIDS = {
+    "SVM": dict(C=[0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30, 100, 300],
+                gamma=["scale"] + [float(g) for g in np.logspace(-4, 1, 14)]),      # 150
+    "RandomForest": dict(n_estimators=[100, 200, 300, 500],
+                         max_depth=[None, 3, 5, 10, 20],
+                         min_samples_leaf=[1, 2, 4, 8],
+                         max_features=["sqrt", "log2", None]),                       # 240
+    "MLP": dict(hidden_layer_sizes=[(16,), (32,), (64,), (128,), (32, 16), (64, 32)],
+                alpha=[1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0],
+                learning_rate_init=[1e-3, 1e-2],
+                activation=["relu", "tanh"]),                                        # 168
+    "XGBoost": dict(n_estimators=[100, 200, 300, 500], max_depth=[2, 3, 4, 6, 8],
+                    learning_rate=[0.01, 0.03, 0.1, 0.3], subsample=[0.7, 1.0]),     # 160
+}
+
+
+def build_models(seed, include=None, grids="paper"):
     ef = lambda **kw: EFGBTSVM(random_state=seed, **kw)
     ef_grid = dict(C1=C_GRID, n_hidden=H_GRID, activation=ACT_GRID, purity=PUR_GRID)
     models = {
@@ -110,6 +135,15 @@ def build_models(seed, include=None):
         # not in the grid; noise_alpha fixed at 1.0 (chosen a priori, see REPORT.md)
         "EF-GBTSVM-A": (ef(purity_mode="adaptive", noise_alpha=1.0),
                         dict(C1=C_GRID, n_hidden=H_GRID, activation=ACT_GRID)),
+        # Phase A inner-CV winners (Nov 2026): chosen by leave-one-cell-out inner CV on
+        # the training batteries only; test batteries never seen during selection.
+        # EF-GBTSVM-L8 = wide fixed-purity grid; inner-CV winner for folds 0, 2, 3.
+        "EF-GBTSVM-L8": (ef(), dict(C1=C_GRID, n_hidden=H_GRID, activation=ACT_GRID,
+                                    purity=PUR_GRID_L8)),
+        # EF-GBTSVM-J = adaptive offset; inner-CV winner for fold 1 (held-out B0006).
+        "EF-GBTSVM-J": (ef(purity_mode="adaptive_offset"),
+                         dict(C1=C_GRID, n_hidden=H_GRID, activation=ACT_GRID,
+                              purity_offset=OFFSET_GRID)),
         "GBTSVM": (ef(features="original"), dict(C1=C_GRID, purity=PUR_GRID)),
         "HF-GBTSVM": (ef(features="hidden"), ef_grid),
         "EF-TSVM": (ef(use_balls=False), dict(C1=C_GRID, n_hidden=H_GRID, activation=ACT_GRID)),
@@ -132,6 +166,10 @@ def build_models(seed, include=None):
                                   learning_rate=[0.05, 0.1, 0.3]))
     except Exception:
         pass
+    if grids == "equal":
+        models = {k: (est, EQUAL_GRIDS.get(k, grid)) for k, (est, grid) in models.items()}
+    elif grids != "paper":
+        raise SystemExit(f"--grids must be 'paper' or 'equal', got {grids!r}")
     if include:
         models = {k: v for k, v in models.items() if k in include}
     return models
@@ -189,6 +227,12 @@ def main():
                     help="column with group ids (e.g. battery_id). Enables leave-one-group-out "
                          "evaluation (one run per group) and group-aware CV; column is not a feature.")
     ap.add_argument("--models", nargs="*", default=None)
+    ap.add_argument("--grids", default="paper", choices=["paper", "equal"],
+                    help="'equal': >=150-point grids for SVM, RandomForest, MLP and XGBoost "
+                         "(see EQUAL_GRIDS); 'paper' (default): the grids of earlier runs")
+    ap.add_argument("--n-jobs", type=int, default=-1,
+                    help="n_jobs for RandomizedSearchCV (default -1 = all CPUs; "
+                         "use 4 on Windows to avoid process limit issues)")
     ap.add_argument("--max-rows", type=int, default=None, help="subsample for quick tests")
     ap.add_argument("--out", default="results")
     a = ap.parse_args()
@@ -226,7 +270,7 @@ def main():
             continue
         if a.noise > 0:
             ytr = flip_labels(ytr, a.noise, np.random.RandomState(1000 + seed))
-        for mname, (est, grid) in build_models(seed, a.models).items():
+        for mname, (est, grid) in build_models(seed, a.models, a.grids).items():
             pipe = Pipeline([("scale", StandardScaler()), ("clf", est)])
             pgrid = {f"clf__{k}": v for k, v in grid.items()}
             n_comb = int(np.prod([len(v) for v in grid.values()]))
@@ -236,7 +280,7 @@ def main():
                   else StratifiedKFold(cv_n, shuffle=True, random_state=seed))
             search = RandomizedSearchCV(pipe, pgrid, n_iter=min(a.n_iter, n_comb),
                                         scoring=scoring_m, cv=cv, random_state=seed,
-                                        n_jobs=-1, refit=False)
+                                        n_jobs=a.n_jobs, refit=False)
             t0 = time.time()
             search.fit(Xtr, ytr, groups=gtr)
             best = search.best_params_

@@ -30,7 +30,7 @@ class TWSVM:
     def __init__(self, C1=1.0, C2=1.0, delta=0.05, normalize=True):
         self.C1, self.C2, self.delta, self.normalize = C1, C2, delta, normalize
 
-    def fit(self, A, B, weights=None):
+    def fit(self, A, B, weights=None, own_weights=None):
         """A: samples of positive class, B: negative class (2D arrays).
 
         weights : optional (wA, wB), default None
@@ -41,6 +41,11 @@ class TWSVM:
             constrains the opposite-class plane less). weights=None (the
             default) reproduces the original unweighted behavior exactly —
             every a_i is bounded by C1/C2 as before.
+        own_weights : optional (sA, sB), default None
+            Per-sample weights on each plane's own-class term: plane 1
+            minimises 0.5 * sum_i sA_i (w1'a_i + b1)^2 instead of the plain
+            sum, so H'H becomes H' diag(sA) H (likewise G'G for plane 2).
+            None (the default) keeps the plain H'H and G'G unchanged.
         """
         H = np.hstack([A, np.ones((len(A), 1))])
         G = np.hstack([B, np.ones((len(B), 1))])
@@ -49,13 +54,16 @@ class TWSVM:
         wA, wB = (None, None) if weights is None else weights
         ub1 = self.C1 if wB is None else self.C1 * np.asarray(wB, dtype=float)
         ub2 = self.C2 if wA is None else self.C2 * np.asarray(wA, dtype=float)
+        sA, sB = (None, None) if own_weights is None else own_weights
+        HtH = H.T @ H if sA is None else (H * np.asarray(sA, dtype=float)[:, None]).T @ H
+        GtG = G.T @ G if sB is None else (G * np.asarray(sB, dtype=float)[:, None]).T @ G
 
-        # plane 1:  u1 = -(H'H + dI)^-1 G' alpha
-        HHG = np.linalg.solve(H.T @ H + self.delta * I, G.T)
+        # plane 1:  u1 = -(H'S_A H + dI)^-1 G' alpha   (S_A = I unless own_weights)
+        HHG = np.linalg.solve(HtH + self.delta * I, G.T)
         a1 = _box_qp(G @ HHG, ub1)
         u1 = -HHG @ a1
-        # plane 2:  u2 =  (G'G + dI)^-1 H' gamma
-        GGH = np.linalg.solve(G.T @ G + self.delta * I, H.T)
+        # plane 2:  u2 =  (G'S_B G + dI)^-1 H' gamma
+        GGH = np.linalg.solve(GtG + self.delta * I, H.T)
         a2 = _box_qp(H @ GGH, ub2)
         u2 = GGH @ a2
 
