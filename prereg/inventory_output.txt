@@ -1,0 +1,77 @@
+B0005 dev   cycles= 616 discharge= 168 chg=170 imp=278 medI=2.01-2.01A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.46-2.70 featfail=0 
+B0006 dev   cycles= 616 discharge= 168 chg=170 imp=278 medI=2.01-2.01A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.12-2.50 featfail=0 
+B0007 dev   cycles= 616 discharge= 168 chg=170 imp=278 medI=1.99-1.99A amb=24.0-24.0C stratum=T24 Vmin_under_load=1.74-2.20 featfail=0 
+B0018 dev   cycles= 319 discharge= 132 chg=134 imp=53 medI=2.01-2.01A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.28-2.50 featfail=0 
+B0025 fresh cycles=  80 discharge=  28 chg=31 imp=21 medI=4.02-4.03A amb=24.0-24.0C stratum=T24 Vmin_under_load=1.67-1.99 featfail=0 EXCL: R1 load current median |I| range 4.02-4.03 A; R4 only 28 discharge cycles
+B0026 fresh cycles=  80 discharge=  28 chg=31 imp=21 medI=4.02-4.03A amb=24.0-24.0C stratum=T24 Vmin_under_load=1.77-2.17 featfail=0 EXCL: R1 load current median |I| range 4.02-4.03 A; R4 only 28 discharge cycles
+B0027 fresh cycles=  80 discharge=  28 chg=31 imp=21 medI=3.97-3.97A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.38-2.50 featfail=0 EXCL: R1 load current median |I| range 3.97-3.97 A; R4 only 28 discharge cycles
+B0028 fresh cycles=  80 discharge=  28 chg=31 imp=21 medI=1.99-2.00A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.53-2.69 featfail=0 EXCL: R4 only 28 discharge cycles
+B0029 fresh cycles=  97 discharge=  40 chg=40 imp=17 medI=4.02-4.02A amb=43.0-43.0C stratum=other Vmin_under_load=1.80-2.00 featfail=0 EXCL: R1 load current median |I| range 4.02-4.02 A; R4 only 40 discharge cycles
+B0030 fresh cycles=  97 discharge=  40 chg=40 imp=17 medI=4.02-4.03A amb=43.0-43.0C stratum=other Vmin_under_load=1.92-2.18 featfail=0 EXCL: R1 load current median |I| range 4.02-4.03 A; R4 only 40 discharge cycles
+B0031 fresh cycles=  97 discharge=  40 chg=40 imp=17 medI=3.97-3.98A amb=43.0-43.0C stratum=other Vmin_under_load=2.30-2.49 featfail=0 EXCL: R1 load current median |I| range 3.97-3.98 A; R4 only 40 discharge cycles
+B0032 fresh cycles=  97 discharge=  40 chg=40 imp=17 medI=3.99-3.99A amb=43.0-43.0C stratum=other Vmin_under_load=2.60-2.69 featfail=0 EXCL: R1 load current median |I| range 3.99-3.99 A; R4 only 40 discharge cycles
+B0033 fresh cycles= 486 discharge= 197 chg=197 imp=92 medI=4.02-4.03A amb=24.0-24.0C stratum=T24 Vmin_under_load=0.99-2.00 featfail=11 EXCL: R1 load current median |I| range 4.02-4.03 A; R3 features undefined on 11 cycles (first: #1 load-off before 1000 s)
+B0034 fresh cycles= 486 discharge= 197 chg=197 imp=92 medI=4.03-4.03A amb=24.0-24.0C stratum=T24 Vmin_under_load=1.94-2.20 featfail=1 EXCL: R1 load current median |I| range 4.03-4.03 A; R3 features undefined on 1 cycles (first: #1 load-off before 1000 s)
+B0036 fresh cycles= 486 discharge= 197 chg=197 imp=92 medI=2.00-2.00A amb=24.0-24.0C stratum=T24 Vmin_under_load=2.60-2.70 featfail=0 PASS R1-R4,R6
+B0038 fresh cycles= 122 discharge=  47 chg=47 imp=28 medI=1.01-4.03A amb=24.0-44.0C stratum=other Vmin_under_load=2.00-2.20 featfail=1 EXCL: R1 load current median |I| range 1.01-4.03 A; R2 ambient varies 24-44 C; R3 features undefined on 1 cycles (first: #1 load-off before 1000 s); R4 only 47 discharge cycles
+B0039 fresh cycles= 122 discharge=  47 chg=47 imp=28 medI=1.00-3.98A amb=24.0-44.0C stratum=other Vmin_under_load=2.42-2.50 featfail=12 EXCL: R1 load current median |I| range 1.00-3.98 A; R2 ambient varies 24-44 C; R3 features undefined on 12 cycles (first: #1 load-off before 1000 s); R4 only 47 discharge cycles
+B0040 fresh cycles= 122 discharge=  47 chg=47 imp=28 medI=1.00-3.99A amb=24.0-44.0C stratum=other Vmin_under_load=1.75-2.70 featfail=14 EXCL: R1 load current median |I| range 1.00-3.99 A; R2 ambient varies 24-44 C; R3 features undefined on 14 cycles (first: #1 load-off before 1000 s); R4 only 47 discharge cycles
+B0041 fresh cycles= 163 discharge=  67 chg=67 imp=29 medI=1.01-4.03A amb=4.0-4.0C stratum=T4 Vmin_under_load=1.75-2.00 featfail=42 EXCL: R1 load current median |I| range 1.01-4.03 A; R3 features undefined on 42 cycles (first: #1 load-off before 1000 s)
+B0042 fresh cycles= 275 discharge= 112 chg=113 imp=50 medI=1.01-4.03A amb=4.0-22.0C stratum=other Vmin_under_load=2.00-3.38 featfail=31 EXCL: R1 load current median |I| range 1.01-4.03 A; R2 ambient varies 4-22 C; R3 features undefined on 31 cycles (first: #43 load-off before 1000 s)
+B0043 fresh cycles= 275 discharge= 112 chg=113 imp=50 medI=1.00-3.98A amb=4.0-22.0C stratum=other Vmin_under_load=2.22-3.36 featfail=46 EXCL: R1 load current median |I| range 1.00-3.98 A; R2 ambient varies 4-22 C; R3 features undefined on 46 cycles (first: #42 load-off before 1000 s)
+B0044 fresh cycles= 275 discharge= 112 chg=113 imp=50 medI=1.00-3.99A amb=4.0-22.0C stratum=other Vmin_under_load=2.45-3.29 featfail=46 EXCL: R1 load current median |I| range 1.00-3.99 A; R2 ambient varies 4-22 C; R3 features undefined on 46 cycles (first: #42 load-off before 1000 s)
+B0045 fresh cycles= 184 discharge=  72 chg=72 imp=40 medI=1.00-1.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=1.96-2.94 featfail=0 EXCL: R1 load current median |I| range 1.00-1.01 A
+B0046 fresh cycles= 184 discharge=  72 chg=72 imp=40 medI=1.01-1.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.14-3.47 featfail=0 EXCL: R1 load current median |I| range 1.01-1.01 A
+B0047 fresh cycles= 184 discharge=  72 chg=72 imp=40 medI=0.99-1.00A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.47-3.45 featfail=0 EXCL: R1 load current median |I| range 0.99-1.00 A
+B0048 fresh cycles= 184 discharge=  72 chg=72 imp=40 medI=1.00-1.00A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.68-3.44 featfail=0 EXCL: R1 load current median |I| range 1.00-1.00 A
+B0049 fresh cycles=  62 discharge=  25 chg=25 imp=12 medI=2.01-2.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=1.97-3.45 featfail=1 EXCL: R3 features undefined on 1 cycles (first: #17 load-off before 1000 s); R4 only 25 discharge cycles
+B0050 fresh cycles=  62 discharge=  25 chg=25 imp=12 medI=2.01-2.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.13-3.55 featfail=12 EXCL: R3 features undefined on 12 cycles (first: #5 load-off before 1000 s); R4 only 25 discharge cycles
+B0051 fresh cycles=  62 discharge=  25 chg=25 imp=12 medI=1.99-1.99A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.47-3.55 featfail=1 EXCL: R3 features undefined on 1 cycles (first: #17 load-off before 1000 s); R4 only 25 discharge cycles
+B0052 fresh cycles=  62 discharge=  25 chg=25 imp=12 medI=1.99-1.99A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.69-2.70 featfail=21 EXCL: R3 features undefined on 21 cycles (first: #5 index 0 is out of bounds for axis 0 with size 0); R4 only 25 discharge cycles
+B0053 fresh cycles= 137 discharge=  56 chg=55 imp=26 medI=2.01-2.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=1.93-3.80 featfail=1 EXCL: R3 features undefined on 1 cycles (first: #56 load-off before 1000 s)
+B0054 fresh cycles= 253 discharge= 103 chg=102 imp=48 medI=2.01-2.01A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.16-3.84 featfail=1 EXCL: R3 features undefined on 1 cycles (first: #103 load-off before 1000 s)
+B0055 fresh cycles= 252 discharge= 102 chg=102 imp=48 medI=1.99-1.99A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.48-2.50 featfail=0 PASS R1-R4,R6
+B0056 fresh cycles= 252 discharge= 102 chg=102 imp=48 medI=1.99-1.99A amb=4.0-4.0C stratum=T4 Vmin_under_load=2.68-2.70 featfail=0 PASS R1-R4,R6
+
+shared-time-vector pairs (fraction of paired discharge cycles with identical Time):
+   B0005-B0006 1.0
+   B0005-B0007 1.0
+   B0006-B0007 1.0
+   B0025-B0026 1.0
+   B0025-B0027 1.0
+   B0025-B0028 1.0
+   B0026-B0027 1.0
+   B0026-B0028 1.0
+   B0027-B0028 1.0
+   B0029-B0030 1.0
+   B0029-B0031 1.0
+   B0029-B0032 1.0
+   B0030-B0031 1.0
+   B0030-B0032 1.0
+   B0031-B0032 1.0
+   B0033-B0034 1.0
+   B0033-B0036 1.0
+   B0034-B0036 1.0
+   B0038-B0039 1.0
+   B0038-B0040 1.0
+   B0039-B0040 1.0
+   B0042-B0043 1.0
+   B0042-B0044 1.0
+   B0043-B0044 1.0
+   B0045-B0046 1.0
+   B0045-B0047 1.0
+   B0045-B0048 1.0
+   B0046-B0047 1.0
+   B0046-B0048 1.0
+   B0047-B0048 1.0
+   B0049-B0050 1.0
+   B0049-B0051 1.0
+   B0049-B0052 1.0
+   B0050-B0051 1.0
+   B0050-B0052 1.0
+   B0051-B0052 1.0
+   B0054-B0055 1.0
+   B0054-B0056 1.0
+   B0055-B0056 1.0
+
+groups: {'B0007': ['B0005', 'B0006', 'B0007'], 'B0028': ['B0025', 'B0026', 'B0027', 'B0028'], 'B0032': ['B0029', 'B0030', 'B0031', 'B0032'], 'B0036': ['B0033', 'B0034', 'B0036'], 'B0040': ['B0038', 'B0039', 'B0040'], 'B0044': ['B0042', 'B0043', 'B0044'], 'B0048': ['B0045', 'B0046', 'B0047', 'B0048'], 'B0052': ['B0049', 'B0050', 'B0051', 'B0052'], 'B0056': ['B0054', 'B0055', 'B0056']}

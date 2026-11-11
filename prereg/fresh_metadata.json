@@ -1,0 +1,256 @@
+{
+ "groups": [
+  [
+   "B0005",
+   "B0006",
+   "B0007"
+  ],
+  [
+   "B0018"
+  ],
+  [
+   "B0025",
+   "B0026",
+   "B0027",
+   "B0028"
+  ],
+  [
+   "B0029",
+   "B0030",
+   "B0031",
+   "B0032"
+  ],
+  [
+   "B0033",
+   "B0034",
+   "B0036"
+  ],
+  [
+   "B0038",
+   "B0039",
+   "B0040"
+  ],
+  [
+   "B0041"
+  ],
+  [
+   "B0042",
+   "B0043",
+   "B0044"
+  ],
+  [
+   "B0045",
+   "B0046",
+   "B0047",
+   "B0048"
+  ],
+  [
+   "B0049",
+   "B0050",
+   "B0051",
+   "B0052"
+  ],
+  [
+   "B0053"
+  ],
+  [
+   "B0054",
+   "B0055",
+   "B0056"
+  ]
+ ],
+ "pairs": {
+  "B0005-B0006": 1.0,
+  "B0005-B0007": 1.0,
+  "B0006-B0007": 1.0,
+  "B0025-B0026": 1.0,
+  "B0025-B0027": 1.0,
+  "B0025-B0028": 1.0,
+  "B0026-B0027": 1.0,
+  "B0026-B0028": 1.0,
+  "B0027-B0028": 1.0,
+  "B0029-B0030": 1.0,
+  "B0029-B0031": 1.0,
+  "B0029-B0032": 1.0,
+  "B0030-B0031": 1.0,
+  "B0030-B0032": 1.0,
+  "B0031-B0032": 1.0,
+  "B0033-B0034": 1.0,
+  "B0033-B0036": 1.0,
+  "B0034-B0036": 1.0,
+  "B0038-B0039": 1.0,
+  "B0038-B0040": 1.0,
+  "B0039-B0040": 1.0,
+  "B0042-B0043": 1.0,
+  "B0042-B0044": 1.0,
+  "B0043-B0044": 1.0,
+  "B0045-B0046": 1.0,
+  "B0045-B0047": 1.0,
+  "B0045-B0048": 1.0,
+  "B0046-B0047": 1.0,
+  "B0046-B0048": 1.0,
+  "B0047-B0048": 1.0,
+  "B0049-B0050": 1.0,
+  "B0049-B0051": 1.0,
+  "B0049-B0052": 1.0,
+  "B0050-B0051": 1.0,
+  "B0050-B0052": 1.0,
+  "B0051-B0052": 1.0,
+  "B0054-B0055": 1.0,
+  "B0054-B0056": 1.0,
+  "B0055-B0056": 1.0
+ },
+ "passing": [
+  "B0036",
+  "B0055",
+  "B0056"
+ ],
+ "stratum": {
+  "B0005": "T24",
+  "B0006": "T24",
+  "B0007": "T24",
+  "B0018": "T24",
+  "B0025": "T24",
+  "B0026": "T24",
+  "B0027": "T24",
+  "B0028": "T24",
+  "B0029": "other",
+  "B0030": "other",
+  "B0031": "other",
+  "B0032": "other",
+  "B0033": "T24",
+  "B0034": "T24",
+  "B0036": "T24",
+  "B0038": "other",
+  "B0039": "other",
+  "B0040": "other",
+  "B0041": "T4",
+  "B0042": "other",
+  "B0043": "other",
+  "B0044": "other",
+  "B0045": "T4",
+  "B0046": "T4",
+  "B0047": "T4",
+  "B0048": "T4",
+  "B0049": "T4",
+  "B0050": "T4",
+  "B0051": "T4",
+  "B0052": "T4",
+  "B0053": "T4",
+  "B0054": "T4",
+  "B0055": "T4",
+  "B0056": "T4"
+ },
+ "excluded": {
+  "B0025": [
+   "R1 load current median |I| range 4.02-4.03 A",
+   "R4 only 28 discharge cycles"
+  ],
+  "B0026": [
+   "R1 load current median |I| range 4.02-4.03 A",
+   "R4 only 28 discharge cycles"
+  ],
+  "B0027": [
+   "R1 load current median |I| range 3.97-3.97 A",
+   "R4 only 28 discharge cycles"
+  ],
+  "B0028": [
+   "R4 only 28 discharge cycles"
+  ],
+  "B0029": [
+   "R1 load current median |I| range 4.02-4.02 A",
+   "R4 only 40 discharge cycles"
+  ],
+  "B0030": [
+   "R1 load current median |I| range 4.02-4.03 A",
+   "R4 only 40 discharge cycles"
+  ],
+  "B0031": [
+   "R1 load current median |I| range 3.97-3.98 A",
+   "R4 only 40 discharge cycles"
+  ],
+  "B0032": [
+   "R1 load current median |I| range 3.99-3.99 A",
+   "R4 only 40 discharge cycles"
+  ],
+  "B0033": [
+   "R1 load current median |I| range 4.02-4.03 A",
+   "R3 features undefined on 11 cycles (first: #1 load-off before 1000 s)"
+  ],
+  "B0034": [
+   "R1 load current median |I| range 4.03-4.03 A",
+   "R3 features undefined on 1 cycles (first: #1 load-off before 1000 s)"
+  ],
+  "B0038": [
+   "R1 load current median |I| range 1.01-4.03 A",
+   "R2 ambient varies 24-44 C",
+   "R3 features undefined on 1 cycles (first: #1 load-off before 1000 s)",
+   "R4 only 47 discharge cycles"
+  ],
+  "B0039": [
+   "R1 load current median |I| range 1.00-3.98 A",
+   "R2 ambient varies 24-44 C",
+   "R3 features undefined on 12 cycles (first: #1 load-off before 1000 s)",
+   "R4 only 47 discharge cycles"
+  ],
+  "B0040": [
+   "R1 load current median |I| range 1.00-3.99 A",
+   "R2 ambient varies 24-44 C",
+   "R3 features undefined on 14 cycles (first: #1 load-off before 1000 s)",
+   "R4 only 47 discharge cycles"
+  ],
+  "B0041": [
+   "R1 load current median |I| range 1.01-4.03 A",
+   "R3 features undefined on 42 cycles (first: #1 load-off before 1000 s)"
+  ],
+  "B0042": [
+   "R1 load current median |I| range 1.01-4.03 A",
+   "R2 ambient varies 4-22 C",
+   "R3 features undefined on 31 cycles (first: #43 load-off before 1000 s)"
+  ],
+  "B0043": [
+   "R1 load current median |I| range 1.00-3.98 A",
+   "R2 ambient varies 4-22 C",
+   "R3 features undefined on 46 cycles (first: #42 load-off before 1000 s)"
+  ],
+  "B0044": [
+   "R1 load current median |I| range 1.00-3.99 A",
+   "R2 ambient varies 4-22 C",
+   "R3 features undefined on 46 cycles (first: #42 load-off before 1000 s)"
+  ],
+  "B0045": [
+   "R1 load current median |I| range 1.00-1.01 A"
+  ],
+  "B0046": [
+   "R1 load current median |I| range 1.01-1.01 A"
+  ],
+  "B0047": [
+   "R1 load current median |I| range 0.99-1.00 A"
+  ],
+  "B0048": [
+   "R1 load current median |I| range 1.00-1.00 A"
+  ],
+  "B0049": [
+   "R3 features undefined on 1 cycles (first: #17 load-off before 1000 s)",
+   "R4 only 25 discharge cycles"
+  ],
+  "B0050": [
+   "R3 features undefined on 12 cycles (first: #5 load-off before 1000 s)",
+   "R4 only 25 discharge cycles"
+  ],
+  "B0051": [
+   "R3 features undefined on 1 cycles (first: #17 load-off before 1000 s)",
+   "R4 only 25 discharge cycles"
+  ],
+  "B0052": [
+   "R3 features undefined on 21 cycles (first: #5 index 0 is out of bounds for axis 0 with size 0)",
+   "R4 only 25 discharge cycles"
+  ],
+  "B0053": [
+   "R3 features undefined on 1 cycles (first: #56 load-off before 1000 s)"
+  ],
+  "B0054": [
+   "R3 features undefined on 1 cycles (first: #103 load-off before 1000 s)"
+  ]
+ }
+}

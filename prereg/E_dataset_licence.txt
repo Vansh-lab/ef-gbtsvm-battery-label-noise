@@ -1,0 +1,44 @@
+PHASE E, STEP 2 - licence / terms texts of candidate datasets (PREREG_E.md section 6, R1)
+Collected 2026-11-11 from web page text only. No dataset file was downloaded; no capacity/label/SOH value was read.
+The quotes below were extracted by fetch sub-agents from the pages named; they were NOT opened by me directly.
+Re-check each page by eye before any dataset is chosen. Status "not stated" means: the sub-agent did not find it on the pages read.
+
+=== 1. CALCE CS2 and CX2 (University of Maryland, CALCE battery data archive) ===
+Pages: https://calce.umd.edu/data (current, footer "(c) 2026 University of Maryland")
+       https://web.calce.umd.edu/batteries/data/ (older page, footer "Copyright (c) 2014 by CALCE and the University of Maryland, All Rights Reserved")
+       https://web.calce.umd.edu/batteries/data.htm (only a redirect notice)
+Licence / redistribution clause: NONE found on either page.
+Only usage text (verbatim as quoted):
+  current: "We provide open access to our experimental test data on lithium-ion batteries, which includes continuous full and partial cycling, storage, dynamic driving profiles, open circuit voltage measurements, and impedance measurements."
+  current: "Use of this data for publication purposes should include references to the CALCE article(s) that describe the experiments conducted to generating the data."
+  older:   "Usage of this data for publication purposes should include references to the CALCE battery data base and at least 3 articles referenced by CALCE and/or other contributors to this data collective."
+The older page footer links to /general/web_disclaimer.htm (NOT read). Another page (IEEE DataPort "calce battery group 0",
+https://ieee-dataport.org/documents/calce-battery-group-0) asks: "Please cite the link to use this dataset:https://web.calce.umd.edu/batteries/data.htm" (from a search snippet).
+A Hugging Face mirror card states "license: other" because the source terms are custom (search snippet, https://huggingface.co/datasets/bsebench-org/calce-cx2-prismatic-aging-raw) - not CALCE's own statement.
+=> R1: no explicit licence. Same situation as NASA PCoE ("License not specified"). Needs the user's decision.
+
+=== 2. XJTU battery dataset (Wang et al., Nat Commun 15, 4332 (2024)) ===
+Pages: https://zenodo.org/records/10963339 ; https://wang-fujin.github.io/
+Zenodo, Rights: "License" -> "Creative Commons Attribution 4.0 International" (cc-by-4.0), Access "Open".
+Zenodo: "If you find this data helpful, please consider citing our paper:" Wang, F., Zhai, Z., Zhao, Z. et al. Physics-informed neural network for lithium-ion battery degradation stable modeling and prognosis. Nat Commun 15, 4332 (2024). https://doi.org/10.1038/s41467-024-48779-z
+Wang site footer: "Copyright (c) 2023. Xi'an Jiaotong University All rights reserved."  -> conflicts with CC BY 4.0 on Zenodo; neither page says which governs.
+Zenodo: "Other details can be found in "Data Introduction.pdf" file." (inside the 2.4 GB zip, NOT read)
+=> R1: CC BY 4.0 on the hosting record; caveat on the conflicting footer.
+
+=== 3. Oxford Battery Degradation Dataset 1 (Howey and Birkl, 2017) ===
+Pages: https://ora.ox.ac.uk/objects/uuid:03ba4b01-cfed-46d3-9b1a-7d4a7bdf6fac (DOI 10.5287/bodleian:KO2kdmYGg)
+       Readme: https://ora.ox.ac.uk/objects/uuid:03ba4b01-cfed-46d3-9b1a-7d4a7bdf6fac/files/m43cc05e7c5f1245f4895d9dbd495e52f
+Landing page: "Licence: ODC Open Database License (ODC-ODbL)" -> https://opendatacommons.org/licenses/odbl/1.0/index.html
+Readme: "These data are copyright (c) 2017, The Chancellor, Masters and Scholars of the University of Oxford, and the 'Oxford Battery Degradation Dataset 1' researchers. All rights reserved."
+Readme: "This 'Oxford Battery Degradation Dataset 1' is made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/"
+Readme disclaimer begins: "THIS DATA IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" ..."
+Readme citation: "If you make use of our data, please cite our dataset directly using its DOI, as well as the following PhD thesis: Christoph R. Birkl, "Diagnosis and Prognosis of Degradation in Lithium-Ion Batteries", PhD thesis, Department of Engineering Science, University of Oxford, 2017."
+=> R1: ODbL (share-alike on derived databases; attribution required).
+
+=== 4. HUST LFP dataset (Ma et al., 2022, DOI 10.1039/d2ee01676a) ===
+Pages read: https://arxiv.org/abs/2502.18807 and https://arxiv.org/html/2502.18807v7 (BatteryLife paper that re-uses it).
+Licence of the dataset: NOT STATED. The only licence on those pages is for the paper: "License: CC BY-NC-ND 4.0" (not the dataset).
+Hosting record: not found. Paper says "Other datasets were sourced from the links shared in the original papers." Possible places named but NOT opened:
+https://github.com/Ruifeng-Tan/BatteryLife ; https://doi.org/10.1039/D2EE01676A
+A web-search snippet claimed a Mendeley Data host, but the search results listed did not show the HUST record; unverified.
+=> R1: unknown.

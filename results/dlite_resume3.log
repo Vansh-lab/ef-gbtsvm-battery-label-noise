@@ -1,0 +1,75 @@
+frozen hashes OK
+SOH aligned with CSV: 636 rows, labels reproduced
+636 samples, 12 features, class balance [359 277]; folds=4; n_iter=150
+
+=== condition BND ===
+  fold 0: flipped 73/468 (15.6%), boundary set 146
+run0 EF-GBTSVM     ACC=90.48 BACC=91.62 F1=88.89 AUC=98.29 fit=7.27s  {'purity': 0.98, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run0 EF-GBTSVM-W   ACC=91.07 BACC=88.90 F1=87.39 AUC=99.24 fit=2.98s  {'purity': 0.95, 'n_hidden': 23, 'activation': 3, 'C1': 1e-05}
+run0 EF-GBTSVM-L   ACC=87.50 BACC=85.70 F1=82.93 AUC=97.70 fit=3.27s  {'purity': 0.95, 'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run0 EF-GBTSVM-A   ACC=84.52 BACC=80.30 F1=75.47 AUC=99.96 fit=1.48s  {'n_hidden': 63, 'activation': 2, 'C1': 1e-05}
+run0 EF-GBTSVM-L8  ACC=79.76 BACC=74.51 F1=66.00 AUC=96.39 fit=2.98s  {'purity': 0.95, 'n_hidden': 183, 'activation': 3, 'C1': 0.1}
+run0 EF-GBTSVM-J   ACC=73.81 BACC=70.68 F1=62.71 AUC=89.62 fit=2.53s  {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 2, 'C1': 0.001}
+run0 GBTSVM        ACC=84.52 BACC=80.30 F1=75.47 AUC=99.51 fit=2.37s  {'purity': 0.925, 'C1': 1e-05}
+run0 HF-GBTSVM     ACC=93.45 BACC=91.93 F1=91.06 AUC=99.48 fit=3.63s  {'purity': 0.98, 'n_hidden': 23, 'activation': 3, 'C1': 1e-05}
+run0 EF-TSVM       ACC=83.93 BACC=80.35 F1=75.68 AUC=93.72 fit=0.27s  {'n_hidden': 23, 'activation': 3, 'C1': 1e-05}
+run0 TSVM          ACC=97.62 BACC=97.24 F1=96.92 AUC=99.91 fit=0.93s  {'C1': 0.1}
+run0 SVM           ACC=91.07 BACC=88.64 F1=87.18 AUC=99.94 fit=0.02s  {'gamma': 0.0014251026703029992, 'C': 3}
+run0 RVFL          ACC=92.26 BACC=90.15 F1=89.08 AUC=99.94 fit=0.01s  {'n_hidden': 63, 'activation': 3, 'C': 0.01}
+run0 RandomForest  ACC=86.31 BACC=82.58 F1=78.90 AUC=92.67 fit=0.42s  {'n_estimators': 100, 'min_samples_leaf': 4, 'max_features': 'sqrt', 'max_depth': 3}
+run0 MLP           ACC=85.71 BACC=81.82 F1=77.78 AUC=99.94 fit=0.50s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (32,), 'alpha': 1.0, 'activation': 'relu'}
+run0 XGBoost       ACC=82.74 BACC=78.83 F1=73.39 AUC=93.70 fit=0.17s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 4, 'learning_rate': 0.1}
+  fold 0: checkpoint saved results\dlite_ckpt\BND_fold0.csv
+  fold 1: flipped 84/468 (17.9%), boundary set 168
+run1 EF-GBTSVM     ACC=92.86 BACC=90.37 F1=94.69 AUC=93.97 fit=3.75s  {'purity': 0.98, 'n_hidden': 23, 'activation': 2, 'C1': 0.0001}
+run1 EF-GBTSVM-W   ACC=95.83 BACC=94.91 F1=96.80 AUC=99.75 fit=3.06s  {'purity': 0.85, 'n_hidden': 23, 'activation': 4, 'C1': 1e-05}
+run1 EF-GBTSVM-L   ACC=95.83 BACC=94.91 F1=96.80 AUC=99.75 fit=10.89s  {'purity': 0.85, 'n_hidden': 23, 'activation': 4, 'C1': 1e-05}
+run1 EF-GBTSVM-A   ACC=68.45 BACC=55.83 F1=80.30 AUC=73.04 fit=1.76s  {'n_hidden': 63, 'activation': 2, 'C1': 100}
+run1 EF-GBTSVM-L8  ACC=92.86 BACC=94.44 F1=94.12 AUC=99.92 fit=3.06s  {'purity': 0.85, 'n_hidden': 143, 'activation': 3, 'C1': 1e-05}
+run1 EF-GBTSVM-J   ACC=93.45 BACC=94.91 F1=94.63 AUC=99.68 fit=4.08s  {'purity_offset': 0.1, 'n_hidden': 143, 'activation': 3, 'C1': 0.0001}
+run1 GBTSVM        ACC=85.71 BACC=88.52 F1=87.63 AUC=95.48 fit=3.90s  {'purity': 0.9, 'C1': 1e-05}
+run1 HF-GBTSVM     ACC=97.62 BACC=98.15 F1=98.11 AUC=100.00 fit=3.12s  {'purity': 0.85, 'n_hidden': 23, 'activation': 3, 'C1': 0.0001}
+run1 EF-TSVM       ACC=92.86 BACC=92.59 F1=94.39 AUC=98.77 fit=2.05s  {'n_hidden': 143, 'activation': 1, 'C1': 0.001}
+run1 TSVM          ACC=79.76 BACC=75.37 F1=85.22 AUC=89.92 fit=0.63s  {'C1': 1}
+run1 SVM           ACC=70.24 BACC=74.63 F1=71.91 AUC=94.35 fit=0.01s  {'gamma': 0.1193776641714437, 'C': 1}
+run1 RVFL          ACC=94.05 BACC=91.67 F1=95.58 AUC=97.82 fit=0.01s  {'n_hidden': 143, 'activation': 4, 'C': 1e-05}
+run1 RandomForest  ACC=95.83 BACC=94.54 F1=96.83 AUC=99.60 fit=1.08s  {'n_estimators': 300, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 5}
+run1 MLP           ACC=98.81 BACC=98.33 F1=99.08 AUC=100.00 fit=0.89s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64,), 'alpha': 1.0, 'activation': 'relu'}
+run1 XGBoost       ACC=91.67 BACC=89.44 F1=93.75 AUC=98.98 fit=0.42s  {'subsample': 0.7, 'n_estimators': 200, 'max_depth': 6, 'learning_rate': 0.3}
+  fold 1: checkpoint saved results\dlite_ckpt\BND_fold1.csv
+  fold 2: flipped 59/468 (12.6%), boundary set 118
+run2 EF-GBTSVM     ACC=72.62 BACC=80.60 F1=65.67 AUC=92.90 fit=2.23s  {'purity': 0.95, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run2 EF-GBTSVM-W   ACC=79.17 BACC=85.07 F1=71.54 AUC=97.87 fit=2.27s  {'purity': 0.95, 'n_hidden': 103, 'activation': 2, 'C1': 0.0001}
+run2 EF-GBTSVM-L   ACC=79.76 BACC=85.47 F1=72.13 AUC=97.89 fit=2.17s  {'purity': 0.95, 'n_hidden': 103, 'activation': 2, 'C1': 0.0001}
+run2 EF-GBTSVM-A   ACC=95.24 BACC=91.11 F1=90.24 AUC=100.00 fit=0.11s  {'n_hidden': 183, 'activation': 2, 'C1': 0.001}
+run2 EF-GBTSVM-L8  ACC=75.60 BACC=83.33 F1=68.70 AUC=99.78 fit=2.25s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 0.001}
+run2 EF-GBTSVM-J   ACC=72.62 BACC=80.60 F1=65.67 AUC=92.90 fit=2.53s  {'purity_offset': 0.05, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run2 GBTSVM        ACC=60.12 BACC=72.76 F1=57.32 AUC=96.51 fit=2.32s  {'purity': 0.9, 'C1': 0.1}
+run2 HF-GBTSVM     ACC=76.79 BACC=84.15 F1=69.77 AUC=99.84 fit=2.53s  {'purity': 0.95, 'n_hidden': 143, 'activation': 2, 'C1': 0.001}
+run2 EF-TSVM       ACC=98.21 BACC=97.37 F1=96.63 AUC=99.91 fit=0.74s  {'n_hidden': 143, 'activation': 2, 'C1': 0.1}
+run2 TSVM          ACC=97.02 BACC=97.97 F1=94.74 AUC=100.00 fit=0.54s  {'C1': 0.1}
+run2 SVM           ACC=86.31 BACC=90.65 F1=79.65 AUC=100.00 fit=0.02s  {'gamma': 0.020309176209047368, 'C': 300}
+run2 RVFL          ACC=100.00 BACC=100.00 F1=100.00 AUC=100.00 fit=0.01s  {'n_hidden': 183, 'activation': 2, 'C': 0.1}
+run2 RandomForest  ACC=85.71 BACC=90.24 F1=78.95 AUC=97.83 fit=1.88s  {'n_estimators': 500, 'min_samples_leaf': 8, 'max_features': 'log2', 'max_depth': 3}
+run2 MLP           ACC=84.52 BACC=89.43 F1=77.59 AUC=99.28 fit=1.47s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64, 32), 'alpha': 0.0001, 'activation': 'relu'}
+run2 XGBoost       ACC=87.50 BACC=91.46 F1=81.08 AUC=99.95 fit=0.11s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 2, 'learning_rate': 0.01}
+  fold 2: checkpoint saved results\dlite_ckpt\BND_fold2.csv
+  fold 3: flipped 72/504 (14.3%), boundary set 144
+run3 EF-GBTSVM     ACC=47.73 BACC=44.99 F1=27.37 AUC=66.19 fit=3.18s  {'purity': 0.925, 'n_hidden': 183, 'activation': 2, 'C1': 10}
+run3 EF-GBTSVM-W   ACC=78.79 BACC=81.08 F1=80.56 AUC=96.88 fit=3.56s  {'purity': 0.95, 'n_hidden': 183, 'activation': 2, 'C1': 100}
+run3 EF-GBTSVM-L   ACC=78.79 BACC=81.08 F1=80.56 AUC=96.88 fit=3.48s  {'purity': 0.95, 'n_hidden': 183, 'activation': 2, 'C1': 100}
+run3 EF-GBTSVM-A   ACC=94.70 BACC=95.27 F1=94.31 AUC=100.00 fit=0.10s  {'n_hidden': 183, 'activation': 2, 'C1': 0.001}
+run3 EF-GBTSVM-L8  ACC=77.27 BACC=74.14 F1=65.12 AUC=83.92 fit=3.52s  {'purity': 0.95, 'n_hidden': 103, 'activation': 10, 'C1': 10}
+run3 EF-GBTSVM-J   ACC=15.91 BACC=14.93 F1=6.72 AUC=9.20 fit=2.79s  {'purity_offset': 0.1, 'n_hidden': 183, 'activation': 2, 'C1': 100}
+run3 GBTSVM        ACC=56.82 BACC=50.86 F1=3.39 AUC=99.95 fit=1.31s  {'purity': 0.85, 'C1': 1e-05}
+run3 HF-GBTSVM     ACC=79.55 BACC=76.72 F1=69.66 AUC=99.98 fit=3.51s  {'purity': 0.95, 'n_hidden': 23, 'activation': 3, 'C1': 100}
+run3 EF-TSVM       ACC=78.03 BACC=76.86 F1=72.90 AUC=92.59 fit=0.75s  {'n_hidden': 103, 'activation': 10, 'C1': 0.1}
+run3 TSVM          ACC=88.64 BACC=87.07 F1=85.15 AUC=99.98 fit=0.73s  {'C1': 1}
+run3 SVM           ACC=100.00 BACC=100.00 F1=100.00 AUC=100.00 fit=0.02s  {'gamma': 0.008376776400682925, 'C': 0.1}
+run3 RVFL          ACC=77.27 BACC=74.14 F1=65.12 AUC=99.84 fit=0.01s  {'n_hidden': 63, 'activation': 10, 'C': 1}
+run3 RandomForest  ACC=84.09 BACC=82.08 F1=78.35 AUC=96.06 fit=0.40s  {'n_estimators': 100, 'min_samples_leaf': 1, 'max_features': None, 'max_depth': 5}
+run3 MLP           ACC=64.39 BACC=59.48 F1=31.88 AUC=90.75 fit=0.38s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (64, 32), 'alpha': 0.01, 'activation': 'tanh'}
+run3 XGBoost       ACC=78.79 BACC=75.86 F1=68.18 AUC=96.51 fit=0.36s  {'subsample': 0.7, 'n_estimators': 500, 'max_depth': 2, 'learning_rate': 0.3}
+  fold 3: checkpoint saved results\dlite_ckpt\BND_fold3.csv
+=== finished BND ===
+ALL CONDITIONS DONE

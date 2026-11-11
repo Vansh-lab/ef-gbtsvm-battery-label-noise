@@ -1,0 +1,117 @@
+=== D-lite claims (computed from results/dlite_*_runs.csv) ===
+Flip log (per fold): see results/dlite_flip_log.csv
+condition  fold  n_train  n_boundary  n_flipped  flip_pct  train_pos_after  test_untouched
+      N30     0      468         NaN        140 29.914530              227            True
+      N30     1      468         NaN        140 29.914530              213            True
+      N30     2      468         NaN        140 29.914530              236            True
+      N30     3      504         NaN        151 29.960317              244            True
+      N40     0      468         NaN        187 39.957265              230            True
+      N40     1      468         NaN        187 39.957265              234            True
+      N40     2      468         NaN        187 39.957265              233            True
+      N40     3      504         NaN        201 39.880952              258            True
+      BND     0      468       146.0         73 15.598291              182            True
+      BND     1      468       168.0         84 17.948718              165            True
+      BND     2      468       118.0         59 12.606838              231            True
+      BND     3      504       144.0         72 14.285714              211            True
+
+[N30] main pool k=15:
+  ACC: PF 92.92, rank 8/15, top SVM 97.63 (gap -4.71); tied for top: ['SVM']
+  BACC: PF 92.38, rank 6/15, top SVM 97.53 (gap -5.15); tied for top: ['SVM']
+  [sensitivity k=17] ACC: rank 10/17, top SVM 97.63
+  [sensitivity k=17] BACC: rank 7/17, top SVM 97.53
+  => PF is NOT best on this condition.
+
+[N40] main pool k=15:
+  ACC: PF 85.12, rank 5/15, top RandomForest 94.49 (gap -9.38); tied for top: ['RandomForest']
+  BACC: PF 80.83, rank 6/15, top RandomForest 93.86 (gap -13.03); tied for top: ['RandomForest']
+  [sensitivity k=17] ACC: rank 6/17, top EF-GBTSVM-J 96.23
+  [sensitivity k=17] BACC: rank 7/17, top EF-GBTSVM-J 94.65
+  => PF is NOT best on this condition.
+
+[BND] main pool k=15:
+  ACC: PF 81.52, rank 12/15, top RVFL 90.90 (gap -9.38); tied for top: ['RVFL']
+  BACC: PF 81.72, rank 11/15, top TSVM 89.41 (gap -7.69); tied for top: ['TSVM']
+  [sensitivity k=17] ACC: rank 12/17, top RVFL 90.90
+  [sensitivity k=17] BACC: rank 11/17, top TSVM 89.41
+  => PF is NOT best on this condition.
+
+Across all three conditions: no across-conditions 'best' claim; per-condition statements only.
+
+Mean ACC / BACC over folds (main + components + stump-fair):
+                          ACC   BACC     F1    AUC
+noise_pct model                                   
+N30       EF-GBTSVM     87.91  88.29  86.03  92.86
+          EF-GBTSVM-A   94.36  92.09  92.54  99.90
+          EF-GBTSVM-J   93.91  91.49  92.43  99.92
+          EF-GBTSVM-L   88.47  82.25  72.05  76.49
+          EF-GBTSVM-L8  93.67  93.42  93.01  99.11
+          EF-GBTSVM-PF  92.92  92.38  92.50  99.09
+          EF-GBTSVM-W   75.83  70.05  63.36  61.32
+          EF-TSVM       65.04  66.56  65.65  67.60
+          GBTSVM        75.80  77.12  73.68  89.49
+          HF-GBTSVM     91.77  85.91  76.08  99.75
+          MLP           93.34  89.92  87.11  99.83
+          RVFL          95.16  94.39  94.94  99.99
+          RandomForest  97.09  95.36  94.83  99.46
+          SVM           97.63  97.53  97.64  99.99
+          Stump-fair    95.90  94.77  94.75  94.77
+          TSVM          77.76  68.88  63.32  99.94
+          XGBoost       93.25  92.40  92.42  95.86
+N40       EF-GBTSVM     71.55  70.93  63.58  92.53
+          EF-GBTSVM-A   94.29  91.80  92.63  99.93
+          EF-GBTSVM-J   96.23  94.65  94.51  99.98
+          EF-GBTSVM-L   71.56  71.07  67.98  80.14
+          EF-GBTSVM-L8  81.99  78.86  72.07  88.80
+          EF-GBTSVM-PF  85.12  80.83  74.92  92.78
+          EF-GBTSVM-W   72.89  75.55  74.15  82.41
+          EF-TSVM       50.84  49.85  29.58  49.82
+          GBTSVM        67.91  66.46  55.52  79.81
+          HF-GBTSVM     56.16  65.45  62.37  86.52
+          MLP           74.62  72.97  61.75  92.32
+          RVFL          84.04  83.38  80.16  92.35
+          RandomForest  94.49  93.86  93.28  99.08
+          SVM           87.89  89.60  87.32  97.79
+          Stump-fair    92.00  93.28  90.36  93.28
+          TSVM          69.52  67.66  53.20  99.95
+          XGBoost       80.80  80.18  78.37  88.59
+BND       EF-GBTSVM     75.92  76.89  69.15  87.84
+          EF-GBTSVM-A   85.73  80.63  85.08  93.25
+          EF-GBTSVM-J   63.95  65.28  57.44  72.85
+          EF-GBTSVM-L   85.47  86.79  83.10  98.05
+          EF-GBTSVM-L8  81.37  81.61  73.48  95.00
+          EF-GBTSVM-PF  81.52  81.72  73.61  94.94
+          EF-GBTSVM-W   86.21  87.49  84.07  98.44
+          EF-TSVM       88.26  86.79  84.90  96.25
+          GBTSVM        71.79  73.11  55.95  97.86
+          HF-GBTSVM     86.85  87.74  82.15  99.82
+          MLP           83.36  82.27  71.58  97.49
+          RVFL          90.90  88.99  87.44  99.40
+          RandomForest  87.99  87.36  83.26  96.54
+          SVM           86.90  88.48  84.68  98.57
+          Stump-fair    75.84  73.33  55.55  73.33
+          TSVM          90.76  89.41  90.51  97.45
+          XGBoost       85.17  83.90  79.10  97.28
+
+Train-vs-test gap (train ACC on TRUE train labels minus test ACC), mean over folds:
+noise_pct       BND    N30    N40
+model                            
+EF-GBTSVM     12.31   1.70   4.87
+EF-GBTSVM-A    2.46   0.61   0.87
+EF-GBTSVM-J   22.33   2.81  -3.15
+EF-GBTSVM-L    4.44   6.08   9.44
+EF-GBTSVM-L8   6.46  -0.87  -0.99
+EF-GBTSVM-PF   6.05  -0.33  -1.50
+EF-GBTSVM-W    2.73  14.12   8.60
+EF-TSVM        1.46  16.81  22.37
+GBTSVM        16.41  14.44  10.98
+HF-GBTSVM      3.01  -0.05  18.45
+MLP            5.83   3.93  14.20
+RVFL           2.08   1.94   6.74
+RandomForest  -1.55  -1.56  -7.16
+SVM            7.38  -1.03   6.39
+Stump-fair    13.70   2.26   0.91
+TSVM           2.49  12.30  -4.23
+XGBoost        0.94  -3.38  -3.98
+  gap > 5 pp: EF-GBTSVM@BND=12.3; EF-GBTSVM-J@BND=22.3; EF-GBTSVM-L8@BND=6.5; EF-GBTSVM-PF@BND=6.0; GBTSVM@BND=16.4; MLP@BND=5.8; SVM@BND=7.4; Stump-fair@BND=13.7; EF-GBTSVM-L@N30=6.1; EF-GBTSVM-W@N30=14.1; EF-TSVM@N30=16.8; GBTSVM@N30=14.4; TSVM@N30=12.3; EF-GBTSVM-L@N40=9.4; EF-GBTSVM-W@N40=8.6; EF-TSVM@N40=22.4; GBTSVM@N40=11.0; HF-GBTSVM@N40=18.4; MLP@N40=14.2; RVFL@N40=6.7; SVM@N40=6.4
+
+Stump-oracle upper bound (not ranked): N30 98.20, N40 96.71, BND 91.49

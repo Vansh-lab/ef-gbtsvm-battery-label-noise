@@ -1,0 +1,3 @@
+B0036 n= 197 capacity finite>0: True degraded: 0 (0.0%) healthy: 197 (100.0%) R5 FAIL
+B0055 n= 102 capacity finite>0: True degraded: 0 (0.0%) healthy: 102 (100.0%) R5 FAIL
+B0056 n= 102 capacity finite>0: True degraded: 0 (0.0%) healthy: 102 (100.0%) R5 FAIL

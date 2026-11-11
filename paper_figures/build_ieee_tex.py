@@ -131,7 +131,11 @@ def inline(xml, cite=True):
     p = Inline(cite)
     p.feed(xml)
     p.flush()
-    return "".join(p.parts).strip()
+    out = "".join(p.parts).strip()
+    # a long unbreakable \texttt token (e.g. a SHA-256 hash) overflows the column; seqsplit lets
+    # it break across lines without changing the characters it contains
+    out = re.sub(r"\\texttt\{([^\\{}\s]{20,})\}", r"\\texttt{\\seqsplit{\1}}", out)
+    return out
 
 
 def plain(xml):
@@ -309,6 +313,7 @@ def build():
 \usepackage{{booktabs,tabularx}}
 \usepackage[hidelinks]{{hyperref}}
 \usepackage{{url}}
+\usepackage{{seqsplit}}           % breaks long unbreakable \texttt tokens (SHA-256 hashes) across lines
 \begin{{document}}
 \title{{{title}}}
 \author{{{auth}}}
@@ -391,3 +396,6 @@ if __name__ == "__main__":
     build()
     charts()
     print("wrote", sorted(os.listdir(OUT)))
+    import check_tex_complete                     # every doc sentence must survive the conversion
+    if check_tex_complete.main():
+        raise SystemExit("paper.tex is missing text from the doc; see MISSING lines above")

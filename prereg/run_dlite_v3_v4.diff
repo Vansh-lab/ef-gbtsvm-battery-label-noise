@@ -1,0 +1,29 @@
+--- prereg/run_dlite_v3_36b5cc49.py	2026-11-11 09:44:23.705537100 +0530
++++ run_dlite.py	2026-11-11 09:44:23.997778400 +0530
+@@ -157,6 +157,12 @@
+                 print(f"run{run}: skipped (train or test has a single class)", flush=True)
+                 continue
+             folds.append((run, tr, te, ytr))
++            ck = os.path.join(OUT, "dlite_ckpt", f"{cond}_fold{run}.csv")      # fold checkpoint (REPORT.md)
++            if os.path.exists(ck):
++                rows += pd.read_csv(ck).to_dict("records")
++                print(f"  fold {run}: loaded {ck} (already complete), skipping its model runs", flush=True)
++                continue
++            fold_rows = []
+             for mname, (est, grid) in build_models(seed, None, "equal").items():
+                 pipe = Pipeline([("scale", StandardScaler()), ("clf", est)])
+                 pgrid = {f"clf__{k}": v for k, v in grid.items()}
+@@ -180,8 +186,13 @@
+                          train_acc_clean=100 * accuracy_score(ytr_clean, ptr),
+                          params={k.replace("clf__", ""): v for k, v in best.items()})
+                 rows.append(m)
++                fold_rows.append(m)
+                 print(f"run{run} {mname:13s} ACC={m['ACC']:.2f} BACC={m['BACC']:.2f} F1={m['F1']:.2f} "
+                       f"AUC={m['AUC']:.2f} fit={train_time:.2f}s  {m['params']}", flush=True)
++            os.makedirs(os.path.dirname(ck), exist_ok=True)
++            pd.DataFrame(fold_rows).to_csv(ck + ".tmp", index=False)
++            os.replace(ck + ".tmp", ck)
++            print(f"  fold {run}: checkpoint saved {ck}", flush=True)
+         rows += stump_rows(X, y, groups, feats, folds, cond)
+         pd.DataFrame(rows).to_csv(os.path.join(OUT, f"dlite_{cond}_runs.csv"), index=False)
+         fl = os.path.join(OUT, "dlite_flip_log.csv")

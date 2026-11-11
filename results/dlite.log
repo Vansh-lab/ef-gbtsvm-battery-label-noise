@@ -1,0 +1,172 @@
+frozen hashes OK
+SOH aligned with CSV: 636 rows, labels reproduced
+636 samples, 12 features, class balance [359 277]; folds=4; n_iter=150
+
+=== condition N30 ===
+  fold 0: flipped 140/468 (29.9%), boundary set nan
+run0 EF-GBTSVM     ACC=66.67 BACC=66.67 F1=61.11 AUC=74.39 fit=11.18s  {'purity': 0.98, 'n_hidden': 103, 'activation': 10, 'C1': 0.1}
+run0 EF-GBTSVM-W   ACC=97.62 BACC=96.97 F1=96.88 AUC=99.96 fit=0.04s  {'purity': 0.65, 'n_hidden': 103, 'activation': 3, 'C1': 0.001}
+run0 EF-GBTSVM-L   ACC=98.21 BACC=97.99 F1=97.71 AUC=99.94 fit=0.04s  {'purity': 0.65, 'n_hidden': 143, 'activation': 10, 'C1': 0.001}
+run0 EF-GBTSVM-A   ACC=97.62 BACC=97.24 F1=96.92 AUC=99.81 fit=0.11s  {'n_hidden': 183, 'activation': 1, 'C1': 10}
+run0 EF-GBTSVM-L8  ACC=97.62 BACC=96.97 F1=96.88 AUC=99.94 fit=0.03s  {'purity': 0.65, 'n_hidden': 183, 'activation': 2, 'C1': 0.001}
+run0 EF-GBTSVM-J   ACC=98.81 BACC=99.02 F1=98.51 AUC=99.96 fit=0.08s  {'purity_offset': 0.05, 'n_hidden': 63, 'activation': 2, 'C1': 0.01}
+run0 GBTSVM        ACC=77.98 BACC=81.86 F1=78.11 AUC=99.78 fit=6.03s  {'purity': 0.85, 'C1': 0.1}
+run0 HF-GBTSVM     ACC=96.43 BACC=95.99 F1=95.38 AUC=99.18 fit=6.92s  {'purity': 0.95, 'n_hidden': 63, 'activation': 2, 'C1': 0.01}
+run0 EF-TSVM       ACC=90.48 BACC=87.88 F1=86.21 AUC=81.94 fit=0.45s  {'n_hidden': 143, 'activation': 2, 'C1': 0.1}
+run0 TSVM          ACC=97.02 BACC=96.48 F1=96.12 AUC=99.94 fit=0.44s  {'C1': 1}
+run0 SVM           ACC=98.81 BACC=99.02 F1=98.51 AUC=99.94 fit=0.01s  {'gamma': 0.020309176209047368, 'C': 0.3}
+run0 RVFL          ACC=98.21 BACC=97.99 F1=97.71 AUC=99.96 fit=0.00s  {'n_hidden': 23, 'activation': 3, 'C': 0.01}
+run0 RandomForest  ACC=97.62 BACC=96.97 F1=96.88 AUC=99.87 fit=1.37s  {'n_estimators': 500, 'min_samples_leaf': 8, 'max_features': None, 'max_depth': 3}
+run0 MLP           ACC=99.40 BACC=99.51 F1=99.25 AUC=99.94 fit=1.06s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64, 32), 'alpha': 1.0, 'activation': 'tanh'}
+run0 XGBoost       ACC=97.62 BACC=96.97 F1=96.88 AUC=99.96 fit=0.10s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 2, 'learning_rate': 0.01}
+  fold 1: flipped 140/468 (29.9%), boundary set nan
+run1 EF-GBTSVM     ACC=91.07 BACC=90.83 F1=92.96 AUC=98.87 fit=6.73s  {'purity': 0.95, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+run1 EF-GBTSVM-W   ACC=85.12 BACC=79.17 F1=89.63 AUC=99.92 fit=0.09s  {'purity': 0.65, 'n_hidden': 183, 'activation': 3, 'C1': 0.01}
+run1 EF-GBTSVM-L   ACC=92.26 BACC=89.17 F1=94.32 AUC=100.00 fit=0.08s  {'purity': 0.65, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM-A   ACC=92.26 BACC=89.17 F1=94.32 AUC=100.00 fit=0.10s  {'n_hidden': 183, 'activation': 1, 'C1': 100}
+run1 EF-GBTSVM-L8  ACC=92.26 BACC=89.17 F1=94.32 AUC=100.00 fit=0.08s  {'purity': 0.65, 'n_hidden': 143, 'activation': 2, 'C1': 1e-05}
+run1 EF-GBTSVM-J   ACC=89.29 BACC=85.00 F1=92.31 AUC=99.92 fit=0.12s  {'purity_offset': 0.05, 'n_hidden': 143, 'activation': 3, 'C1': 0.001}
+run1 GBTSVM        ACC=64.29 BACC=70.74 F1=63.41 AUC=58.67 fit=7.35s  {'purity': 0.95, 'C1': 1}
+run1 HF-GBTSVM     ACC=96.43 BACC=95.00 F1=97.30 AUC=100.00 fit=6.91s  {'purity': 0.95, 'n_hidden': 63, 'activation': 1, 'C1': 0.0001}
+run1 EF-TSVM       ACC=27.98 BACC=33.24 F1=20.92 AUC=11.73 fit=0.44s  {'n_hidden': 143, 'activation': 3, 'C1': 1}
+run1 TSVM          ACC=64.29 BACC=50.00 F1=78.26 AUC=100.00 fit=0.31s  {'C1': 1e-05}
+run1 SVM           ACC=97.02 BACC=95.83 F1=97.74 AUC=100.00 fit=0.01s  {'gamma': 0.008376776400682925, 'C': 0.3}
+run1 RVFL          ACC=94.05 BACC=91.67 F1=95.58 AUC=100.00 fit=0.00s  {'n_hidden': 143, 'activation': 2, 'C': 0.001}
+run1 RandomForest  ACC=99.40 BACC=99.17 F1=99.54 AUC=100.00 fit=0.91s  {'n_estimators': 300, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 3}
+run1 MLP           ACC=97.02 BACC=95.83 F1=97.74 AUC=99.38 fit=0.28s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (64, 32), 'alpha': 1.0, 'activation': 'tanh'}
+run1 XGBoost       ACC=83.93 BACC=84.91 F1=86.70 AUC=84.12 fit=0.37s  {'subsample': 0.7, 'n_estimators': 200, 'max_depth': 6, 'learning_rate': 0.3}
+  fold 2: flipped 140/468 (29.9%), boundary set nan
+run2 EF-GBTSVM     ACC=94.64 BACC=96.34 F1=90.91 AUC=98.16 fit=6.06s  {'purity': 0.85, 'n_hidden': 63, 'activation': 4, 'C1': 0.1}
+run2 EF-GBTSVM-W   ACC=69.05 BACC=47.86 F1=3.70 AUC=7.41 fit=5.88s  {'purity': 0.85, 'n_hidden': 183, 'activation': 1, 'C1': 0.01}
+run2 EF-GBTSVM-L   ACC=70.24 BACC=48.67 F1=3.85 AUC=6.63 fit=5.88s  {'purity': 0.85, 'n_hidden': 183, 'activation': 1, 'C1': 0.01}
+run2 EF-GBTSVM-A   ACC=92.86 BACC=86.67 F1=84.62 AUC=99.78 fit=0.08s  {'n_hidden': 63, 'activation': 1, 'C1': 1}
+run2 EF-GBTSVM-L8  ACC=94.64 BACC=96.34 F1=90.91 AUC=98.16 fit=5.87s  {'purity': 0.85, 'n_hidden': 63, 'activation': 4, 'C1': 0.1}
+run2 EF-GBTSVM-J   ACC=92.86 BACC=86.67 F1=84.62 AUC=99.78 fit=0.09s  {'purity_offset': 0.05, 'n_hidden': 63, 'activation': 1, 'C1': 0.1}
+run2 GBTSVM        ACC=90.48 BACC=82.22 F1=78.38 AUC=99.80 fit=5.98s  {'purity': 0.85, 'C1': 0.1}
+run2 HF-GBTSVM     ACC=75.00 BACC=53.33 F1=12.50 AUC=99.82 fit=7.03s  {'purity': 0.925, 'n_hidden': 103, 'activation': 10, 'C1': 0.1}
+run2 EF-TSVM       ACC=97.02 BACC=94.44 F1=94.12 AUC=100.00 fit=0.41s  {'n_hidden': 183, 'activation': 3, 'C1': 0.1}
+run2 TSVM          ACC=73.21 BACC=50.00 F1=0.00 AUC=99.84 fit=0.32s  {'C1': 1e-05}
+run2 SVM           ACC=100.00 BACC=100.00 F1=100.00 AUC=100.00 fit=0.01s  {'gamma': 0.003455107294592218, 'C': 10}
+run2 RVFL          ACC=98.21 BACC=96.67 F1=96.55 AUC=100.00 fit=0.01s  {'n_hidden': 103, 'activation': 3, 'C': 1e-05}
+run2 RandomForest  ACC=92.86 BACC=86.67 F1=84.62 AUC=97.99 fit=0.29s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 10}
+run2 MLP           ACC=84.52 BACC=71.11 F1=59.38 AUC=100.00 fit=0.19s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (16,), 'alpha': 0.1, 'activation': 'relu'}
+run2 XGBoost       ACC=95.24 BACC=91.11 F1=90.24 AUC=99.48 fit=0.12s  {'subsample': 1.0, 'n_estimators': 100, 'max_depth': 3, 'learning_rate': 0.03}
+  fold 3: flipped 151/504 (30.0%), boundary set nan
+run3 EF-GBTSVM     ACC=99.24 BACC=99.32 F1=99.15 AUC=100.00 fit=6.10s  {'purity': 0.85, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-W   ACC=51.52 BACC=56.20 F1=63.22 AUC=37.98 fit=6.97s  {'purity': 0.95, 'n_hidden': 183, 'activation': 10, 'C1': 100}
+run3 EF-GBTSVM-L   ACC=93.18 BACC=93.17 F1=92.31 AUC=99.37 fit=0.03s  {'purity': 0.65, 'n_hidden': 143, 'activation': 1, 'C1': 0.001}
+run3 EF-GBTSVM-A   ACC=94.70 BACC=95.27 F1=94.31 AUC=100.00 fit=0.11s  {'n_hidden': 183, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-L8  ACC=90.15 BACC=91.22 F1=89.92 AUC=98.32 fit=2.90s  {'purity': 0.75, 'n_hidden': 143, 'activation': 2, 'C1': 0.0001}
+run3 EF-GBTSVM-J   ACC=94.70 BACC=95.27 F1=94.31 AUC=100.00 fit=0.08s  {'purity_offset': 0.05, 'n_hidden': 23, 'activation': 10, 'C1': 1e-05}
+run3 GBTSVM        ACC=70.45 BACC=73.65 F1=74.84 AUC=99.72 fit=7.05s  {'purity': 0.9, 'C1': 1e-05}
+run3 HF-GBTSVM     ACC=99.24 BACC=99.32 F1=99.15 AUC=100.00 fit=6.19s  {'purity': 0.85, 'n_hidden': 63, 'activation': 2, 'C1': 0.0001}
+run3 EF-TSVM       ACC=44.70 BACC=50.68 F1=61.38 AUC=76.72 fit=0.56s  {'n_hidden': 63, 'activation': 4, 'C1': 100}
+run3 TSVM          ACC=76.52 BACC=79.05 F1=78.91 AUC=99.98 fit=0.39s  {'C1': 1e-05}
+run3 SVM           ACC=94.70 BACC=95.27 F1=94.31 AUC=100.00 fit=0.02s  {'gamma': 0.0001, 'C': 30}
+run3 RVFL          ACC=90.15 BACC=91.22 F1=89.92 AUC=100.00 fit=0.01s  {'n_hidden': 143, 'activation': 2, 'C': 0.01}
+run3 RandomForest  ACC=98.48 BACC=98.65 F1=98.31 AUC=99.98 fit=1.46s  {'n_estimators': 500, 'min_samples_leaf': 8, 'max_features': 'sqrt', 'max_depth': 3}
+run3 MLP           ACC=92.42 BACC=93.24 F1=92.06 AUC=100.00 fit=0.21s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (64,), 'alpha': 1.0, 'activation': 'tanh'}
+run3 XGBoost       ACC=96.21 BACC=96.62 F1=95.87 AUC=99.88 fit=0.14s  {'subsample': 0.7, 'n_estimators': 200, 'max_depth': 2, 'learning_rate': 0.01}
+=== finished N30 ===
+
+=== condition N40 ===
+  fold 0: flipped 187/468 (40.0%), boundary set nan
+run0 EF-GBTSVM     ACC=82.74 BACC=83.65 F1=80.00 AUC=94.01 fit=7.21s  {'purity': 0.98, 'n_hidden': 103, 'activation': 1, 'C1': 0.01}
+run0 EF-GBTSVM-W   ACC=97.62 BACC=97.24 F1=96.92 AUC=99.96 fit=0.03s  {'purity': 0.55, 'n_hidden': 63, 'activation': 3, 'C1': 1e-05}
+run0 EF-GBTSVM-L   ACC=97.62 BACC=97.24 F1=96.92 AUC=99.96 fit=0.04s  {'purity': 0.55, 'n_hidden': 63, 'activation': 3, 'C1': 1e-05}
+run0 EF-GBTSVM-A   ACC=97.62 BACC=97.24 F1=96.92 AUC=99.96 fit=0.09s  {'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+run0 EF-GBTSVM-L8  ACC=98.81 BACC=99.02 F1=98.51 AUC=99.96 fit=0.05s  {'purity': 0.55, 'n_hidden': 63, 'activation': 2, 'C1': 100}
+run0 EF-GBTSVM-J   ACC=97.62 BACC=97.24 F1=96.92 AUC=99.96 fit=0.08s  {'purity_offset': -0.05, 'n_hidden': 63, 'activation': 3, 'C1': 0.001}
+run0 GBTSVM        ACC=75.60 BACC=79.90 F1=76.30 AUC=99.79 fit=7.33s  {'purity': 0.925, 'C1': 1e-05}
+run0 HF-GBTSVM     ACC=76.79 BACC=80.88 F1=77.19 AUC=99.88 fit=6.96s  {'purity': 0.95, 'n_hidden': 63, 'activation': 3, 'C1': 0.1}
+run0 EF-TSVM       ACC=48.81 BACC=53.30 F1=53.26 AUC=63.31 fit=0.51s  {'n_hidden': 143, 'activation': 1, 'C1': 100}
+run0 TSVM          ACC=71.43 BACC=76.47 F1=73.33 AUC=99.94 fit=0.29s  {'C1': 1}
+run0 SVM           ACC=91.07 BACC=92.65 F1=89.80 AUC=99.94 fit=0.01s  {'gamma': 0.003455107294592218, 'C': 10}
+run0 RVFL          ACC=99.40 BACC=99.51 F1=99.25 AUC=99.96 fit=0.00s  {'n_hidden': 23, 'activation': 3, 'C': 0.01}
+run0 RandomForest  ACC=89.88 BACC=88.73 F1=86.61 AUC=96.85 fit=0.30s  {'n_estimators': 100, 'min_samples_leaf': 8, 'max_features': None, 'max_depth': 3}
+run0 MLP           ACC=92.26 BACC=93.63 F1=91.03 AUC=99.94 fit=0.23s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32, 16), 'alpha': 1.0, 'activation': 'tanh'}
+run0 XGBoost       ACC=90.48 BACC=88.68 F1=86.89 AUC=96.93 fit=0.09s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 2, 'learning_rate': 0.03}
+  fold 1: flipped 187/468 (40.0%), boundary set nan
+run1 EF-GBTSVM     ACC=62.50 BACC=70.46 F1=59.35 AUC=91.00 fit=7.40s  {'purity': 0.925, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM-W   ACC=53.57 BACC=54.63 F1=58.51 AUC=52.39 fit=6.53s  {'purity': 0.85, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM-L   ACC=55.95 BACC=56.48 F1=61.46 AUC=55.52 fit=6.81s  {'purity': 0.85, 'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM-A   ACC=90.48 BACC=86.67 F1=93.10 AUC=100.00 fit=0.09s  {'n_hidden': 23, 'activation': 1, 'C1': 1e-05}
+run1 EF-GBTSVM-L8  ACC=84.52 BACC=87.96 F1=86.32 AUC=84.06 fit=4.00s  {'purity': 0.75, 'n_hidden': 23, 'activation': 1, 'C1': 0.0001}
+run1 EF-GBTSVM-J   ACC=97.02 BACC=95.83 F1=97.74 AUC=100.00 fit=0.37s  {'purity_offset': 0.1, 'n_hidden': 183, 'activation': 1, 'C1': 0.001}
+run1 GBTSVM        ACC=57.74 BACC=64.17 F1=55.90 AUC=55.37 fit=7.11s  {'purity': 0.95, 'C1': 1}
+run1 HF-GBTSVM     ACC=64.88 BACC=71.20 F1=64.24 AUC=81.50 fit=6.60s  {'purity': 0.85, 'n_hidden': 63, 'activation': 1, 'C1': 0.001}
+run1 EF-TSVM       ACC=33.93 BACC=44.54 F1=12.60 AUC=43.40 fit=0.50s  {'n_hidden': 103, 'activation': 3, 'C1': 1e-05}
+run1 TSVM          ACC=69.05 BACC=75.93 F1=68.29 AUC=100.00 fit=0.43s  {'C1': 1}
+run1 SVM           ACC=64.88 BACC=70.46 F1=65.09 AUC=91.20 fit=0.02s  {'gamma': 'scale', 'C': 1}
+run1 RVFL          ACC=56.55 BACC=62.13 F1=55.76 AUC=69.43 fit=0.00s  {'n_hidden': 103, 'activation': 1, 'C': 0.01}
+run1 RandomForest  ACC=98.21 BACC=97.50 F1=98.63 AUC=99.97 fit=0.82s  {'n_estimators': 300, 'min_samples_leaf': 8, 'max_features': None, 'max_depth': 3}
+run1 MLP           ACC=35.71 BACC=43.70 F1=23.94 AUC=69.52 fit=0.41s  {'learning_rate_init': 0.01, 'hidden_layer_sizes': (32, 16), 'alpha': 0.1, 'activation': 'tanh'}
+run1 XGBoost       ACC=49.40 BACC=59.54 F1=37.96 AUC=85.97 fit=0.13s  {'subsample': 0.7, 'n_estimators': 100, 'max_depth': 4, 'learning_rate': 0.01}
+  fold 2: flipped 187/468 (40.0%), boundary set nan
+run2 EF-GBTSVM     ACC=80.36 BACC=64.74 F1=45.90 AUC=97.74 fit=7.04s  {'purity': 0.85, 'n_hidden': 23, 'activation': 1, 'C1': 0.01}
+run2 EF-GBTSVM-W   ACC=79.76 BACC=85.47 F1=72.13 AUC=90.19 fit=1.58s  {'purity': 0.65, 'n_hidden': 23, 'activation': 1, 'C1': 0.01}
+run2 EF-GBTSVM-L   ACC=60.71 BACC=55.56 F1=37.74 AUC=68.83 fit=1.63s  {'purity': 0.65, 'n_hidden': 23, 'activation': 1, 'C1': 0.01}
+run2 EF-GBTSVM-A   ACC=92.86 BACC=86.67 F1=84.62 AUC=99.78 fit=0.08s  {'n_hidden': 63, 'activation': 1, 'C1': 1}
+run2 EF-GBTSVM-L8  ACC=77.98 BACC=61.00 F1=37.29 AUC=96.62 fit=6.96s  {'purity': 0.85, 'n_hidden': 23, 'activation': 1, 'C1': 0.001}
+run2 EF-GBTSVM-J   ACC=94.05 BACC=88.89 F1=87.50 AUC=99.96 fit=1.38s  {'purity_offset': 0.1, 'n_hidden': 23, 'activation': 2, 'C1': 0.001}
+run2 GBTSVM        ACC=76.19 BACC=55.56 F1=20.00 AUC=99.69 fit=7.21s  {'purity': 0.85, 'C1': 1}
+run2 HF-GBTSVM     ACC=29.17 BACC=50.92 F1=42.51 AUC=73.32 fit=7.40s  {'purity': 0.95, 'n_hidden': 143, 'activation': 1, 'C1': 0.0001}
+run2 EF-TSVM       ACC=82.74 BACC=67.78 F1=52.46 AUC=86.72 fit=0.27s  {'n_hidden': 63, 'activation': 10, 'C1': 0.001}
+run2 TSVM          ACC=73.21 BACC=50.00 F1=0.00 AUC=99.86 fit=0.26s  {'C1': 1e-05}
+run2 SVM           ACC=99.40 BACC=99.59 F1=98.90 AUC=100.00 fit=0.01s  {'gamma': 'scale', 'C': 0.3}
+run2 RVFL          ACC=89.29 BACC=80.00 F1=75.00 AUC=100.00 fit=0.00s  {'n_hidden': 63, 'activation': 2, 'C': 0.1}
+run2 RandomForest  ACC=98.21 BACC=96.67 F1=96.55 AUC=99.96 fit=1.38s  {'n_estimators': 500, 'min_samples_leaf': 4, 'max_features': 'sqrt', 'max_depth': 3}
+run2 MLP           ACC=80.36 BACC=63.33 F1=42.11 AUC=99.84 fit=0.13s  {'learning_rate_init': 0.001, 'hidden_layer_sizes': (32,), 'alpha': 0.1, 'activation': 'tanh'}
+run2 XGBoost       ACC=86.31 BACC=81.49 F1=73.56 AUC=93.29 fit=0.19s  {'subsample': 1.0, 'n_estimators': 200, 'max_depth': 3, 'learning_rate': 0.03}
+  fold 3: flipped 201/504 (39.9%), boundary set nan
+Traceback (most recent call last):
+  File "C:\Users\VANSH SACHAN\Downloads\ee_gbtsvm\run_dlite.py", line 186, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "C:\Users\VANSH SACHAN\Downloads\ee_gbtsvm\run_dlite.py", line 161, in main
+    search.fit(Xtr, ytr, groups=gtr)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py", line 1336, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\model_selection\_search.py", line 1053, in fit
+    self._run_search(evaluate_candidates)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\model_selection\_search.py", line 2002, in _run_search
+    evaluate_candidates(
+    ~~~~~~~~~~~~~~~~~~~^
+        ParameterSampler(
+        ^^^^^^^^^^^^^^^^^
+            self.param_distributions, self.n_iter, random_state=self.random_state
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\model_selection\_search.py", line 999, in evaluate_candidates
+    out = parallel(
+        delayed(_fit_and_score)(
+    ...<13 lines>...
+        )
+    )
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\parallel.py", line 91, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 2072, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 1682, in _get_outputs
+    yield from self._retrieve()
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 1784, in _retrieve
+    self._raise_error_fast()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 1859, in _raise_error_fast
+    error_job.get_result(self.timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 758, in get_result
+    return self._return_or_raise()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\VANSH SACHAN\AppData\Local\Programs\Python\Python313\Lib\site-packages\joblib\parallel.py", line 773, in _return_or_raise
+    raise self._result
+joblib.externals.loky.process_executor.TerminatedWorkerError: A worker process managed by the executor was unexpectedly terminated. This could be caused by a segmentation fault while calling the function or by an excessive memory usage causing the Operating System to kill the worker.
+
+Detailed tracebacks of the workers should have been printed to stderr in the executor process if faulthandler was not disabled.

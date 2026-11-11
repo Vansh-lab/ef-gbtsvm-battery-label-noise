@@ -1,0 +1,219 @@
+=== Phase D-lite statistics ===
+Primary EF-GBTSVM-PF = per-fold Phase A selection {0: 'EF-GBTSVM-L8', 1: 'EF-GBTSVM-J', 2: 'EF-GBTSVM-L8', 3: 'EF-GBTSVM-L8'} (not re-selected).
+MAIN pool k=15; SENSITIVITY pool k=17 (adds L8, J).
+CAVEATS: 4 folds per condition -> per-condition Wilcoxon n=4, minimum two-sided p = 0.125, so no
+per-condition test can be significant. The 3 conditions reuse the same 4 batteries/features and
+B0005/6/7 share one recording: pooled N=12 observations are NOT independent; pooled p-values are
+descriptive only. Nemenyi is post-hoc and descriptive. Absence of significance != equivalence.
+
+########## MAIN POOL ##########
+--- pooled (4 folds x 3 conditions): k=15 models, N=12 observations, metric=ACC ---
+Friedman chi2 = 40.103, p = 0.0002459
+Nemenyi q(0.05,k=15) = 3.391, CD = 6.192 rank units
+Average ranks (1 = best):
+  SVM              4.54
+  RandomForest     4.83
+  RVFL             5.38
+  EF-GBTSVM-A      6.17
+  Stump-fair       7.25
+  MLP              7.42
+  EF-GBTSVM-L      8.00
+  XGBoost          8.17
+  HF-GBTSVM        8.33
+  EF-GBTSVM-PF     8.54 <- primary
+  TSVM             9.29
+  EF-GBTSVM-W      9.29
+  EF-GBTSVM        9.62
+  EF-TSVM         10.92  (significantly worse than rank-1 model)
+  GBTSVM          12.25  (significantly worse than rank-1 model)
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 14/14
+
+--- condition=N30: k=15 models, N=4 observations, metric=ACC ---
+Friedman chi2 = 25.005, p = 0.03452
+Nemenyi q(0.05,k=15) = 3.391, CD = 10.724 rank units
+Average ranks (1 = best):
+  SVM              3.00
+  RandomForest     5.00
+  Stump-fair       5.50
+  RVFL             5.50
+  MLP              5.88
+  XGBoost          7.12
+  EF-GBTSVM-A      7.25
+  HF-GBTSVM        7.62
+  EF-GBTSVM        8.00
+  EF-GBTSVM-L      8.00
+  EF-GBTSVM-PF     8.50 <- primary
+  EF-TSVM         11.75
+  EF-GBTSVM-W     11.88
+  TSVM            12.38
+  GBTSVM          12.62
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 14/14
+
+--- condition=N40: k=15 models, N=4 observations, metric=ACC ---
+Friedman chi2 = 28.734, p = 0.01135
+Nemenyi q(0.05,k=15) = 3.391, CD = 10.724 rank units
+Average ranks (1 = best):
+  EF-GBTSVM-A      3.38
+  RandomForest     3.75
+  SVM              4.25
+  Stump-fair       4.50
+  RVFL             5.50
+  EF-GBTSVM-PF     6.00 <- primary
+  XGBoost          8.38
+  MLP              8.62
+  EF-GBTSVM-L      9.25
+  EF-GBTSVM-W      9.62
+  EF-GBTSVM        9.88
+  TSVM            10.50
+  GBTSVM          11.25
+  HF-GBTSVM       12.12
+  EF-TSVM         13.00
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 14/14
+
+--- condition=BND: k=15 models, N=4 observations, metric=ACC ---
+Friedman chi2 = 19.009, p = 0.1646
+Nemenyi q(0.05,k=15) = 3.391, CD = 10.724 rank units
+Average ranks (1 = best):
+  TSVM             5.00
+  RVFL             5.12
+  HF-GBTSVM        5.25
+  RandomForest     5.75
+  SVM              6.38
+  EF-GBTSVM-W      6.38
+  EF-GBTSVM-L      6.75
+  MLP              7.75
+  EF-GBTSVM-A      7.88
+  EF-TSVM          8.00
+  XGBoost          9.00
+  EF-GBTSVM       11.00
+  EF-GBTSVM-PF    11.12 <- primary
+  Stump-fair      11.75
+  GBTSVM          12.88
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 14/14
+
+--- Wilcoxon signed-rank, EF-GBTSVM-PF vs each, pooled (nominal n=12, two-sided, exact/permutation) ---
+  EF-GBTSVM      W= 18.0  p=0.2061  Holm-p=1.0000  wins/losses/ties=7/4/1  mean diff=+8.06
+  EF-GBTSVM-A    W= 19.0  p=0.2402  Holm-p=1.0000  wins/losses/ties=4/7/1  mean diff=-4.94
+  EF-GBTSVM-L    W= 35.0  p=0.7910  Holm-p=1.0000  wins/losses/ties=4/8/0  mean diff=+4.69
+  EF-GBTSVM-W    W= 22.0  p=0.3652  Holm-p=1.0000  wins/losses/ties=6/5/1  mean diff=+8.21
+  EF-TSVM        W= 21.0  p=0.1763  Holm-p=1.0000  wins/losses/ties=7/5/0  mean diff=+18.47
+  GBTSVM         W=  4.0  p=0.0034  Holm-p=0.0479  wins/losses/ties=11/1/0  mean diff=+14.69
+  HF-GBTSVM      W= 27.5  p=0.3911  Holm-p=1.0000  wins/losses/ties=6/6/0  mean diff=+8.26
+  MLP            W= 37.0  p=0.9097  Holm-p=1.0000  wins/losses/ties=4/8/0  mean diff=+2.75
+  RVFL           W= 10.0  p=0.0820  Holm-p=0.9844  wins/losses/ties=1/9/2  mean diff=-3.51
+  RandomForest   W=  9.0  p=0.0312  Holm-p=0.4062  wins/losses/ties=2/9/1  mean diff=-6.67
+  SVM            W= 26.5  p=0.3496  Holm-p=1.0000  wins/losses/ties=3/9/0  mean diff=-4.29
+  Stump-fair     W= 22.5  p=0.6426  Holm-p=1.0000  wins/losses/ties=4/6/2  mean diff=-1.39
+  TSVM           W= 19.5  p=0.1338  Holm-p=1.0000  wins/losses/ties=9/3/0  mean diff=+7.17
+  XGBoost        W= 31.5  p=0.9180  Holm-p=1.0000  wins/losses/ties=5/6/1  mean diff=+0.11
+
+--- Wilcoxon signed-rank, EF-GBTSVM-PF vs each, condition=N30 (min p=0.125) (nominal n=4, two-sided, exact/permutation) ---
+  EF-GBTSVM      W=  3.0  p=1.0000  Holm-p=1.0000  wins/losses/ties=1/2/1  mean diff=+5.02
+  EF-GBTSVM-A    W=  1.0  p=0.5000  Holm-p=1.0000  wins/losses/ties=1/2/1  mean diff=-1.43
+  EF-GBTSVM-L    W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=+4.45
+  EF-GBTSVM-W    W=  0.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=3/0/1  mean diff=+17.10
+  EF-TSVM        W=  1.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+27.88
+  GBTSVM         W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=4/0/0  mean diff=+17.13
+  HF-GBTSVM      W=  5.0  p=1.0000  Holm-p=1.0000  wins/losses/ties=2/2/0  mean diff=+1.15
+  MLP            W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-0.42
+  RVFL           W=  0.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=0/3/1  mean diff=-2.23
+  RandomForest   W=  1.0  p=0.5000  Holm-p=1.0000  wins/losses/ties=1/2/1  mean diff=-4.17
+  SVM            W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=0/4/0  mean diff=-4.71
+  Stump-fair     W=  0.0  p=0.5000  Holm-p=1.0000  wins/losses/ties=0/2/2  mean diff=-2.98
+  TSVM           W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=4/0/0  mean diff=+15.17
+  XGBoost        W=  2.0  p=0.7500  Holm-p=1.0000  wins/losses/ties=1/2/1  mean diff=-0.32
+
+--- Wilcoxon signed-rank, EF-GBTSVM-PF vs each, condition=N40 (min p=0.125) (nominal n=4, two-sided, exact/permutation) ---
+  EF-GBTSVM      W=  1.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+13.57
+  EF-GBTSVM-A    W=  3.0  p=0.6250  Holm-p=1.0000  wins/losses/ties=2/2/0  mean diff=-9.17
+  EF-GBTSVM-L    W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+13.56
+  EF-GBTSVM-W    W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+12.23
+  EF-TSVM        W=  1.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+34.28
+  GBTSVM         W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=4/0/0  mean diff=+17.21
+  HF-GBTSVM      W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=4/0/0  mean diff=+28.96
+  MLP            W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=2/2/0  mean diff=+10.50
+  RVFL           W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=+1.08
+  RandomForest   W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-9.38
+  SVM            W=  5.0  p=1.0000  Holm-p=1.0000  wins/losses/ties=2/2/0  mean diff=-2.77
+  Stump-fair     W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-6.89
+  TSVM           W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=4/0/0  mean diff=+15.60
+  XGBoost        W=  2.5  p=0.5000  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+4.32
+
+--- Wilcoxon signed-rank, EF-GBTSVM-PF vs each, condition=BND (min p=0.125) (nominal n=4, two-sided, exact/permutation) ---
+  EF-GBTSVM      W=  3.0  p=0.6250  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+5.60
+  EF-GBTSVM-A    W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-4.21
+  EF-GBTSVM-L    W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=0/4/0  mean diff=-3.95
+  EF-GBTSVM-W    W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=0/4/0  mean diff=-4.69
+  EF-TSVM        W=  1.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-6.74
+  GBTSVM         W=  1.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+9.73
+  HF-GBTSVM      W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=0/4/0  mean diff=-5.33
+  MLP            W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-1.84
+  RVFL           W=  0.0  p=0.2500  Holm-p=1.0000  wins/losses/ties=0/3/1  mean diff=-9.38
+  RandomForest   W=  0.0  p=0.1250  Holm-p=1.0000  wins/losses/ties=0/4/0  mean diff=-6.47
+  SVM            W=  4.0  p=0.8750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-5.38
+  Stump-fair     W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=3/1/0  mean diff=+5.68
+  TSVM           W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-9.24
+  XGBoost        W=  2.0  p=0.3750  Holm-p=1.0000  wins/losses/ties=1/3/0  mean diff=-3.65
+
+--- pooled, BACC: k=15 models, N=12 observations, metric=BACC ---
+Friedman chi2 = 34.624, p = 0.001671
+Nemenyi q(0.05,k=15) = 3.391, CD = 6.192 rank units
+Average ranks (1 = best):
+  SVM              4.79
+  RandomForest     5.12
+  RVFL             5.75
+  EF-GBTSVM-A      6.25
+  Stump-fair       7.29
+  MLP              7.54
+  EF-GBTSVM-L      7.92
+  EF-GBTSVM-PF     8.21 <- primary
+  XGBoost          8.42
+  HF-GBTSVM        8.46
+  EF-GBTSVM-W      8.92
+  EF-GBTSVM        9.00
+  TSVM             9.33
+  EF-TSVM         10.67
+  GBTSVM          12.33  (significantly worse than rank-1 model)
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 14/14
+
+########## SENSITIVITY POOL (adds L8, J) ##########
+--- pooled (4 folds x 3 conditions): k=17 models, N=12 observations, metric=ACC ---
+Friedman chi2 = 41.690, p = 0.0004389
+Nemenyi q(0.05,k=17) = 3.458, CD = 7.130 rank units
+Average ranks (1 = best):
+  SVM              5.17
+  RandomForest     5.33
+  RVFL             5.96
+  EF-GBTSVM-A      7.00
+  Stump-fair       8.21
+  MLP              8.25
+  EF-GBTSVM-J      8.33 <- PF component
+  EF-GBTSVM-L      8.92
+  XGBoost          9.12
+  HF-GBTSVM        9.33
+  EF-GBTSVM-PF     9.46 <- primary
+  EF-GBTSVM-L8     9.71 <- PF component
+  EF-GBTSVM-W     10.46
+  TSVM            10.79
+  EF-GBTSVM       10.83
+  EF-TSVM         12.12
+  GBTSVM          14.00  (significantly worse than rank-1 model)
+Models NOT significantly different from EF-GBTSVM-PF (|rank diff| <= CD): 16/16
+
+--- Wilcoxon signed-rank, EF-GBTSVM-PF vs each, pooled (nominal n=12, two-sided, exact/permutation) ---
+  EF-GBTSVM      W= 18.0  p=0.2061  Holm-p=1.0000  wins/losses/ties=7/4/1  mean diff=+8.06
+  EF-GBTSVM-A    W= 19.0  p=0.2402  Holm-p=1.0000  wins/losses/ties=4/7/1  mean diff=-4.94
+  EF-GBTSVM-J    W= 21.5  p=0.9336  Holm-p=1.0000  wins/losses/ties=5/4/3  mean diff=+1.83
+  EF-GBTSVM-L    W= 35.0  p=0.7910  Holm-p=1.0000  wins/losses/ties=4/8/0  mean diff=+4.69
+  EF-GBTSVM-L8   W=  2.0  p=0.7500  Holm-p=1.0000  wins/losses/ties=2/1/9  mean diff=+0.84
+  EF-GBTSVM-W    W= 22.0  p=0.3652  Holm-p=1.0000  wins/losses/ties=6/5/1  mean diff=+8.21
+  EF-TSVM        W= 21.0  p=0.1763  Holm-p=1.0000  wins/losses/ties=7/5/0  mean diff=+18.47
+  GBTSVM         W=  4.0  p=0.0034  Holm-p=0.0547  wins/losses/ties=11/1/0  mean diff=+14.69
+  HF-GBTSVM      W= 27.5  p=0.3911  Holm-p=1.0000  wins/losses/ties=6/6/0  mean diff=+8.26
+  MLP            W= 37.0  p=0.9097  Holm-p=1.0000  wins/losses/ties=4/8/0  mean diff=+2.75
+  RVFL           W= 10.0  p=0.0820  Holm-p=1.0000  wins/losses/ties=1/9/2  mean diff=-3.51
+  RandomForest   W=  9.0  p=0.0312  Holm-p=0.4688  wins/losses/ties=2/9/1  mean diff=-6.67
+  SVM            W= 26.5  p=0.3496  Holm-p=1.0000  wins/losses/ties=3/9/0  mean diff=-4.29
+  Stump-fair     W= 22.5  p=0.6426  Holm-p=1.0000  wins/losses/ties=4/6/2  mean diff=-1.39
+  TSVM           W= 19.5  p=0.1338  Holm-p=1.0000  wins/losses/ties=9/3/0  mean diff=+7.17
+  XGBoost        W= 31.5  p=0.9180  Holm-p=1.0000  wins/losses/ties=5/6/1  mean diff=+0.11

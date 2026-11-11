@@ -1186,6 +1186,135 @@ rebuilt from the .mat files reproduces all 636 `degraded` labels; BND boundary s
 146 (73) / 168 (84) / 118 (59) / 144 (72). Single run in the background, log `results/dlite.log`,
 outputs `results/dlite_*`.
 
+### D-lite first-run crash and resume (deviation, 2026-11-07)
+
+First run (`run_dlite.py` sha256 `afd2e1d0...ebd5b`): **N30 completed** (`results/dlite_N30_runs.csv`, 17
+models x 4 folds); **N40 crashed in fold 3** (after 3 folds' models had run) with
+`joblib TerminatedWorkerError: a worker process was unexpectedly terminated` (OS kill / memory;
+exact cause unknown). No N40 or BND result file exists; the crash log is kept as
+`results/dlite_firstrun_crash.log`. Not a model/analysis bug and no D-lite result had been looked at.
+Handling: `run_dlite.py` was edited only to accept condition names on the command line (default = all
+three) and to merge instead of overwrite `dlite_flip_log.csv`; new sha256
+`66bfef23056a6341fd1b8054972fdd8d646ba733635e94d36c681052b941de84`. Models, grids, seeds, scorer, flips
+are untouched. N30 from the first run is kept; N40 and BND are run with
+`python run_dlite.py N40 BND` (log `results/dlite_resume.log`). Seeds are deterministic, so this equals
+a single uninterrupted run apart from the crash. If another crash occurs it is reported the same way.
+
+### D-lite script diff check (2026-11-07)
+
+`run_dlite.py` v1 (sha256 `afd2e1d0...ebd5b`) was overwritten by the resume edit; v1 was reconstructed by
+reversing exactly the three edits and its sha256 equals `afd2e1d034e1fa1401b38b4e21e13be0bdcb14d59a5d152d9fdef4c6754ebd5b`
+(`prereg/run_dlite_v1_reconstructed.py`). Diff v1 -> v2 (`66bfef23...de84`), `prereg/run_dlite_v1_v2.diff`
+(ignoring line endings): (1) `main()` reads optional condition names from `sys.argv` (default all three)
+plus an assert; (2) `for cond in conds` instead of `for cond in CONDITIONS`; (3) `dlite_flip_log.csv` is
+merged per condition instead of overwritten. **Unchanged:** `FROZEN` hashes and `check_frozen`, `soh_per_row`,
+`corrupt` (flip generation, seeds `1000 + fold`), `stump_rows`, the per-fold model loop (`build_models(seed,
+None, "equal")`, `GroupKFold`, `RandomizedSearchCV`, balanced-accuracy scoring, n_iter 150, n_jobs 4),
+metrics; PF selection lives in `dlite_analysis.py`/`phase_b_analysis.py` (frozen hash), also untouched.
+Side effect disclosed late: my Python edit converted the file's line endings from LF to CRLF, which is why
+the v2 hash differs from "v1 + three edits" byte-for-byte; the code content differs only by the three hunks.
+
+### D-lite resume #1 killed by machine reboot; resume #2 with --n-jobs 2 (deviation, 2026-11-07)
+
+Resume #1 (`python run_dlite.py N40 BND`, n_jobs 4, started 13:01) ran N40 folds 0 and 1 completely and
+was in fold 2 (3 models of fold 2 logged, last log write 16:15:45) when **the machine rebooted at 16:23:37**
+(Windows `LastBootUpTime`); no python process survived and the log has no traceback. The script writes a
+condition's CSV only when the whole condition finishes, so **no N40 result file exists** (no partial file
+to set aside); about 3 h of N40 work was lost. Log kept: `results/dlite_resume_killed_by_reboot.log`.
+No D-lite result was analysed. N30 (`dlite_N30_runs.csv` sha256 `f9f344047d46...`) and the N30 flip log
+(`f2d95d6485da...`) are untouched.
+Resume #2, started 2026-11-07 after this entry: `python run_dlite.py --n-jobs 2 N40 BND`, log
+`results/dlite_resume2.log`. Reason for n_jobs 2: the first run's worker kill (TerminatedWorkerError) and
+the slow, loaded machine. `run_dlite.py` edited only to parse `--n-jobs` (default stays 4): sha256
+`36b5cc496b78dc9186260fd5ce405a49ef2329cbfd1ff4d36a26e8231971dfeb` (from `66bfef23...de84`; diff: the arg
+parsing block and `n_jobs=n_jobs` in RandomizedSearchCV; copy of the previous version in
+`prereg/run_dlite_v2_66bfef23.py`). n_jobs only sets worker count; seeds, models, grids, flips, metrics unchanged.
+
+### D-lite fold-level checkpoint (deviation, 2026-11-11)
+
+Why: resume #1 was lost to a reboot and resume #2 stalled while the laptop slept (log last written 2026-11-08
+16:30, run later resumed by itself); the script only writes a condition's CSV when the whole condition ends, so
+any interruption loses all folds of that condition. What: `run_dlite.py` now writes the rows of each completed
+(condition, fold) to `results/dlite_ckpt/<cond>_fold<k>.csv` (atomic: .tmp then rename) and, on restart, loads
+and skips any (condition, fold) whose checkpoint exists. Only saving/skip logic; flips (`corrupt`), seeds, models,
+grids, scorer, metrics, PF/analysis are untouched. Diff `prereg/run_dlite_v3_v4.diff` (v3 = `36b5cc49...dfeb`,
+copy `prereg/run_dlite_v3_36b5cc49.py`): +6 lines before the model loop (path, load-and-continue, `fold_rows`),
+`fold_rows.append(m)`, +4 lines after the loop (write checkpoint). New sha256 of `run_dlite.py`:
+`aa34974cae94b07089f67fc112665834bb979af1302db77d1ea06339345fd9be`. The already-running resume #2 process
+(started from v3) does not have checkpoints; N40 folds 0-1 (15 models each) exist only in that process's memory and
+in `results/dlite_resume2.log`, in no CSV, and are not recovered from the log.
+Power settings (requested by Vansh, 2026-11-11, AC only): `powercfg /change standby-timeout-ac 0` (was already 0) and
+`powercfg /change hibernate-timeout-ac 0` (was 43200 s). DC (battery) values untouched: hibernate 10800 s. At
+check time the laptop was on battery (BatteryStatus 1, 39%). Windows Update / auto-restart settings were not changed.
+
+### D-lite: N40 complete; second reboot killed BND fold 0; BND restarted with checkpoints (2026-11-11)
+
+Resume #2 (v3 script, n_jobs 2) **finished N40** at 12:25: `results/dlite_N40_runs.csv` (68 rows = 17 models incl. Stump-fair/
+oracle x 4 folds) sha256 `8c463abeb6caa8409fb208a4f87ade5976c1a65552bee6cd06b60253717aaa7a`; flip log
+`results/dlite_flip_log.csv` sha256 `6d665985d59280d8893b381299f651e547e6fcdac0d63f909decf33a8de79378` (N30 140/140/140/151
+and N40 187/187/187/201 flipped; BND entries are written when BND finishes). N30 file unchanged
+(`f9f34404...`). The machine **rebooted again at 12:43:05** while BND fold 0 was in progress (about 6 models logged,
+log kept as `results/dlite_resume2_final.log`); no BND CSV exists, nothing was analysed. N40 was not rerun.
+Resume #3: `python run_dlite.py --n-jobs 2 BND` with the checkpoint version `aa34974c...fd9be`
+(per-fold checkpoints in `results/dlite_ckpt/`; log `results/dlite_resume3.log`). Same reason and same non-changes
+as the earlier entries (seeds, flips, models, grids, scorer, metrics untouched).
+
+### D-lite: all three conditions complete; analysis run (2026-11-11)
+
+BND finished 15:03 (resume #3, checkpoint script, no further interruption): `results/dlite_BND_runs.csv` (68 rows) sha256
+`95d4d3ef67c08617e3be4007f226652c30359b3f56605d4d0cefe726f231b394`; final flip log `results/dlite_flip_log.csv` sha256 `efc8b38b0b8ff665f6fa141bde1930b083d90f6faf5ab6e12085dcf7fa761f6f`
+(BND flips 73/84/59/72 of 468/468/468/504; boundary sets 146/168/118/144; test labels untouched on all 12 rows).
+Checkpoints `results/dlite_ckpt/BND_fold{0..3}.csv`. N30 `f9f34404...` and N40 `8c463abe...` unchanged.
+Analysis: `python dlite_analysis.py` crashed on its last footnote line (stump-oracle upper bound used `oracle.condition`, but the column
+had been renamed `noise_pct`) AFTER writing `dlite_stats.txt`; fixed that one expression (diff: `oracle.condition` -> `oracle.noise_pct`),
+new `dlite_analysis.py` sha256 `59941dd0799861a5eb22f77c1e7ddf8cd6ea6619a357d5fee01a3834eeb61bb1` (old `33a18146...`, copy `prereg/dlite_analysis_v1_33a18146.py`), rerun; stats file
+byte-identical to the crashed attempt (`results/dlite_stats_firstattempt.txt`), so no statistic or claim changed. Models were not rerun
+(analysis-only bug). Outputs: `dlite_stats.txt` `bf449b3fa6b9e93c22a235893e28d85ff145b18db484eb2569e156d82a6688b4`, `dlite_claims.txt` `e64e9f7e6ed47e62ab9caf4a72da7435fb690f3ffa6cf09b07707e4d92ecf70d`,
+`dlite_summary_table.csv`, `dlite_per_fold.csv`, full stdout `dlite_analysis_stdout.txt`.
+Claim table (PREREG_DLITE.md section 6), main pool k=15, mean over 4 folds: **PF is not best on N30, N40 or BND** (ACC rank 8/5/12,
+BACC rank 6/6/11; tops SVM / RandomForest / RVFL(ACC), TSVM(BACC)); no across-conditions claim. Paper document not touched.
+
+### Paper doc: D-lite section added (2026-11-11, Vansh: "Haan, section likho")
+
+In the Claude Docs paper (same URL), Section 6 Results, directly after Table 6: new "Heavier and boundary-concentrated noise
+(pre-registered stress test)" paragraph, Table 7 (PF ACC/BACC + rank, best entry, single-feature threshold for N30/N40/BND),
+a results paragraph (Friedman/Nemenyi/Wilcoxon/gap, all numbers from `results/dlite_*`), and a "Scope and execution" paragraph
+(not external validation; the 0-eligible fresh-cell attempt; interruptions and deviations). Written as a direct insert (new
+content), doc rev 221. Nothing else in the doc was edited. Not yet updated to match (left for Vansh): the Limitations bullet "Noise
+model" (says only symmetric random flips), Abstract/Conclusion, and the "Needs human review" list.
+
+### Paper doc: D-lite follow-up edits laid as suggestions (2026-11-11)
+
+Four suggestions (not yet accepted; anyone with edit access accepts them on their cards), doc revs 222-225: Abstract sentence on the
+stress test (`sg_5qg5pfdt7l`), Conclusion sentence (`sg_bx4mogjso1`), Limitations "Noise model" bullet addendum (`sg_5bnh32pabp`), and a
+"Needs human review" checklist item about pushing PREREG_DLITE.md, results/dlite_* and prereg/ to the public repo (`sg_z6c0kcrm8c`).
+Laid as suggestions because they change existing summary text. Numbers: PF ACC rank 8/5/12, 85.12 at 40%, random forest 94.49 (results/dlite_summary_table.csv).
+
+### Paper: suggestion to scope the "no significant difference" sentences; paper.tex rebuilt (2026-11-11)
+
+Suggestions `sg_jl1hfx7q6p` (Abstract) and `sg_5d01us79ke` (Conclusion) add "in the main 0% to 20% noise experiments" to the
+"no difference ... significant (Friedman p = 0.123)" / "no model is significantly better than another" sentences, so they do not clash with
+the stress test's pooled Friedman p = 0.0002 and Holm p = 0.048 (PF > GBTSVM). Pending, not accepted.
+`paper_figures/doc_latest.xml` was refreshed from doc rev 229 with the pending suggestions left out (ins removed, del kept); the
+previous export is `doc_latest_rev219.xml`, the export with suggestions applied is `doc_latest_with_suggestions.xml`.
+`python paper_figures/build_ieee_tex.py` rebuilt `paper/ieee/paper.tex` (backup of the old one: `paper_rev219_backup.tex`; 53,719 -> 60,391
+bytes; contains Table 6, Table 7 and the stress-test paragraphs). `check_tex_complete.py`: 630 sentences/cells/equation parts, PASS.
+`check_citations.py` (rev 219 vs rev 229): 34 cited paragraphs, no citation target changed, PASS. Page count: not measured, no TeX engine on this machine.
+
+### Paper: MiKTeX installed, paper.tex compiled, overfull box fixed, 11 pages (2026-11-11)
+
+Installed MiKTeX (user scope, via winget) because no TeX engine was on this machine; xelatex works (fontspec/texgyretermes,
+as build_ieee_tex.py already assumed). First compile found one real defect: the stress-test paragraph's SHA-256
+(fb412a6f...acbe1, 64 chars, no spaces) overflowed its column by 118.6pt as an unbreakable `\texttt{}` token. Fixed at the
+generator, not the doc: `build_ieee_tex.py`'s `inline()` now wraps any `\texttt{}` token of 20+ non-space characters in
+`\seqsplit{}` (new `\usepackage{seqsplit}`), so long hashes/ids break across lines; no character of any hash changed.
+Rebuilt, recompiled (2 xelatex passes): **0 overfull boxes** (was 1), 18 underfull (cosmetic, pre-existing, in reference-list
+line breaks, not fixed). `check_tex_complete.py` 630 parts PASS both before and after. Final: `paper/ieee/paper.pdf`, **11
+pages**, IEEEtran conference, A4, two-column -- at the top of the professor's stated 10-11 page range (Needs-human-review item),
+so no compression is offered or needed. Hashes: `build_ieee_tex.py` 4fbd5dc2286da5bdf04b...; `paper.tex` eaa64396a4479f3d2a83...;
+`paper.pdf` 7eb36af4524416f9f85a... (20-char prefixes; full hashes in the repo build). `overleaf_upload.zip` was also
+regenerated by the same build; not yet re-uploaded anywhere.
+
 ## Open questions for next session
 
 1. **A looser purity threshold fixes 20%-noise but breaks 10%-noise — needs a way to get both.**
@@ -1231,3 +1360,17 @@ outputs `results/dlite_*`.
    the search uses min(30, grid size). Answered: re-tuning the EF-GBTSVM family with 150 candidates
    does not close the gap (see "Tuning budget equalization"). Still open: RVFL and the ablations
    were not re-tuned.
+
+## Phase E pre-registration frozen (2026-11-11)
+PREREG_E.md approved by the user in chat on 2026-11-11 (file text unchanged since approval; its header still says DRAFT because editing it would change the hash). sha256: ecefed8e62d4f9c5659f6f778847a8678427524b8bc8271b4a01bd64e84356d7
+No Phase E code or run exists yet. Open decisions in PREREG_E.md section 7 are still unanswered; nothing runs until the user says yes.
+
+## ADDENDUM_E1.md approved (2026-11-11)
+ADDENDUM_E1.md (XJTU Batch 1 + Batch 2 dataset-specific rules) approved by the user in chat on 2026-11-11 (file text unchanged since approval; its header still says DRAFT). sha256: 41e1e33723672c780faf5b91dc9ddb3abb16dc76509d52c7c7bcaf1dee373719
+PREREG_E.md unchanged (sha256 above still matches). No XJTU file has been downloaded or extracted; the 2.4 GB download is a separate approval that has not been given. D-lite untouched.
+
+## XJTU download and documentation check (2026-11-11)
+`Battery Dataset.zip` (Zenodo 10963339) downloaded to `data/raw_xjtu/`; size 2,438,769,934 B, md5 `A635CEF9678E0DE21F9D5C1F78A4342C` equals the expected value. Only `Data Introduction-English.pdf` was extracted. Variable list (names/classes/dims only) of the 23 Batch-1/2 cells: all identical structure (`data` 1 x n_cycles struct with `system_time`, `relative_time_min`, `voltage_V`, `current_A`, `capacity_Ah`, `power_Wh`, `temperature_C`; `summary` struct with per-cycle `discharge_capacity_Ah` etc.). No value of any cell was read. Details and open items: `prereg/E_xjtu_doc_check.md`. ADDENDUM_E1.md unchanged (sha256 `41e1e337…3719`). D-lite untouched; features, labels and R2–R6 wait until D-lite is finished.
+
+**Deviation / limitation (to go into the paper):** the first cycle of every XJTU cell is a 0.2C capacity check. It is removed as irregular and the SOH reference is the second (1C) cycle. The authors' end-of-life ("below 80 % of initial value") refers to the 0.2C initial capacity, our `degraded` label (SOH < 0.80) to the 1C capacity. The two definitions are not identical.
+Capacity source for XJTU (user decision, 2026-11-11): `summary.discharge_capacity_Ah`, one source for all cells; supersedes the per-sample-max wording of ADDENDUM_E1.md section 6 (addendum file and hash unchanged). Recorded in `prereg/E_xjtu_doc_check.md` Part 4. No capacity value read yet.
