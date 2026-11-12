@@ -1,0 +1,107 @@
+R2: 23 candidate cells (Batch-1: 8, Batch-2: 15)
+  read Batch-1/2C_battery-1.mat: 390 cycles, unparsed=0, RSS 106->110 MB
+  read Batch-1/2C_battery-2.mat: 407 cycles, unparsed=0, RSS 110->112 MB
+  read Batch-1/2C_battery-3.mat: 393 cycles, unparsed=0, RSS 112->115 MB
+  read Batch-1/2C_battery-4.mat: 396 cycles, unparsed=0, RSS 115->117 MB
+  read Batch-1/2C_battery-5.mat: 403 cycles, unparsed=0, RSS 117->120 MB
+  read Batch-1/2C_battery-6.mat: 408 cycles, unparsed=0, RSS 120->122 MB
+  read Batch-1/2C_battery-7.mat: 402 cycles, unparsed=0, RSS 122->124 MB
+  read Batch-1/2C_battery-8.mat: 420 cycles, unparsed=0, RSS 124->127 MB
+  read Batch-2/3C_battery-1.mat: 299 cycles, unparsed=0, RSS 127->128 MB
+  read Batch-2/3C_battery-2.mat: 292 cycles, unparsed=0, RSS 128->130 MB
+  read Batch-2/3C_battery-3.mat: 286 cycles, unparsed=0, RSS 130->132 MB
+  read Batch-2/3C_battery-4.mat: 322 cycles, unparsed=0, RSS 132->133 MB
+  read Batch-2/3C_battery-5.mat: 297 cycles, unparsed=0, RSS 133->135 MB
+  read Batch-2/3C_battery-6.mat: 322 cycles, unparsed=0, RSS 135->137 MB
+  read Batch-2/3C_battery-7.mat: 319 cycles, unparsed=0, RSS 137->139 MB
+  read Batch-2/3C_battery-8.mat: 270 cycles, unparsed=0, RSS 139->141 MB
+  read Batch-2/3C_battery-9.mat: 287 cycles, unparsed=0, RSS 141->143 MB
+  read Batch-2/3C_battery-10.mat: 164 cycles, unparsed=0, RSS 143->146 MB
+  read Batch-2/3C_battery-11.mat: 131 cycles, unparsed=0, RSS 146->147 MB
+  read Batch-2/3C_battery-12.mat: 212 cycles, unparsed=0, RSS 147->148 MB
+  read Batch-2/3C_battery-13.mat: 226 cycles, unparsed=0, RSS 148->150 MB
+  read Batch-2/3C_battery-14.mat: 147 cycles, unparsed=0, RSS 150->152 MB
+  read Batch-2/3C_battery-15.mat: 168 cycles, unparsed=0, RSS 152->154 MB
+
+R3: dataset-wide median of non-first-cycle discharge |I| medians over 6938 cycles computed (value not printed; used only as a tolerance anchor).
+  Batch-1/2C_battery-1.mat: n_cycles=390 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-2.mat: n_cycles=407 irregular=1 (0.2%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-3.mat: n_cycles=393 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-4.mat: n_cycles=396 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-5.mat: n_cycles=403 irregular=1 (0.2%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-6.mat: n_cycles=408 irregular=1 (0.2%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-7.mat: n_cycles=402 irregular=1 (0.2%) temp_finite=True -> R3 PASS
+  Batch-1/2C_battery-8.mat: n_cycles=420 irregular=1 (0.2%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-1.mat: n_cycles=299 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-2.mat: n_cycles=292 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-3.mat: n_cycles=286 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-4.mat: n_cycles=322 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-5.mat: n_cycles=297 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-6.mat: n_cycles=322 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-7.mat: n_cycles=319 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-8.mat: n_cycles=270 irregular=1 (0.4%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-9.mat: n_cycles=287 irregular=1 (0.3%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-10.mat: n_cycles=164 irregular=1 (0.6%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-11.mat: n_cycles=131 irregular=1 (0.8%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-12.mat: n_cycles=212 irregular=1 (0.5%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-13.mat: n_cycles=226 irregular=1 (0.4%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-14.mat: n_cycles=147 irregular=1 (0.7%) temp_finite=True -> R3 PASS
+  Batch-2/3C_battery-15.mat: n_cycles=168 irregular=1 (0.6%) temp_finite=True -> R3 PASS
+
+R2: 23 cells, 23 groups after fingerprint matching -> PASS (needs >=8 cells, >=6 groups)
+
+R5 + R6 (R6 reads summary.discharge_capacity_Ah only now; no value printed):
+  Batch-1/2C_battery-1.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=389)
+  Batch-1/2C_battery-2.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=406)
+  Batch-1/2C_battery-3.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=392)
+  Batch-1/2C_battery-4.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=395)
+  Batch-1/2C_battery-5.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=402)
+  Batch-1/2C_battery-6.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=407)
+  Batch-1/2C_battery-7.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=401)
+  Batch-1/2C_battery-8.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=419)
+  Batch-2/3C_battery-1.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=298)
+  Batch-2/3C_battery-2.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=291)
+  Batch-2/3C_battery-3.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=285)
+  Batch-2/3C_battery-4.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=321)
+  Batch-2/3C_battery-5.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=296)
+  Batch-2/3C_battery-6.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=321)
+  Batch-2/3C_battery-7.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=318)
+  Batch-2/3C_battery-8.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=269)
+  Batch-2/3C_battery-9.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=286)
+  Batch-2/3C_battery-10.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=163)
+  Batch-2/3C_battery-11.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=130)
+  Batch-2/3C_battery-12.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=211)
+  Batch-2/3C_battery-13.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=225)
+  Batch-2/3C_battery-14.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=146)
+  Batch-2/3C_battery-15.mat: R5 3/3 finite -> PASS; R6 FAIL (n_regular_cycles=167)
+
+=== Summary: cell x (R2, R3, R5, R6) ===
+cell                       group  R2    R3    R5    R6   
+Batch-1/2C_battery-1.mat   g1     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-2.mat   g2     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-3.mat   g3     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-4.mat   g4     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-5.mat   g5     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-6.mat   g6     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-7.mat   g7     PASS  PASS  PASS  FAIL 
+Batch-1/2C_battery-8.mat   g8     PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-1.mat   g9     PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-2.mat   g10    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-3.mat   g11    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-4.mat   g12    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-5.mat   g13    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-6.mat   g14    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-7.mat   g15    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-8.mat   g16    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-9.mat   g17    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-10.mat  g18    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-11.mat  g19    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-12.mat  g20    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-13.mat  g21    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-14.mat  g22    PASS  PASS  PASS  FAIL 
+Batch-2/3C_battery-15.mat  g23    PASS  PASS  PASS  FAIL 
+
+Cells passing R2(dataset)+R3+R5+R6 all four: 0 / 23
+Groups among the cells that pass R3+R5+R6: 0
+
+wrote prereg/xjtu_label_free_results.json (pass/fail and counts only)

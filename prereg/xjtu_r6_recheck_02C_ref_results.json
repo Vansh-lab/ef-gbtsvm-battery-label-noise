@@ -1,0 +1,166 @@
+{
+ "reference": "cycle-1 (0.2C, authors' initial)",
+ "rows": [
+  {
+   "name": "Batch-1/2C_battery-1.mat",
+   "n_regular_after0": 389,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-2.mat",
+   "n_regular_after0": 406,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-3.mat",
+   "n_regular_after0": 392,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-4.mat",
+   "n_regular_after0": 395,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-5.mat",
+   "n_regular_after0": 402,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-6.mat",
+   "n_regular_after0": 407,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-7.mat",
+   "n_regular_after0": 401,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-1/2C_battery-8.mat",
+   "n_regular_after0": 419,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-1.mat",
+   "n_regular_after0": 298,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-2.mat",
+   "n_regular_after0": 291,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-3.mat",
+   "n_regular_after0": 285,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-4.mat",
+   "n_regular_after0": 321,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-5.mat",
+   "n_regular_after0": 296,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-6.mat",
+   "n_regular_after0": 321,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-7.mat",
+   "n_regular_after0": 318,
+   "r6_02C_ref_pass": false,
+   "reaches_080": true,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-8.mat",
+   "n_regular_after0": 269,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-9.mat",
+   "n_regular_after0": 286,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-10.mat",
+   "n_regular_after0": 163,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-11.mat",
+   "n_regular_after0": 130,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-12.mat",
+   "n_regular_after0": 211,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-13.mat",
+   "n_regular_after0": 225,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-14.mat",
+   "n_regular_after0": 146,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  },
+  {
+   "name": "Batch-2/3C_battery-15.mat",
+   "n_regular_after0": 167,
+   "r6_02C_ref_pass": false,
+   "reaches_080": false,
+   "class_balance_ok": false
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+  Batch-1/2C_battery-1.mat: n_regular=389 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-2.mat: n_regular=406 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-3.mat: n_regular=392 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-4.mat: n_regular=395 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-5.mat: n_regular=402 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-6.mat: n_regular=407 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-7.mat: n_regular=401 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-1/2C_battery-8.mat: n_regular=419 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-1.mat: n_regular=298 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-2.mat: n_regular=291 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-3.mat: n_regular=285 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-4.mat: n_regular=321 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-5.mat: n_regular=296 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-6.mat: n_regular=321 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-7.mat: n_regular=318 reaches_080=True class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-8.mat: n_regular=269 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-9.mat: n_regular=286 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-10.mat: n_regular=163 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-11.mat: n_regular=130 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-12.mat: n_regular=211 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-13.mat: n_regular=225 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-14.mat: n_regular=146 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+  Batch-2/3C_battery-15.mat: n_regular=167 reaches_080=False class_balance_ok=False -> R6(0.2C ref) FAIL
+
+R6 with 0.2C (cycle-1) reference: 0/23 cells PASS (reach SOH<0.80 AND class balance ok); 8/23 reach SOH<0.80 at all (regardless of class balance).
+No SOH or capacity value was printed.
+wrote prereg/xjtu_r6_recheck_02C_ref_results.json (pass/fail and counts only)
