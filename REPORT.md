@@ -1655,3 +1655,26 @@ Verified, not guessed:
 * Regenerated the Docs-export .pdf and .docx; all three deliverables (IEEE .pdf, Docs .pdf, .docx)
   now agree on the new numbering and DOIs (the Docs exports additionally carry the needs-review
   section, as before). No number, model or result was touched -- only citation numbering.
+
+## Push to public repo + submission summary (2026-11-13, Vansh: push + delivery package)
+
+Pushed REPORT.md, ADDENDUM_E1.md, PREREG_E.md and the 7 XJTU label-free check files (prereg/xjtu_*)
+to the public repo as commit 3abd562 (0ddd0e0..3abd562). File list confirmed before staging: exactly
+these 10 files, no .mat file or dataset archive. Re-verified the three deliverables (IEEE PDF, Docs
+PDF, docx) still consistent via pdftotext/docx-xml comparison -- unchanged since the last rebuild, 11
+pages. Wrote paper/README_FOR_SUBMISSION.md (not pushed to the repo; a local summary file) covering
+what the paper claims, what it does not, and the two items still needing Vansh himself (venue/
+template, ref [29] arXiv-only citation).
+
+## Author byline removed from paper.pdf (2026-11-13, Vansh: "paper.pdf me ... hata do")
+
+Deleted the byline paragraph ("Vansh Sachan / B.Tech, Electrical Engineering (3rd Year) / Faculty
+of Technology, University of Delhi") from the paper doc entirely (force delete, no concurrent
+edits to lose). build_ieee_tex.py crashed on the next build (it hardcoded extracting an author
+block containing the text "Vansh Sachan" to build \IEEEauthorblockN/A); fixed it to fall back to
+an empty \author{} when no byline paragraph exists, so the script does not silently assume a
+byline is always present. paper.tex/paper.pdf rebuilt (xelatex twice): still 11 pages, no overfull
+boxes, check_tex_complete.py PASS (635 sentences, -1 for the removed byline). Docs-export PDF and
+docx regenerated from the same doc state. Verified via pdftotext/docx-xml: the name, "B.Tech,
+Electrical Engineering (3rd Year)" and "Faculty of Technology, University of Delhi" appear zero
+times in any of the three deliverables; 95.25% and other key numbers unchanged.

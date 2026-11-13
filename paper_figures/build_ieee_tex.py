@@ -301,8 +301,10 @@ def build():
         i += 1
 
     bib = "\n".join(f"\\bibitem{{r{k}}} {r}" for k, r in enumerate(refs, 1))
-    auth = r"\IEEEauthorblockN{" + authors[0].replace(r"\textbf{", "").rstrip("}") + "}" \
-        + r"\IEEEauthorblockA{" + r" \\ ".join(authors[1:]) + "}"
+    # No byline block in the doc (name/affiliation removed on purpose) -> no \author content.
+    auth = "" if not authors else (
+        r"\IEEEauthorblockN{" + authors[0].replace(r"\textbf{", "").rstrip("}") + "}"
+        + r"\IEEEauthorblockA{" + r" \\ ".join(authors[1:]) + "}")
     doc = rf"""\documentclass[conference,a4paper]{{IEEEtran}}
 \usepackage{{amsmath,amssymb}}
 \usepackage{{fontspec}}           % Tectonic is XeTeX-based: IEEEtran's Times (ptm) has no TU shapes
