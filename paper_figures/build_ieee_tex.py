@@ -31,10 +31,13 @@ FIG_BLOBS = {"blob/c9f63a1a-5af7": "console_claims_main.png",
              "blob/c1407cd4-3f3c": "fig2_grid_comparison.png",
              "blob/9f046676-3f00": "fig3_train_test_gap.png",
              "blob/5e0d3663-2a71": "fig4_dlite_comparison.png",
-             "blob/653c3eb1-28e4": "fig5_class_prior.png"}
+             "blob/653c3eb1-28e4": "fig5_class_prior.png",
+             "blob/c5310c82-e5bc": "diagram_pf_architecture.png",
+             "blob/3558062a-7d40": "diagram_experiment_pipeline.png"}
 EMBED_FIGS = {"node/d118714c-1932": "fig_acc_by_noise.pdf", "node/c3fabf0f-db18": "fig_ranks.pdf"}
 WIDE = {"console_claims_main.png", "console_train_gap.png",
-        "console_wilcoxon_main.png", "fig3_train_test_gap.png"}     # figure* (both columns)
+        "console_wilcoxon_main.png", "fig3_train_test_gap.png",
+        "diagram_pf_architecture.png", "diagram_experiment_pipeline.png"}     # figure* (both columns)
 SKIP_SECTIONS = {"Needs human review"}
 
 # ---- text -> LaTeX ---------------------------------------------------------------------------

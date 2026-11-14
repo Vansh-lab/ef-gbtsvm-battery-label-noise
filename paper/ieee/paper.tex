@@ -1,0 +1,531 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\usepackage{amsmath,amssymb}
+\usepackage{fontspec}           % Tectonic is XeTeX-based: IEEEtran's Times (ptm) has no TU shapes
+\setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+  ItalicFont=*-italic, BoldItalicFont=*-bolditalic]   % Times clone, so the page count matches IEEE's Times layout
+\setmonofont{texgyrecursor}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, Scale=0.95]
+\usepackage{graphicx}
+\usepackage{booktabs,tabularx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{seqsplit}           % breaks long unbreakable \texttt tokens (SHA-256 hashes) across lines
+\begin{document}
+\title{A Leakage-Free, Fair Benchmark of EF-GBTSVM for Li-ion Battery Degradation Classification under Label Noise}
+\author{}
+\maketitle
+\begin{abstract}
+Battery health labels made by thresholding state of health (SOH) are uncertain near the threshold, so a classifier for Li-ion degradation should be judged under label noise and without information leaking from the test battery. We benchmark EF-GBTSVM, an enhanced-feature granular-ball twin support vector machine, on the NASA PCoE cells B0005, B0006, B0007 and B0018: 636 discharge cycles, labelled degraded below 0.80 SOH. We found that B0005, B0006 and B0007 share one recording, which makes whole-record features unreliable, so we use 12 physics-guided features computed only from the loaded part of each discharge.
+Every model is evaluated leave-one-battery-out, with battery-grouped nested tuning, the same budget of at most 150 hyperparameter candidates, and 0\%, 10\% or 20\% of training labels flipped. The EF-GBTSVM configuration chosen on each fold by inner cross-validation (EF-GBTSVM-PF) reaches 95.25\%, 95.08\% and 95.28\% mean accuracy. Its mean accuracy is 0.42, 8.41 and 0.57 points above the original EF-GBTSVM's, but no difference is statistically significant. At 0\% and 20\% noise the gain is smaller than the swings between test batteries (PF wins, loses and ties on 2/1/1 and 3/1/0 batteries). At 10\% it comes from three batteries; on two of them the setting PF used also lies in the original model's grid but was not among the 150 candidates its random search drew. PF's mean train-test gap is at most 2.21 points.
+EF-GBTSVM-PF is not the best model. It ranks 11th (tied with two other variants), 10th and 6th of 15; random forest has the best pooled rank; and a single-feature threshold tuned by the same protocol matches or beats it at every noise level. In a pre-registered stress test with 30\% and 40\% random flips and boundary-concentrated noise, PF is again not best (accuracy rank 8, 5 and 12 of 15), and its accuracy falls to 85.12\% at 40\% noise. In the main 0\% to 20\% noise experiments, with four batteries, no difference among the 15 models is statistically significant (Friedman p = 0.123). We therefore report a fair, reproducible benchmark, not a claim of superiority.
+\end{abstract}
+\begin{IEEEkeywords}
+granular ball, twin support vector machine, label noise, lithium-ion battery, state of health, data leakage, benchmark
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+
+Battery health monitoring decides when a Li-ion cell should be retired. With public ageing data such as the NASA PCoE battery data set \cite{r10}, data-driven estimation of state of health (SOH) and lifetime is an active field \cite{r22}, and early-cycle measurements can already separate short-lived from long-lived cells \cite{r23}. Many applications need only a health class: is the cell still healthy, or has it degraded below an SOH threshold?
+
+Labels made by thresholding SOH are uncertain for cycles near the threshold, so a classifier for this task should be judged under label noise. Learning from noisy labels is a well-studied problem \cite{r17}. Granular-ball computing replaces individual samples by balls of nearby samples and was proposed for efficient and robust classification \cite{r24}. The granular ball twin support vector machine (GBTSVM) \cite{r30} trains a twin SVM on ball centres, and EF-GBTSVM \cite{r29} adds random enhanced features to the centres and reports results under label noise.
+
+Benchmarks can mislead when information about the test data reaches the model during training or selection \cite{r15}. A survey of machine-learning-based science found reports of leakage in 17 fields, affecting 294 papers, and in one case study complex models no longer performed substantively better than logistic regression once the leakage was corrected \cite{r26}. We met two leakage risks on the NASA cells. First, three of the four cells share one recording, so whole-record features carry another cell's timing. Second, choosing one model variant using results from all folds lets every test battery's labels influence the variant tested on it.
+
+This paper asks a narrow question: under a protocol with no test leakage and an equal tuning budget, how does EF-GBTSVM compare with its own family and with standard classifiers? Our contributions are:
+
+\begin{enumerate}
+\item A leakage audit of NASA cells B0005, B0006, B0007 and B0018, and 12 physics-guided features computed only from the loaded part of each discharge.
+\item A benchmark of 15 models: EF-GBTSVM, its variants W, L and A, the per-fold EF-GBTSVM-PF, the ablations GBTSVM, HF-GBTSVM, EF-TSVM and TSVM, RBF-SVM, RVFL, random forest, a multilayer perceptron, XGBoost and a single-feature threshold. All use leave-one-battery-out testing, battery-grouped nested tuning, the same budget and 0\%, 10\% and 20\% label noise.
+\item A per-fold, inner-CV selection of the EF-GBTSVM variant (EF-GBTSVM-PF) that uses no test labels. Its mean accuracy is above the original EF-GBTSVM's at every noise level (by 0.42, 8.41 and 0.57 points), but none of these differences is significant: the 0\% and 20\% gains are within the swings between test batteries, and part of the 10\% gain reflects which candidates the original model's random search drew. It is not the best model.
+\item Friedman, Nemenyi and Wilcoxon tests reported with their limits for four batteries, a train-versus-test overfitting check, and the code that produces every number.
+\end{enumerate}
+
+\section{Related work}
+
+\textbf{Granular-ball computing.} Xia et al. \cite{r24} describe data by granular balls, each summarised by a centre and a radius, and train classifiers on the balls rather than on every sample, for efficiency and robustness. GBSVM \cite{r32} builds a support vector machine whose inputs are granular balls; that paper corrects errors in the original GBSVM model, derives the dual and solves it with particle swarm optimisation and sequential minimal optimisation. GBTSVM \cite{r30} brings balls into the twin SVM: each class is covered by balls, and the two hyperplanes are fitted to ball centres, with the ball radii entering the constraints. Pin-GBTSVM \cite{r31} replaces the hinge loss with the pinball loss to reduce sensitivity to noise, and adds a large-scale variant that needs no matrix inversion. EF-GBTSVM \cite{r29} maps the ball centres through a random hidden layer, concatenates the result with the centres, and fits a twin SVM in that enhanced space; its experiments include 5\% to 20\% label noise.
+
+\textbf{Twin support vector machines.} The SVM \cite{r5} separates two classes with one maximum-margin hyperplane. The twin SVM (TWSVM) \cite{r9} instead fits two nonparallel hyperplanes, each close to one class and far from the other, by solving two smaller quadratic programs. The twin bounded SVM \cite{r13} adds a regularisation term to each subproblem, so that structural risk is minimised, and speeds up training with successive over-relaxation. A recent review covers the many TWSVM variants and their applications \cite{r28}. Because the hinge loss makes TWSVM sensitive to noise, Pin-TSVM \cite{r21} uses the pinball loss and analyses its insensitivity to noise points.
+
+\textbf{Randomised feature maps.} The random vector functional link (RVFL) network \cite{r4} assigns hidden-layer weights at random, keeps them fixed, and links inputs directly to the output, so only the output weights are learned. Suganthan and Katuwal \cite{r25} identify the original works on randomisation-based feedforward networks, from Schmidt et al.'s 1992 network to the 1994 closed-form solution for RVFL with direct input-output links. A review by Malik et al. \cite{r27} lists fast training, the direct links and universal approximation as RVFL's strengths, and surveys shallow, ensemble and deep variants. EF-GBTSVM borrows the RVFL hidden layer to enrich the ball centres.
+
+\textbf{Learning battery health.} Data-driven SOH estimation and lifetime prediction for Li-ion batteries is reviewed in \cite{r22}. Severson et al. \cite{r23} cycled 124 commercial cells and, from early-cycle discharge voltage features, classified cells into two lifetime groups with 4.9\% test error using the first five cycles. Kernel and Bayesian methods have long been used on battery prognostics: Saha et al. \cite{r11} examine relevance vector machines and particle filters for predicting remaining useful life with uncertainty bounds, and Li et al. \cite{r18} predict SOH and remaining life with a relevance vector machine on denoised time series. A capacity threshold is the usual end-of-life rule; manufacturers typically recommend replacing a traction battery when 70\% to 80\% of its capacity remains \cite{r14}. We label a cycle degraded below 0.80 SOH.
+
+\textbf{Label noise.} In the random classification noise model, each training label is flipped independently at random \cite{r3}; under that model, choosing the rule most consistent with the sample suffices when fewer than half the labels are flipped. Natarajan et al. \cite{r16} study class-conditional noise, where the flip rate depends on the class, and show that some weighted SVM and logistic losses are provably noise-tolerant. The survey in \cite{r17} reviews noise-robust, noise-cleansing and noise-tolerant learning. Our experiments inject symmetric random flips into the training labels only.
+
+\textbf{Evaluation and leakage.} Kaufman et al. \cite{r15} define leakage as the introduction of information about the target that should not legitimately be available to the model. Kapoor and Narayanan \cite{r26} show how widespread it is and how it leads to overoptimistic conclusions. Reporting the cross-validation error of a model tuned by that same cross-validation is optimistically biased \cite{r8}, and over-fitting a selection criterion can cost as much as the differences between learning algorithms \cite{r12}; \cite{r8} recommends nested cross-validation as the remedy, and \cite{r12} discusses ways to avoid this selection bias. For comparing many classifiers, Dem\v{s}ar \cite{r7} recommends the Friedman test with its post-hoc tests and introduces critical-difference diagrams. Benavoli et al. \cite{r19} show that mean-rank post-hoc results depend on which other models are in the pool, and recommend pairwise tests such as the Wilcoxon signed-rank test; we report both.
+
+\section{Method}
+
+We use our own re-implementation of EF-GBTSVM, which follows the formulation of Quadir et al. \cite{r29}; the equations below restate that formulation in our notation, and the end of this section lists where our code differs.
+
+\textbf{Granular balls.} Let the training set be \{($x_i$, $y_i$)\}, i = 1, \ldots{}, n, with $x_i$ a row vector in $\mathbb{R}^{m}$ and $y_i$ $\in$ \{+1, $-$1\}. A granular ball $GB_j$ holds $n_j$ samples; its centre $c_j$, label $t_j$ and purity $\pi_j$ are
+
+\begin{equation}
+\begin{gathered}
+c_j=\frac{1}{n_j}\sum_{x_s\in GB_j}x_s \\ t_j=\arg\max_{c\in\{\pm1\}}\bigl|\{x_s\in GB_j:\ y_s=c\}\bigr| \\ \pi_j=\frac{1}{n_j}\max_{c\in\{\pm1\}}\bigl|\{x_s\in GB_j:\ y_s=c\}\bigr|
+\end{gathered}
+\end{equation}
+
+Ball generation starts from the whole training set as one ball and splits every ball whose purity is below the threshold $\tau$ into two balls by 2-means clustering, until no impure ball is left \cite{r30}, \cite{r29}. Conceptually it solves
+
+\begin{equation}
+\begin{gathered}
+\min\ \vartheta_1\,\frac{n}{\sum_{j=1}^{k}|GB_j|}+\vartheta_2\,k \\ \text{s.t.}\ \pi_j\ge\tau,\quad j=1,\dots,k
+\end{gathered}
+\end{equation}
+
+where k is the number of balls and $\vartheta_{1}$, $\vartheta_{2}$ are weights. The purity threshold $\tau$ is the setting this paper studies: a high $\tau$ keeps splitting around flipped labels, and a low $\tau$ lets impure balls through.
+
+\textbf{Enhanced features.} Stack the k centres as C $\in$ $\mathbb{R}^{k\times m}$. A random hidden layer with weights W $\in$ $\mathbb{R}^{m\times h}$, bias b $\in$ $\mathbb{R}^{h}$ and activation $\phi$ is drawn once and never trained, as in RVFL \cite{r4}:
+
+\begin{equation}
+\begin{gathered}
+Z=\phi\bigl(CW+\mathbf{1}\,b^{\top}\bigr)\in\mathbb{R}^{k\times h} \\ T=\bigl[\,Z,\ C\,\bigr]\in\mathbb{R}^{k\times(h+m)}
+\end{gathered}
+\end{equation}
+
+$T_{1}$ holds the rows of T for balls labelled +1 and $T_{2}$ those labelled $-$1. A test point x is mapped the same way, $\psi$(x) = [$\phi(xW+b^{\top})$, x].
+
+\textbf{Twin hyperplanes.} With vectors of ones $e_{1}$, $e_{2}$ and penalties $d_{1}$, $d_{2}$ > 0, EF-GBTSVM solves two problems, one per hyperplane \cite{r29}:
+
+\begin{equation}
+\begin{gathered}
+\min_{w_1,b_1}\ \tfrac12\bigl\lVert T_1w_1+e_1b_1\bigr\rVert^2+d_1\,e_2^{\top}\xi_2 \\ \text{s.t.}\ -(T_2w_1+e_2b_1)+\xi_2\ge e_2,\quad \xi_2\ge 0
+\end{gathered}
+\end{equation}
+
+\begin{equation}
+\begin{gathered}
+\min_{w_2,b_2}\ \tfrac12\bigl\lVert T_2w_2+e_2b_2\bigr\rVert^2+d_2\,e_1^{\top}\xi_1 \\ \text{s.t.}\ (T_1w_2+e_1b_2)+\xi_1\ge e_1,\quad \xi_1\ge 0
+\end{gathered}
+\end{equation}
+
+Each hyperplane stays close to the balls of its own class and pushed, through a soft constraint with slack, to give the other class's balls a value of at most $-$1 (plane 1) or at least +1 (plane 2). GBTSVM \cite{r30} solves the same pair on raw centres, with the ball radii added to the right-hand sides of the constraints; EF-GBTSVM has no radius term. Writing F = [$T_{1}$ $e_{1}$], E = [$T_{2}$ $e_{2}$] and adding a small ridge $\delta$I to avoid a singular inverse, the duals are
+
+\begin{equation}
+\begin{gathered}
+\max_{\alpha}\ e_2^{\top}\alpha-\tfrac12\,\alpha^{\top}E\,(F^{\top}F+\delta I)^{-1}E^{\top}\alpha \\ \text{s.t.}\ 0\le\alpha\le d_1e_2
+\end{gathered}
+\end{equation}
+
+\begin{equation}
+\begin{gathered}
+\max_{\gamma}\ e_1^{\top}\gamma-\tfrac12\,\gamma^{\top}F\,(E^{\top}E+\delta I)^{-1}F^{\top}\gamma \\ \text{s.t.}\ 0\le\gamma\le d_2e_1
+\end{gathered}
+\end{equation}
+
+and the hyperplanes and the decision rule are
+
+\begin{equation}
+\begin{gathered}
+\begin{bmatrix}w_1\\ b_1\end{bmatrix}=-(F^{\top}F+\delta I)^{-1}E^{\top}\alpha \\ \begin{bmatrix}w_2\\ b_2\end{bmatrix}=(E^{\top}E+\delta I)^{-1}F^{\top}\gamma \\ \hat y(x)=\arg\min_{i\in\{1,2\}}\frac{\lvert w_i^{\top}\psi(x)+b_i\rvert}{\lVert w_i\rVert}
+\end{gathered}
+\end{equation}
+
+with i = 1 meaning class +1. Both duals are box-constrained quadratic programs over $k_{2}$ and $k_{1}$ variables, one per ball of the other class, so the problem size is the number of balls, not the number of samples.
+
+\textbf{Variants and ablations.} Table 1 lists the EF-GBTSVM variants and the family ablations we run. The variants W, L, A, L8, J, M and JM are ours. They differ in how $\tau$ is set and, for W, M and JM, in how balls are weighted; the ablations remove the balls (EF-TSVM), the hidden layer (GBTSVM), the original features (HF-GBTSVM), or the balls and the hidden layer (TSVM).
+
+\begin{table*}[!t]
+\centering
+\small
+\caption{Variants and ablations. $\hat{\eta}$ is the out-of-fold error of a 5-nearest-neighbour classifier on the training labels, a proxy for the label-noise rate (it also counts class overlap); clip(v, a, b) limits v to [a, b].}
+\label{tab:1}
+\begin{tabularx}{\textwidth}{lllX}
+\toprule
+Model & Balls & Features & Purity threshold $\tau$ \\
+\midrule
+EF-GBTSVM & yes & enhanced & searched over \{0.85, 0.90, 0.925, 0.95, 0.98\} \\
+EF-GBTSVM-W & yes & enhanced & searched over \{0.55, 0.65, 0.75, 0.85, 0.95\}; dual bounds scaled by ball purity, 0 $\le$ $\alpha_j$ $\le$ $d_{1}\pi_j$ \\
+EF-GBTSVM-L & yes & enhanced & the same wider grid as W, no purity scaling \\
+EF-GBTSVM-A & yes & enhanced & set inside each fit: $\tau$ = clip(0.95 $-$ $\hat{\eta}$, 0.55, 0.95), not searched \\
+EF-GBTSVM-L8 & yes & enhanced & searched over \{0.55, 0.65, 0.75, 0.85, 0.90, 0.925, 0.95, 0.98\} \\
+EF-GBTSVM-J & yes & enhanced & $\tau$ = clip(0.95 $-$ $\hat{\eta}$ + $\Delta$, 0.55, 0.98), offset $\Delta$ $\in$ \{$-$0.10, $-$0.05, 0, 0.05, 0.10\} searched \\
+GBTSVM (ablation) & yes & original only & as EF-GBTSVM \\
+HF-GBTSVM & yes & hidden layer only & as EF-GBTSVM \\
+EF-TSVM & no & enhanced & none \\
+TSVM & no & original only & none \\
+EF-GBTSVM-M (selection only) & yes, mass-weighted & enhanced & as EF-GBTSVM; ball i weighted by $s_i$ = $(n_i\pi_i)^{\beta}$, normalised to mean 1 per class, on its own-class term and its dual bound; $\beta$ $\in$ \{0, 0.5, 1\} searched \\
+EF-GBTSVM-JM (selection only) & yes, mass-weighted & enhanced & J's $\tau$ rule with M's weighting \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\textbf{Per-fold selection, EF-GBTSVM-PF.} Which variant to use is decided inside each outer fold, before any test battery is touched. With the test battery removed, each of the three training batteries is held out once as a validation battery; every candidate (EF-GBTSVM, L8, J and two mass-weighted variants, M and JM) is tuned on the other two batteries with 150 candidates and scored on the held-out one by balanced accuracy, on noisy labels. The candidate with the highest mean validation balanced accuracy over the three validation batteries and the three noise levels is used for that fold; an exact tie goes to the candidate with fewer added parts. This rule was fixed before the final runs. Two earlier selection runs on older feature files (14 and 13 features, without L8) chose other variants; L8 was added afterwards as a control for J's wider $\tau$ range, and the run reported here is the third. It chose L8 for test batteries B0005, B0007 and B0018 and J for B0006, with inner-CV margins over the runner-up of 3.46, 1.06, 0.014 and 1.35 points. Choosing one variant for all folds instead would let each test battery's labels, which serve as validation data in the other folds, influence the variant evaluated on it.
+
+\textbf{Where our code differs from \cite{r29}.}
+
+\begin{itemize}
+\item Inputs are standardised with statistics of the training split only.
+\item After generation, balls with fewer than two samples are dropped unless that would remove a class; 2-means uses three seeded initialisations, and a split that puts every sample in one cluster splits off one sample instead.
+\item W is drawn from U[$-$1, 1] and b from 0.1 $\cdot$ U[0, 1]; the paper does not give these distributions. The feature order is [C, Z], which only permutes w.
+\item $\delta$ = 0.05, $d_{1}$ = $d_{2}$ searched over \{$10^{-5}$, \ldots{}, $10^{2}$\}, hidden size h over \{23, 63, 103, 143, 183\}, and activation over SELU, ReLU, sigmoid, sine and tanh; tanh is our addition. The paper searches d over \{$10^{-5}$, \ldots{}, $10^{5}$\}, h from 3 to 203 in steps of 20, and nine activations.
+\item Our GBTSVM ablation is EF-GBTSVM without enhanced features; it omits the radius terms of the original GBTSVM \cite{r30}, so it is not the authors' GBTSVM.
+\item \cite{r29} states no purity range, and the authors' public code fixes $\tau$ = 0.925; our $\tau$ grids are our own. \cite{r29} tunes by exhaustive grid search with 5-fold cross-validation; we use the randomised, battery-grouped search of Section 5. The QP matrix is symmetrised with $10^{-8}$I added, and an exact distance tie is assigned to the healthy class.
+\end{itemize}
+
+\section{Data}
+
+We use four cells of the NASA PCoE battery data set \cite{r10}: B0005, B0006, B0007 and B0018, 636 discharge cycles in all. For each cell, SOH is the cycle's measured capacity divided by the cell's first-cycle capacity, and a cycle is labelled degraded (1) when SOH < 0.80 and healthy (0) otherwise. According to the README distributed with the data set (README.txt in BatteryAgingARC-FY08Q4.zip) \cite{r10}, the experiments were stopped at a 30\% fade in rated capacity, from 2 Ah to 1.4 Ah. Our threshold, 0.80 of each cell's first-cycle capacity, is earlier (more conservative): computed from the capacities in the raw files, it lies between 1.48 and 1.63 Ah, labels 277 cycles degraded against 131 below 1.4 Ah, and B0007 never falls below 1.4 Ah. Table 2 gives the counts; each cell is one test fold.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{Cycles and labels per cell, and what one misclassified cycle costs in test accuracy.}
+\label{tab:2}
+\resizebox{\columnwidth}{!}{\begin{tabular}{lcccc}
+\toprule
+Cell & Cycles & Degraded (SOH < 0.80) & Healthy & One cycle in test ACC \\
+\midrule
+B0005 & 168 & 66 & 102 & 0.60 points \\
+B0006 & 168 & 108 & 60 & 0.60 points \\
+B0007 & 168 & 45 & 123 & 0.60 points \\
+B0018 & 132 & 58 & 74 & 0.76 points \\
+All & 636 & 277 & 359 &  \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{A shared recording.} The raw files of B0005, B0006 and B0007 have identical time vectors in every discharge cycle; in the first cycle all three run from 0 to 3690.2 s in 197 samples. The load comes off at each cell's own cut-off (3346.9 s, 3690.2 s and 3487.1 s in the first cycle), so in that cycle the record ends with B0006's cut-off and B0005 and B0007 carry a rest period whose length another cell sets. B0018 was recorded alone. Whole-record statistics such as discharge time or mean voltage of one of these cells therefore depend on another cell, which breaks the independence between cells that leave-one-battery-out testing relies on. We do not use them.
+
+\textbf{Physics-guided features.} We compute every feature from the loaded part of each discharge, before the cell's own cut-off, where the shared record cannot enter; all features except the voltage at 1000 s use only samples before the voltage first reaches 3.5 V (in 86 of the 636 cycles, 78 of them from B0006, the voltage at 1000 s is already below 3.5 V). The six base features are the time from load-on to 3.8 V and to 3.5 V, the 3.8 V to 3.5 V interval, the voltage 300 s and 1000 s after load-on, and the temperature rise up to 3.5 V. Each also enters relative to the same cell's first cycle (a ratio for durations, a difference for voltages and temperature), which removes cell-to-cell offsets; that gives 12 features. The first cycle is label-free and is available once a cell enters service, but the relative features of the test cell do use that cell's own first cycle. All models see the same 12 features.
+
+\section{Experimental protocol}
+
+Every model, baseline and variant goes through the same pipeline, and no test battery is used for tuning, feature selection, variant selection or any threshold.
+
+\begin{itemize}
+\item \textbf{Outer split.} Leave-one-battery-out: each cell is the test battery once, and the model is trained on the other three (468 cycles, or 504 when B0018 is held out).
+\item \textbf{Label noise.} A fraction $\rho$ $\in$ \{0, 0.10, 0.20\} of the training labels is flipped: exactly $\lfloor\rho n\rfloor$ training cycles are chosen at random and their labels inverted, with seed 1000 + fold, so every model sees the same flips. Test labels are never flipped.
+\item \textbf{Tuning.} Standardisation is fitted inside the pipeline on training data only. Hyperparameters are chosen by randomised search over min(150, grid size) candidates, with a battery-grouped inner cross-validation in which each of the three training batteries is the validation battery once, scored by balanced accuracy on the noisy training labels. The chosen setting is refitted on the whole training fold.
+\item \textbf{Equal budget.} Each tuned model evaluates min(150, grid size) candidates (Table 3): 150 for every grid larger than 150 points, while GBTSVM (40), TSVM (8) and the RBF-SVM (150) are searched exhaustively.
+\item \textbf{Single-feature threshold.} A depth-1 decision tree on one feature, the feature chosen per fold by the same battery-grouped, balanced-accuracy inner cross-validation; an exact tie goes to the first feature in column order. A second, \emph{oracle} version picks the feature by test accuracy; it is reported only as an upper bound and never ranked.
+\item \textbf{Metrics.} Accuracy (ACC), balanced accuracy (BACC), F1 for the degraded class and area under the ROC curve (AUC), each as mean $\pm$ standard deviation over the four test batteries.
+\item \textbf{Overfitting check.} Each model is refitted with its logged best hyperparameters on the same training fold and flipped labels; we record its accuracy on the clean training labels minus its test accuracy.
+\end{itemize}
+
+\begin{table*}[!t]
+\centering
+\small
+\caption{Search spaces. All tuned models evaluate min(150, grid size) candidates.}
+\label{tab:3}
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+Model & Searched hyperparameters & Grid size \\
+\midrule
+EF-GBTSVM, -W, -L, HF-GBTSVM & $d_{1}$ = $d_{2}$ (8 values), h (5), activation (5), $\tau$ (5) & 1000 \\
+EF-GBTSVM-L8 & d, h, activation, $\tau$ (8 values) & 1600 \\
+EF-GBTSVM-J & d, h, activation, offset $\Delta$ (5) & 1000 \\
+EF-GBTSVM-A, EF-TSVM & d, h, activation & 200 \\
+GBTSVM & d, $\tau$ & 40 \\
+TSVM & d & 8 \\
+RVFL \cite{r4} & C (8), h (5), activation (5) & 200 \\
+RBF-SVM \cite{r5} & C (10 values, 0.01 to 300), $\gamma$ (``scale'' and 14 log-spaced values, $10^{-4}$ to 10) & 150 \\
+Random forest \cite{r6} & trees (4), depth (5), min. samples per leaf (4), features per split (3) & 240 \\
+MLP & hidden layers (6), L2 penalty (7), learning rate (2), activation (2) & 168 \\
+XGBoost \cite{r20} & trees (4), depth (5), learning rate (4), subsample (2) & 160 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\textbf{Statistics.} We rank the models on each of the 12 (noise level, test battery) observations and apply the Friedman test, pooled and per noise level, with the Nemenyi critical difference CD = $q\sqrt{k(k+1)/(6N)}$ \cite{r7}. Pairwise, we compare EF-GBTSVM-PF with every other model by the two-sided Wilcoxon signed-rank test \cite{r1}, as \cite{r19} recommends, with Holm correction \cite{r2} over the 14 comparisons. Accuracies are exact fractions of cycles, so we round them to 6 decimals before ranking and differences to 4 decimals before the Wilcoxon test, so that true ties are counted as ties. Software: Python with scikit-learn 1.8.0, SciPy 1.15.3, NumPy 2.2.6, pandas 2.3.3 and XGBoost 3.1.3; CVXOPT 1.3.3 solves the twin SVM duals.
+
+\section{Results}
+
+EF-GBTSVM-PF has a higher mean accuracy than the original EF-GBTSVM at every noise level, though not significantly, and it is not the most accurate model at any of them (Table 4). Ranks in Table 4 are among the 15 entries of the main comparison: the 13 models that are not EF-GBTSVM-PF's components, EF-GBTSVM-PF itself and the single-feature threshold. EF-GBTSVM-L8 and EF-GBTSVM-J, the two variants PF picks between, are shown for reference but not ranked, because ranking them next to PF would count the same folds twice.
+
+\begin{table*}[!t]
+\centering
+\footnotesize
+\caption{Test accuracy (\%) over the four test batteries, mean $\pm$ SD, with the rank by mean among 15 (1 = best; tied means share the best rank, so PF, W and L are tied for 11th at 0\%). Source: results/phase\_b\_summary\_table.csv.}
+\label{tab:4}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Model & ACC, 0\% noise & Rank & ACC, 10\% noise & Rank & ACC, 20\% noise & Rank \\
+\midrule
+\textbf{EF-GBTSVM-PF} & \textbf{95.25 $\pm$ 3.11} & \textbf{11} & \textbf{95.08 $\pm$ 4.69} & \textbf{10} & \textbf{95.28 $\pm$ 4.11} & \textbf{6} \\
+EF-GBTSVM & 94.83 $\pm$ 3.68 & 14 & 86.66 $\pm$ 9.53 & 14 & 94.71 $\pm$ 3.42 & 9 \\
+EF-GBTSVM-W & 95.25 $\pm$ 3.11 & 11 & 97.33 $\pm$ 1.95 & 3 & 93.05 $\pm$ 3.98 & 11 \\
+EF-GBTSVM-L & 95.25 $\pm$ 3.11 & 11 & 97.33 $\pm$ 1.95 & 3 & 92.90 $\pm$ 4.15 & 12 \\
+EF-GBTSVM-A & 95.73 $\pm$ 2.47 & 10 & 94.99 $\pm$ 2.78 & 11 & 95.10 $\pm$ 2.97 & 7 \\
+EF-GBTSVM-L8 (PF component) & 95.10 $\pm$ 2.97 & -- & 97.61 $\pm$ 0.70 & -- & 91.26 $\pm$ 6.61 & -- \\
+EF-GBTSVM-J (PF component) & 97.21 $\pm$ 3.34 & -- & 94.89 $\pm$ 4.58 & -- & 95.36 $\pm$ 3.53 & -- \\
+GBTSVM (ablation) & 96.43 $\pm$ 2.53 & 9 & 97.77 $\pm$ 3.31 & 1 & 80.09 $\pm$ 17.26 & 14 \\
+HF-GBTSVM & 96.47 $\pm$ 2.92 & 8 & 90.46 $\pm$ 10.26 & 12 & 94.01 $\pm$ 4.62 & 10 \\
+EF-TSVM & 96.67 $\pm$ 1.16 & 7 & 84.89 $\pm$ 23.45 & 15 & 71.39 $\pm$ 23.29 & 15 \\
+TSVM & 98.77 $\pm$ 0.81 & 1 & 95.31 $\pm$ 4.16 & 8 & 88.93 $\pm$ 11.75 & 13 \\
+RBF-SVM & 86.61 $\pm$ 23.25 & 15 & 96.97 $\pm$ 0.75 & 6 & 96.32 $\pm$ 2.64 & 5 \\
+RVFL & 97.75 $\pm$ 0.59 & 2 & 90.10 $\pm$ 5.20 & 13 & 96.86 $\pm$ 0.57 & 3 \\
+Random forest & 97.39 $\pm$ 1.48 & 5 & 97.46 $\pm$ 1.02 & 2 & 97.75 $\pm$ 1.57 & 1 \\
+MLP & 97.61 $\pm$ 0.70 & 4 & 95.59 $\pm$ 3.68 & 7 & 94.78 $\pm$ 5.26 & 8 \\
+XGBoost & 97.69 $\pm$ 0.91 & 3 & 97.16 $\pm$ 0.58 & 5 & 97.42 $\pm$ 1.09 & 2 \\
+Single-feature threshold & 96.94 $\pm$ 1.97 & 6 & 95.16 $\pm$ 3.52 & 9 & 96.85 $\pm$ 1.96 & 4 \\
+\emph{Oracle threshold (upper bound, not ranked)} & \emph{98.73 $\pm$ 0.99} & -- & \emph{98.35 $\pm$ 1.34} & -- & \emph{98.20 $\pm$ 1.30} & -- \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[!t]
+\centering
+\footnotesize
+\caption{Balanced accuracy, F1 (degraded class) and AUC (\%), means over the four test batteries.}
+\label{tab:5}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccccccc}
+\toprule
+Model & BACC 0\% & BACC 10\% & BACC 20\% & F1 0\% & F1 10\% & F1 20\% & AUC 0\% & AUC 10\% & AUC 20\% \\
+\midrule
+\textbf{EF-GBTSVM-PF} & \textbf{95.24} & \textbf{95.05} & \textbf{95.78} & \textbf{93.57} & \textbf{94.99} & \textbf{93.62} & \textbf{99.59} & \textbf{98.99} & \textbf{99.60} \\
+EF-GBTSVM & 94.97 & 85.59 & 93.15 & 93.29 & 84.74 & 93.58 & 99.60 & 92.77 & 99.76 \\
+EF-GBTSVM-W & 95.24 & 97.29 & 92.47 & 93.57 & 97.06 & 92.03 & 99.59 & 98.96 & 99.59 \\
+EF-GBTSVM-L & 95.24 & 97.29 & 92.26 & 93.57 & 97.06 & 91.93 & 99.59 & 98.96 & 99.59 \\
+EF-GBTSVM-A & 94.56 & 94.78 & 95.03 & 94.35 & 93.43 & 93.45 & 99.98 & 99.60 & 99.60 \\
+EF-GBTSVM-L8 & 95.03 & 97.76 & 89.97 & 93.45 & 96.94 & 90.90 & 99.60 & 99.98 & 98.84 \\
+EF-GBTSVM-J & 97.23 & 94.72 & 95.61 & 97.19 & 94.84 & 93.58 & 99.98 & 99.00 & 99.54 \\
+GBTSVM (ablation) & 94.44 & 97.48 & 75.48 & 94.69 & 97.15 & 58.38 & 99.96 & 99.73 & 98.00 \\
+HF-GBTSVM & 95.76 & 90.01 & 92.16 & 95.79 & 90.09 & 93.64 & 99.99 & 94.56 & 99.97 \\
+EF-TSVM & 95.34 & 87.09 & 68.23 & 95.29 & 81.37 & 44.61 & 100.00 & 84.51 & 88.44 \\
+TSVM & 98.67 & 92.51 & 82.37 & 98.37 & 91.77 & 68.85 & 100.00 & 99.95 & 99.98 \\
+RBF-SVM & 88.29 & 96.04 & 95.66 & 83.18 & 96.35 & 95.71 & 99.12 & 99.99 & 99.99 \\
+RVFL & 97.45 & 87.59 & 95.72 & 97.18 & 85.89 & 95.94 & 99.98 & 97.11 & 99.99 \\
+Random forest & 96.15 & 96.39 & 96.90 & 96.11 & 96.49 & 96.60 & 99.99 & 99.83 & 99.95 \\
+MLP & 96.62 & 93.09 & 91.62 & 96.72 & 92.22 & 89.84 & 99.99 & 98.19 & 99.99 \\
+XGBoost & 96.70 & 96.15 & 96.68 & 96.77 & 96.13 & 96.48 & 99.97 & 99.27 & 99.72 \\
+Single-feature threshold & 95.47 & 93.65 & 96.22 & 95.25 & 93.22 & 96.29 & 95.47 & 93.65 & 96.22 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\textbf{Against the original EF-GBTSVM.} EF-GBTSVM-PF is higher in mean accuracy by 0.42, 8.41 and 0.57 points at 0\%, 10\% and 20\% noise, and in balanced accuracy by 0.27, 9.46 and 2.63 points. Per test battery it wins, loses and ties 2/1/1, 3/1/0 and 3/1/0 times. The large gain is at 10\% noise, where the original model falls to 86.66 $\pm$ 9.53\% (75.60\% on B0006) while PF holds 95.08\%. That gain comes from three batteries (B0005 +13.09, B0006 +12.50, B0018 +9.85 points; B0007 $-$1.79). On B0005 and B0018, where PF used L8, the setting L8 chose also lies inside the original model's grid but was not among the 150 candidates its random search drew, so part of the gain reflects search variance rather than the wider grid; on B0006 PF used J, whose $\tau$ rule differs. The 0\% gain depends on B0018 (+2.27 points); without it PF would be below the original (B0005 $-$1.19, B0006 +0.60, B0007 tied), and at 20\% PF loses 6.55 points on B0007. None of these differences is statistically significant (Section 7).
+
+\textbf{Within the granular-ball and twin-SVM family.} Among the nine family models of the main comparison, PF ranks 6th at 0\% (best TSVM, 98.77\%), 5th at 10\% (best GBTSVM, 97.77\%) and 1st at 20\%, but only 0.18 points above EF-GBTSVM-A. Over all 12 observations it has the second-best family rank, behind TSVM (average ranks 7.83 and 6.96). If L8 and J are ranked as separate entries, J is above PF at 20\% (95.36\%). The family leaders at low noise are fragile: TSVM drops to 88.93\% and GBTSVM to 80.09\% at 20\% noise. \textbf{PF is therefore not the best model of its family.}
+
+\textbf{Among all models.} PF is 11th, 10th and 6th of 15. Its gaps to the top model are 3.52 (TSVM), 2.69 (GBTSVM) and 2.48 points (random forest), about 5.9, 4.5 and 4.2 misclassified cycles on a 168-cycle battery. Random forest and XGBoost stay above 97.1\% at every noise level, and random forest has the best average rank over all observations (Figures 1 and 3). Figure 2 shows the program output these claims are read from. \textbf{PF is the best model at no noise level.}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_acc_by_noise.pdf}
+\caption{Mean test accuracy over the four test batteries for each model at 0\%, 10\% and 20\% training-label noise (darker dot = more noise; the line spans the three levels). Stump-fair = single-feature threshold, SVM = RBF-SVM. Source: paper\_figures/chart\_acc\_by\_noise.csv, from results/phase\_b\_summary\_table.csv.}
+\label{fig:1}
+\end{figure}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{console_claims_main.png}
+\caption{Output of \texttt{python phase\_b\_analysis.py} for claims (a) to (c), main comparison of 15 entries: EF-GBTSVM-PF against the original EF-GBTSVM, its rank in the GB/TSVM family, and its rank among all models. The text is the program's own standard output (paper\_figures/console\_phase\_b\_analysis.txt), rendered as an image by make\_paper\_figures.py.}
+\label{fig:2}
+\end{figure*}
+
+\textbf{Noise sensitivity (post hoc).} We did not plan this comparison; we added it after seeing Table 4, so it is exploratory. Table 6 gives each model's accuracy range across the three noise levels. EF-GBTSVM-PF has the smallest range of the 15 (0.20 points), ahead of random forest (0.36) and XGBoost (0.53), and about 40 times smaller than the original EF-GBTSVM's 8.17. Its balanced-accuracy range (0.73) is the third smallest, behind EF-GBTSVM-A (0.47) and XGBoost (0.55). Low sensitivity is not high accuracy: random forest is almost as steady and 2.1 to 2.5 points more accurate at every noise level. The ranges rest on means over four batteries, whose standard deviations for PF are 3.1 to 4.7 points (Table 4), and on three noise levels that reuse the same batteries, so they describe these runs and are not tested.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{Accuracy (\%) at each noise level, its range (maximum minus minimum) over the three levels, and the range of balanced accuracy (BACC), main comparison of 15 entries, sorted by accuracy range. Post hoc and exploratory. Source: results/phase\_b\_summary\_table.csv.}
+\label{tab:6}
+\resizebox{\columnwidth}{!}{\begin{tabular}{lccccc}
+\toprule
+Model & ACC 0\% & ACC 10\% & ACC 20\% & ACC range & BACC range \\
+\midrule
+\textbf{EF-GBTSVM-PF} & \textbf{95.25} & \textbf{95.08} & \textbf{95.28} & \textbf{0.20} & \textbf{0.73} \\
+Random forest & 97.39 & 97.46 & 97.75 & 0.36 & 0.75 \\
+XGBoost & 97.69 & 97.16 & 97.42 & 0.53 & 0.55 \\
+EF-GBTSVM-A & 95.73 & 94.99 & 95.10 & 0.74 & 0.47 \\
+Single-feature threshold & 96.94 & 95.16 & 96.85 & 1.78 & 2.57 \\
+MLP & 97.61 & 95.59 & 94.78 & 2.83 & 5.00 \\
+EF-GBTSVM-W & 95.25 & 97.33 & 93.05 & 4.28 & 4.82 \\
+EF-GBTSVM-L & 95.25 & 97.33 & 92.90 & 4.43 & 5.03 \\
+HF-GBTSVM & 96.47 & 90.46 & 94.01 & 6.01 & 5.75 \\
+RVFL & 97.75 & 90.10 & 96.86 & 7.65 & 9.86 \\
+EF-GBTSVM & 94.83 & 86.66 & 94.71 & 8.17 & 9.38 \\
+TSVM & 98.77 & 95.31 & 88.93 & 9.84 & 16.30 \\
+RBF-SVM & 86.61 & 96.97 & 96.32 & 10.36 & 7.75 \\
+GBTSVM (ablation) & 96.43 & 97.77 & 80.09 & 17.68 & 22.00 \\
+EF-TSVM & 96.67 & 84.89 & 71.39 & 25.28 & 27.11 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{Heavier and boundary-concentrated noise (pre-registered stress test).} After the main experiments we added three training-label conditions on the same four batteries, with the plan fixed before any of them was run (\texttt{PREREG\_DLITE.md}, SHA-256 \texttt{\seqsplit{fb412a6fc58b095cb6125e8a0b1badb936aa784c59af0c411123c27abc0acbe1}}). Two are random flips of 30\% and 40\% of the training labels (N30, N40), with the seed rule used before. The third, boundary noise (BND), flips half of the training cycles whose SOH lies between 0.75 and 0.85: 73, 84, 59 and 72 labels in the four folds, 12.6\% to 17.9\% of the training cycles. Test labels are never changed. Models, grids, the 150-candidate budget and PF's per-fold variants are those of Section 5, and PF is not re-selected for the new noise. The rule for calling PF best was also fixed in advance: the highest mean accuracy and the highest mean balanced accuracy in the main comparison of 15, with a tie not counting. By that rule PF is not best in any of the three conditions (Table 7).
+
+\begin{table}[!t]
+\centering
+\small
+\caption{Stress test: mean accuracy (ACC) and balanced accuracy (BACC) of EF-GBTSVM-PF over the four test batteries, with its rank among the 15 entries of the main comparison (1 = best), the best entry in each metric, and the single-feature threshold. N30 and N40 = random flips of 30\% and 40\% of the training labels; BND = boundary noise. Source: results/dlite\_summary\_table.csv.}
+\label{tab:7}
+\resizebox{\columnwidth}{!}{\begin{tabular}{lccccc}
+\toprule
+Condition & PF ACC (rank) & Best ACC & PF BACC (rank) & Best BACC & Single-feature threshold ACC \\
+\midrule
+N30 & 92.92 (8) & RBF-SVM 97.63 & 92.38 (6) & RBF-SVM 97.53 & 95.90 \\
+N40 & 85.12 (5) & Random forest 94.49 & 80.83 (6) & Random forest 93.86 & 92.00 \\
+BND & 81.52 (12) & RVFL 90.90 & 81.72 (11) & TSVM 89.41 & 75.84 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{What the stress test shows.} PF's flat curve through 20\% noise (Table 6) does not continue: its mean accuracy falls to 92.92 at 30\% and 85.12 at 40\%, while random forest holds 97.09 and 94.49. Under boundary noise PF is 12th of 15 in accuracy and 11th in balanced accuracy, behind RVFL (90.90) and TSVM (90.76). The single-feature threshold is ahead of PF at 30\% and 40\% (95.90 and 92.00) but 5.7 points behind it under boundary noise (75.84 against 81.52; PF higher on 3 of 4 batteries). Pooled over the 12 (condition, battery) observations, the Friedman test rejects equality of the 15 entries ($\chi^2$ = 40.10, p = 0.0002; per condition p = 0.035, 0.011 and 0.165). PF's average rank is 8.54, tenth of 15 (best: RBF-SVM, 4.54), and every other entry lies within the Nemenyi critical difference of PF (6.19). With four batteries per condition, the smallest possible two-sided Wilcoxon p is 0.125, so no per-condition comparison can be significant. In the pooled Wilcoxon tests the only comparison below 0.05 after Holm correction is PF above the GBTSVM ablation (11 of 12 pairs, Holm p = 0.048; 0.055 if the two PF building blocks are added to the pool); random forest, the lowest of the other raw p-values, has p = 0.031 and Holm p = 0.41. These twelve observations reuse four batteries, three of which share one recording, so the p-values are descriptive. On true training labels PF's train-minus-test accuracy gap is $-$0.33 and $-$1.50 points at 30\% and 40\%, and 6.05 points under boundary noise, where the single-feature threshold (13.7) and EF-GBTSVM (12.3) also exceed 5.
+
+\textbf{Scope and execution.} This is a robustness check on the same four batteries, not external validation. We tried to build an external test from the other NASA cells under an inclusion rule written before any of their labels was read; none qualified. Of 30 cells, 27 failed the load-current, ambient, feature-definition or length checks, and the three that passed (B0036, B0055, B0056) never fall below SOH 0.80, so they contain no degraded cycles. A second attempt, on 23 cells of the XJTU battery dataset (CC BY 4.0), also found no eligible cell under its pre-registered rule: the recorded cycles do not give the required class balance (at least 10\% of a cell's cycles below SOH 0.80), against either the first-cycle or the second-cycle capacity as reference. The stress-test run was interrupted by a worker crash and two machine restarts: N30 ran once without interruption, and N40 and BND were each restarted from their first fold, and only complete runs are used. The edits made to the run script (a worker-count option and per-fold checkpoints) leave label flipping, seeds, models, grids and metrics unchanged, and one crash in the analysis script's last footnote line was fixed without changing any statistic; all of this is logged in REPORT.md.
+
+\textbf{A single feature is enough.} The single-feature threshold, tuned by the same protocol, reaches 96.94\%, 95.16\% and 96.85\%, which is 1.69, 0.08 and 1.57 points above PF. Its features are voltage-curve times and voltages such as the 3.8 V to 3.5 V interval relative to the first cycle. At 10\% noise on B0018 two features tie exactly in the inner cross-validation; the fixed rule picks the one with 90.15\% test accuracy, and the other would have given 96.97\%, a mean of 96.86\%. We kept the rule. The oracle threshold, which picks its feature by test accuracy, reaches 98.20\% to 98.73\%; it shows how much of the signal one feature carries, not a fair baseline.
+
+\textbf{RBF-SVM on B0006.} The RBF-SVM's low clean-label mean (86.61 $\pm$ 23.25\%) comes from one battery: on B0006 it reaches 51.79\% accuracy but 96.56\% AUC. Its training cells are 63.9\% healthy while B0006 is 64.3\% degraded, so the ranking is right but the threshold sits on the wrong side. We checked that the scaler was fitted on training data only and kept the result.
+
+\section{Statistical comparison and overfitting check}
+
+No difference among the 15 models is statistically significant, and no model shows a large train-test gap except a few weak configurations.
+
+\textbf{Friedman and Nemenyi.} Over the 12 (noise level, test battery) observations the Friedman test gives $\chi^2$ = 20.224, p = 0.123; per noise level p = 0.210, 0.253 and 0.258, and on balanced accuracy p = 0.308. Adding L8 and J as separate entries (k = 17) gives p = 0.223. The Nemenyi critical difference is 6.19 rank units for N = 12 and 10.72 for N = 4, with q = 3.391 for k = 15. The best and worst average ranks, random forest at 5.29 and the original EF-GBTSVM at 10.88, are 5.58 apart, so no pair of models differs by the CD (Figure 3). EF-GBTSVM-PF's average rank is 7.83, seventh of 15.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ranks.pdf}
+\caption{Friedman average ranks of the 15 models over the 12 (noise level, test battery) observations, with the Nemenyi critical difference (CD = 6.19, k = 15, N = 12) drawn from the best rank. The pooled observations are not independent, so the band is descriptive. Source: paper\_figures/chart\_pooled\_ranks.csv.}
+\label{fig:3}
+\end{figure}
+
+\textbf{Wilcoxon signed-rank tests.} Against each other model over the 12 observations, the lowest raw p-value for EF-GBTSVM-PF is against random forest, p = 0.033: random forest is higher on 8 observations, lower on 2 and tied on 2, by 2.33 points on average. After Holm correction over 14 comparisons this becomes p = 0.465. Next come the original EF-GBTSVM (p = 0.090; PF higher on 8, lower on 3) and XGBoost (p = 0.098); every other raw p is 0.26 or more (Figure 4). Within one noise level there are only four pairs, so the smallest two-sided p a Wilcoxon test can reach is 0.125 (0.25 or 0.5 when a battery ties), and no per-noise comparison can reach 0.05.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{console_wilcoxon_main.png}
+\caption{Output of \texttt{python phase\_b\_analysis.py}: pooled Wilcoxon signed-rank tests of EF-GBTSVM-PF against each other model (12 observations, two-sided, Holm-corrected), with wins, losses and ties per model. Program output rendered as an image.}
+\label{fig:4}
+\end{figure*}
+
+\textbf{What the tests can and cannot say.} The three noise levels reuse the same four batteries and features, so the 12 pooled observations are not independent and the pooled p-values are descriptive, not valid inference. The Nemenyi test is a post-hoc test meant to follow a significant Friedman test, and here none is significant. With four batteries, the observed differences of 2 to 3.5 points between PF and the top models were not detectable. ``Not significantly different'' therefore means the data cannot tell the models apart; it does not mean they are equally good.
+
+\textbf{Overfitting check.} Refitting every model with its logged hyperparameters reproduces all 180 logged test accuracies exactly (the 15 tuned models, including L8 and J, $\times$ 4 batteries $\times$ 3 noise levels); PF's gaps are taken from its L8 and J folds, and the single-feature threshold's are computed directly. EF-GBTSVM-PF's mean gap between clean training accuracy and test accuracy is 1.48, 2.21 and 0.88 points at 0\%, 10\% and 20\% noise (8.70 on its worst fold, B0006 at 10\%), and the single-feature threshold's is 2.11, 3.96 and 1.31. Gaps above 5 points appear only in configurations that also test poorly: EF-TSVM (13.1 at 10\%, 25.3 at 20\%), GBTSVM (13.4 at 20\%), the RBF-SVM at 0\% (12.1, the B0006 case above), the original EF-GBTSVM at 10\% (9.8), RVFL at 10\% (8.4), HF-GBTSVM at 10\% (6.9) and TSVM at 20\% (5.7). Figure 5 shows the program output for the gap table.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{console_train_gap.png}
+\caption{Output of \texttt{python phase\_b\_analysis.py}: mean gap between accuracy on the clean training labels and test accuracy, in points, per model and noise level, and the configurations above 5 points. L8 and J are the two variants PF chooses between. Program output rendered as an image.}
+\label{fig:5}
+\end{figure*}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig1_noise_calibration.png}
+\caption{Estimated training-label noise per fold (EF-GBTSVM-A's internal kNN-based noise estimator, Section 3) vs. actual injected noise, from the Phase B run (results/phys\_phase\_b.log). Dashed line: estimate = injected. Inset: mean estimate and mean purity threshold used, per noise level, over the 4 test batteries. No value shown here is computed from a test label.}
+\label{fig:6}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig2_grid_comparison.png}
+\caption{Test accuracy (mean $\pm$ SD across 4 batteries) under training-label noise, comparing EF-GBTSVM's default purity grid, a wider grid (EF-GBTSVM-L), the noise-adaptive variant (EF-GBTSVM-A), and the one-feature Stump-fair baseline. Source: results/phase\_b\_summary\_table.csv.}
+\label{fig:7}
+\end{figure}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{fig3_train_test_gap.png}
+\caption{Train$-$test accuracy gap (clean-label training accuracy minus test accuracy, in points) per model across training-label noise, from the overfitting check (refit with logged parameters). Left: the EF-GBTSVM family; right: baselines and ablations. Source: results/phase\_b\_train\_gap.csv; EF-GBTSVM-PF uses its per-fold selected variant's gap under the Section 3 mapping and Stump-fair is computed by phys\_stump.py, both matching the Section 7 gap table. Dashed line marks the 5 pp flag threshold.}
+\label{fig:8}
+\end{figure*}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=\columnwidth]{fig4_dlite_comparison.png}
+\caption{Stress-test accuracy (mean $\pm$ SD over the 4 test batteries) under heavier and boundary-concentrated noise (N30, N40, BND), for EF-GBTSVM-PF, the original EF-GBTSVM, the single-feature Stump-fair baseline, and the three best baselines by pooled rank (RBF-SVM, random forest, RVFL). All 17 models are listed in Table 7. Source: results/dlite\_summary\_table.csv.}
+\label{fig:9}
+\end{figure}
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=\columnwidth]{fig5_class_prior.png}
+\caption{Degraded-class share in each leave-one-battery-out fold's training split (the other three cells pooled) versus its test split (the held-out cell), computed from Table 2's cycle and label counts. The large train-to-test prior shift on B0006 (36\% $\rightarrow$ 64\%) and B0007 (50\% $\rightarrow$ 27\%) underlies the RBF-SVM threshold-placement effect discussed in Section 8.}
+\label{fig:10}
+\end{figure}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{diagram_pf_architecture.png}
+\caption{The EF-GBTSVM-PF pipeline: granular-ball generation and purity-threshold splitting, RVFL-style enhanced features, the twin-SVM dual quadratic programs, per-fold selection between the EF-GBTSVM-L8 and EF-GBTSVM-J variants, and the decision rule, based on Section 3's method description and Table 1.}
+\label{fig:11}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{diagram_experiment_pipeline.png}
+\caption{The overall experiment pipeline: NASA PCoE discharge cycles from four cells are labelled degraded or healthy by a state-of-health threshold, a controlled fraction of the training labels only is flipped, each battery is held out in turn under a leave-one-battery-out split with battery-grouped inner-cross-validation tuning, the resulting models are scored by accuracy, balanced accuracy, F1 and AUC, and the per-battery results are compared with Friedman, Nemenyi and Wilcoxon signed-rank tests.}
+\label{fig:12}
+\end{figure*}
+
+\section{Discussion and limitations}
+
+On these four cells, choosing EF-GBTSVM's variant per fold by inner cross-validation gave a higher mean accuracy than the original configuration at every noise level, by a large margin only at 10\% noise and without statistical significance; it did not make EF-GBTSVM better than standard classifiers or than one well-chosen feature.
+
+\textbf{Where the gain over EF-GBTSVM comes from.} The purity grid we used for the original model starts at 0.85; on the B0006 fold at 10\% noise its search picked $\tau$ = 0.98 and it reached 75.60\% accuracy, while EF-GBTSVM-L8 picked $\tau$ = 0.90 and reached 98.21\%. That setting ($\tau$ = 0.90, h = 63, ReLU, d = 0.1) lies inside the original grid too but was not among the 150 candidates the original search drew, so on this fold the difference comes from random sampling, not from the wider range. PF used J on this fold (88.10\%). Which variant helps also changes with the noise level: on B0006, J is 10.12 points below L8 at 10\% noise and 16.07 points above it at 20\%. PF's rule picks one variant per fold for all three noise levels, so it cannot follow such swings; PF's accuracy is steady across noise levels (95.08\% to 95.28\%) but never the highest.
+
+\textbf{Why simple models do so well.} One feature of the discharge voltage curve already separates the classes at about 95\% to 97\%, and with the best feature known in advance (the oracle) above 98\%. When the signal is this concentrated, the extra flexibility of balls, enhanced features or a neural network appears to buy little, and with four test folds the differences that remain are within the noise of the estimate. Unlike the case study in \cite{r26}, the tree ensembles here stay above the single-feature threshold; it is the EF-GBTSVM family that does not.
+
+\textbf{What a practitioner can take from this.} On data like these, a tree ensemble or a single tuned threshold is a strong and cheap baseline. In our runs, EF-GBTSVM with the narrow purity grid we used for it (\{0.85, \ldots{}, 0.98\}) collapsed at 10\% noise, but a wider fixed grid (L8) was worse at 20\% noise. If EF-GBTSVM is used, its variant and threshold range should be chosen per fold by battery-grouped inner cross-validation, as PF does; on four batteries this helped on average but not significantly.
+
+\textbf{Limitations.}
+
+\begin{itemize}
+\item \textbf{Four batteries, one data set.} All conclusions rest on four cells of one chemistry and test regime; the statistical tests are underpowered, and the results may not transfer to other cells or conditions.
+\item \textbf{Candidate shortlist.} The candidates offered to the per-fold selection (the wide purity grid and J's noise-anchored offset) were proposed after earlier experiments that had used test results on the same four batteries, with an older feature file. The selection itself used training batteries only, but the shortlist was not blind.
+\item \textbf{Single-feature threshold.} Its first version chose the feature with a stratified, non-grouped inner split, and was written after the final test results existed. We replaced it with the models' own battery-grouped, balanced-accuracy protocol; Section 6 reports the exact tie at 10\% noise on B0018 that the fixed tie rule decides.
+\item \textbf{Relative features} use each cell's own first cycle, including the test cell's. No labels are involved, and the first cycle is available once a cell is in service.
+\item \textbf{Noise model.} We inject symmetric random flips. Real label noise near an SOH threshold is likely to be concentrated close to the boundary, and it may also depend on the class, as in the class-conditional noise model of \cite{r16}. Section 6 adds one boundary-concentrated condition (half of the training cycles with SOH between 0.75 and 0.85 flipped, on either side of the threshold), but it does not depend on the class, and it is a simulation, not observed annotator error.
+\item \textbf{Re-implementation.} Our code differs from the authors' in the points listed in Section 3; in particular, our GBTSVM ablation has no radius term.
+\item \textbf{Fragile choices.} Fold B0007's variant was chosen by a 0.014-point inner-CV margin over JM, which was not run in the final experiments. Choosing the variant separately per noise level would have picked a different one in 7 of the 12 (fold, noise) cells; the averaging rule was fixed before the run. Several chosen hyperparameters sit at the edge of their grids (RBF-SVM C = 300, MLP L2 penalty 1.0, J offset +0.10, XGBoost learning rate 0.01, random forest minimum leaf size 8, TSVM d = $10^{-5}$), so wider grids could change individual numbers.
+\end{itemize}
+
+\section{Conclusion and future work}
+
+Under a leakage-free protocol with an equal tuning budget, EF-GBTSVM with a per-fold, inner-CV choice of its purity setting reaches about 95\% accuracy on four NASA PCoE cells at 0\%, 10\% and 20\% label noise. Its mean accuracy is above the original EF-GBTSVM's by 0.42, 8.41 and 0.57 points, but none of these differences is significant: at 0\% and 20\% they are within the swings between test batteries, and at 10\% part of the gain reflects the original model's random search rather than its design. Its mean train-test gap is at most 2.21 points (8.70 on its worst fold, B0006 at 10\% noise). It does not outperform random forest, XGBoost or a single tuned feature threshold, and in the main 0\% to 20\% noise experiments, with four batteries, no model is significantly better than another. A pre-registered stress test with 30\% and 40\% random flips and boundary-concentrated noise did not change this: PF was not best in any of the three conditions, and its accuracy fell to 85.12\% at 40\% noise, where random forest kept 94.49\%. The shared recording of B0005, B0006 and B0007 is a pitfall that any study using these cells should check.
+
+\textbf{Future work.}
+
+\begin{itemize}
+\item More cells and data sets, so that the Friedman and Nemenyi procedure \cite{r7} is applied to independent data sets rather than to folds of one.
+\item Label noise concentrated near the SOH threshold, and class-conditional noise \cite{r16}, instead of symmetric flips.
+\item A harder task: predicting degradation several cycles ahead rather than classifying the current cycle.
+\item Noise-insensitive losses inside the granular-ball twin SVM, such as the pinball loss \cite{r31}, \cite{r21}, tested under the same protocol.
+\end{itemize}
+
+\section*{Code and data availability}
+
+The NASA PCoE battery data are available from the NASA Prognostics Data Repository \cite{r10}; the data were provided by the NASA Prognostics Center of Excellence, which we acknowledge as the repository requests. The data are not redistributed with our code, nor are the processed CSV files, because the repository states no licence. Our code is public at \href{https://github.com/Vansh-lab/ef-gbtsvm-battery-label-noise}{https://github.com/Vansh-lab/ef-gbtsvm-battery-label-noise} under the MIT licence. The scripts behind this paper's numbers (prep\_phys\_features.py, run\_experiments.py, phase\_a\_inner\_cv.py, phase\_b\_train\_gap.py, phys\_stump.py, phase\_b\_analysis.py, make\_paper\_figures.py, run\_dlite.py and dlite\_analysis.py) and their result files, including the pre-registered stress test (PREREG\_DLITE.md) and the fresh-cell inclusion rule (prereg/), are in the same repository (commit 0cc0287). The authors' own EF-GBTSVM code is in its \href{https://github.com/mtanveer1/EF-GBTSVM}{public repository}; none of its files are included in ours.
+
+\begin{thebibliography}{30}
+\bibitem{r1} F. Wilcoxon, ``Individual comparisons by ranking methods,'' Biometrics Bulletin, vol. 1, no. 6, pp. 80--83, 1945. doi: 10.2307/3001968
+\bibitem{r2} S. Holm, ``A simple sequentially rejective multiple test procedure,'' Scandinavian Journal of Statistics, vol. 6, no. 2, pp. 65--70, 1979. doi: 10.2307/4615733
+\bibitem{r3} D. Angluin and P. Laird, ``Learning from noisy examples,'' Machine Learning, vol. 2, no. 4, pp. 343--370, 1988. doi: 10.1007/BF00116829
+\bibitem{r4} Y.-H. Pao, G.-H. Park and D. J. Sobajic, ``Learning and generalization characteristics of the random vector functional-link net,'' Neurocomputing, vol. 6, no. 2, pp. 163--180, 1994. doi: 10.1016/0925-2312(94)90053-1
+\bibitem{r5} C. Cortes and V. Vapnik, ``Support-vector networks,'' Machine Learning, vol. 20, no. 3, pp. 273--297, 1995. doi: 10.1007/BF00994018
+\bibitem{r6} L. Breiman, ``Random forests,'' Machine Learning, vol. 45, no. 1, pp. 5--32, 2001. doi: 10.1023/A:1010933404324
+\bibitem{r7} J. Dem\v{s}ar, ``Statistical comparisons of classifiers over multiple data sets,'' Journal of Machine Learning Research, vol. 7, pp. 1--30, 2006. Available: \href{https://jmlr.org/papers/v7/demsar06a.html}{https://jmlr.org/papers/v7/demsar06a.html}
+\bibitem{r8} S. Varma and R. Simon, ``Bias in error estimation when using cross-validation for model selection,'' BMC Bioinformatics, vol. 7, art. no. 91, 2006. doi: 10.1186/1471-2105-7-91
+\bibitem{r9} Jayadeva, R. Khemchandani and S. Chandra, ``Twin support vector machines for pattern classification,'' IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 29, no. 5, pp. 905--910, 2007. doi: 10.1109/TPAMI.2007.1068
+\bibitem{r10} B. Saha and K. Goebel, ``Battery data set,'' NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA, 2007. Available: \href{https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/}{https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/}
+\bibitem{r11} B. Saha, K. Goebel, S. Poll and J. Christophersen, ``Prognostics methods for battery health monitoring using a Bayesian framework,'' IEEE Transactions on Instrumentation and Measurement, vol. 58, no. 2, pp. 291--296, 2009. doi: 10.1109/TIM.2008.2005965
+\bibitem{r12} G. C. Cawley and N. L. C. Talbot, ``On over-fitting in model selection and subsequent selection bias in performance evaluation,'' Journal of Machine Learning Research, vol. 11, pp. 2079--2107, 2010.
+\bibitem{r13} Y.-H. Shao, C.-H. Zhang, X.-B. Wang and N.-Y. Deng, ``Improvements on twin support vector machines,'' IEEE Transactions on Neural Networks, vol. 22, no. 6, pp. 962--968, 2011. doi: 10.1109/TNN.2011.2130540
+\bibitem{r14} V. V. Viswanathan and M. Kintner-Meyer, ``Second use of transportation batteries: Maximizing the value of batteries for transportation and grid services,'' IEEE Transactions on Vehicular Technology, vol. 60, no. 7, pp. 2963--2970, 2011. doi: 10.1109/TVT.2011.2160378
+\bibitem{r15} S. Kaufman, S. Rosset, C. Perlich and O. Stitelman, ``Leakage in data mining: Formulation, detection, and avoidance,'' ACM Transactions on Knowledge Discovery from Data, vol. 6, no. 4, pp. 1--21, 2012. doi: 10.1145/2382577.2382579
+\bibitem{r16} N. Natarajan, I. S. Dhillon, P. K. Ravikumar and A. Tewari, ``Learning with noisy labels,'' in Advances in Neural Information Processing Systems, vol. 26, Curran Associates, 2013.
+\bibitem{r17} B. Fr\'enay and M. Verleysen, ``Classification in the presence of label noise: A survey,'' IEEE Transactions on Neural Networks and Learning Systems, vol. 25, no. 5, pp. 845--869, 2014. doi: 10.1109/TNNLS.2013.2292894
+\bibitem{r18} H. Li, D. Pan and C. L. P. Chen, ``Intelligent prognostics for battery health monitoring using the mean entropy and relevance vector machine,'' IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 44, no. 7, pp. 851--862, 2014. doi: 10.1109/TSMC.2013.2296276
+\bibitem{r19} A. Benavoli, G. Corani and F. Mangili, ``Should we really use post-hoc tests based on mean-ranks?,'' Journal of Machine Learning Research, vol. 17, pp. 1--10, 2016.
+\bibitem{r20} T. Chen and C. Guestrin, ``XGBoost: A scalable tree boosting system,'' in Proc. 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 2016, pp. 785--794. doi: 10.1145/2939672.2939785
+\bibitem{r21} Y. Xu, Z. Yang and X. Pan, ``A novel twin support-vector machine with pinball loss,'' IEEE Transactions on Neural Networks and Learning Systems, vol. 28, no. 2, pp. 359--370, 2017. doi: 10.1109/TNNLS.2015.2513006
+\bibitem{r22} Y. Li, K. Liu, A. M. Foley, A. Z\"ulke, M. Berecibar, E. Nanini-Maury, J. Van Mierlo and H. E. Hoster, ``Data-driven health estimation and lifetime prediction of lithium-ion batteries: A review,'' Renewable and Sustainable Energy Reviews, vol. 113, art. no. 109254, 2019. doi: 10.1016/j.rser.2019.109254
+\bibitem{r23} K. A. Severson, P. M. Attia, N. Jin, N. Perkins, B. Jiang, Z. Yang, M. H. Chen, M. Aykol, P. K. Herring, D. Fraggedakis, M. Z. Bazant, S. J. Harris, W. C. Chueh and R. D. Braatz, ``Data-driven prediction of battery cycle life before capacity degradation,'' Nature Energy, vol. 4, no. 5, pp. 383--391, 2019. doi: 10.1038/s41560-019-0356-8
+\bibitem{r24} S. Xia, Y. Liu, X. Ding, G. Wang, H. Yu and Y. Luo, ``Granular ball computing classifiers for efficient, scalable and robust learning,'' Information Sciences, vol. 483, pp. 136--152, 2019. doi: 10.1016/j.ins.2019.01.010
+\bibitem{r25} P. N. Suganthan and R. Katuwal, ``On the origins of randomization-based feedforward neural networks,'' Applied Soft Computing, vol. 105, art. no. 107239, 2021. doi: 10.1016/j.asoc.2021.107239
+\bibitem{r26} S. Kapoor and A. Narayanan, ``Leakage and the reproducibility crisis in machine-learning-based science,'' Patterns, vol. 4, no. 9, art. no. 100804, 2023. doi: 10.1016/j.patter.2023.100804
+\bibitem{r27} A. K. Malik, R. Gao, M. A. Ganaie, M. Tanveer and P. N. Suganthan, ``Random vector functional link network: Recent developments, applications, and future directions,'' Applied Soft Computing, vol. 143, art. no. 110377, 2023. doi: 10.1016/j.asoc.2023.110377
+\bibitem{r28} M. Tanveer, T. Rajani, R. Rastogi, Y. H. Shao and M. A. Ganaie, ``Comprehensive review on twin support vector machines,'' Annals of Operations Research, vol. 339, no. 3, pp. 1223--1268, 2024. doi: 10.1007/s10479-022-04575-w
+\bibitem{r29} A. Quadir, M. Sajid, M. Tanveer and P. N. Suganthan, ``Enhanced feature based granular ball twin support vector machine,'' arXiv:2410.05786v2, Feb. 2025. doi: 10.48550/arXiv.2410.05786
+\bibitem{r30} A. Quadir, M. Sajid and M. Tanveer, ``Granular ball twin support vector machine,'' IEEE Transactions on Neural Networks and Learning Systems, vol. 36, no. 7, pp. 12444--12453, 2025. doi: 10.1109/TNNLS.2024.3476391
+\bibitem{r31} A. Quadir and M. Tanveer, ``Granular ball twin support vector machine with pinball loss function,'' IEEE Transactions on Computational Social Systems, vol. 12, no. 5, pp. 3891--3900, 2025. doi: 10.1109/TCSS.2024.3411395
+\bibitem{r32} S. Xia, X. Lian, G. Wang, X. Gao, J. Chen and X. Peng, ``GBSVM: An efficient and robust support vector machine framework via granular-ball computing,'' IEEE Transactions on Neural Networks and Learning Systems, vol. 36, no. 5, pp. 9253--9267, 2025. doi: 10.1109/TNNLS.2024.3417433
+\end{thebibliography}
+\end{document}

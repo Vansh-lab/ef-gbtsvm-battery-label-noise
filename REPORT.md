@@ -1762,3 +1762,146 @@ check_tex_complete.py PASS (650 sentence/cell/equation parts; 15 Needs-human-rev
 No overfull boxes. All three deliverables (IEEE PDF 12 pp, Docs-export PDF, docx) regenerated and
 cross-checked: Figures 8/9/10 captions, their source-file citations, and the figure numbers appear
 in each; the docx carries all 10 figure images. No number was changed anywhere.
+
+## Figure work pushed (2026-11-14, Vansh: "Yes, push")
+
+Pushed REPORT.md, build_ieee_tex.py, the two figure scripts (make_diagnostic_figs.py,
+make_diagnostic_figs2.py), the five figure PNGs (in both paper_figures/ and results/) and
+results/fig_noise_calibration.csv as commit 2449293 (c388fdd..2449293). 15 files, no data/.mat/zip.
+The paper/ deliverables (paper.tex/pdf/docx) remain out of the repo as before.
+
+## PREREG_FINEGRID.md frozen (2026-11-14, Vansh: fine-grid noise levels 2/4/6/8%)
+
+New phase: finer label-noise granularity so the paper can show 0/2/4/6/8/10% instead of only
+0/10/20%. 0% and 10% reuse existing Phase B results (not rerun); only 0.02/0.04/0.06/0.08 are new.
+Same protocol as Phase B/D-lite verbatim (same 15 models, same equal-budget grids, same LOBO
+battery-grouped CV, same flip_labels seed rule, same metrics); all 11 frozen code/data hashes
+checked against PREREG_DLITE.md section 1 and found unchanged. PREREG_FINEGRID.md sha256:
+d78ae360e7cf8586fd0c91cd5a7b2c89ab9d51aaf330596d4b14ab137f44ce65. No run exists yet; no label value
+has been read. run_finegrid.py does not exist yet either -- its hash will be recorded here before
+it runs, same discipline as run_dlite.py.
+
+## run_finegrid.py written, hashed, launching (2026-11-14)
+
+run_finegrid.py sha256: 673ab87e6308bb22fa3b4148bbda392c8a8445f651824e46af35a8a8b7a6123b. Imports
+build_models/load_dataset/metrics/score_of/flip_labels from run_experiments.py unchanged, and calls
+phys_stump.stump_runs directly for Stump-fair/oracle (the same call phase_b_analysis.py makes for
+0/10/20%). Per-fold checkpointing to results/finegrid_ckpt/{cond}_fold{run}.csv from fold 0 of the
+first condition (the D-lite lesson: crash/sleep/reboot loses at most one in-progress fold, not a
+whole condition). import run_finegrid succeeded (syntax/import check only, zero model fits run).
+Launching in the background now: python run_finegrid.py --n-jobs 4, conditions N02, N04, N06, N08
+in order, per PREREG_FINEGRID.md (sha256 d78ae360e7cf8586fd0c91cd5a7b2c89ab9d51aaf330596d4b14ab137f44ce65, frozen above).
+
+## Launch correction (2026-11-14): background tracking fixed before any real progress was lost
+
+First launch used nohup+disown inside an already-backgrounded shell call, which detached the python
+process from the harness's own tracking -- the harness reported the LAUNCHER command as "completed"
+after 3 seconds, not the actual run. Caught immediately (process list still showed python running,
+log showed only fold 0 begun, 1.92% flipped, no checkpoint written yet). Killed that process (no
+checkpoint existed, so nothing was lost) and relaunched as a single tracked background command
+(python run_finegrid.py --n-jobs 4, no manual &/disown) so the harness notifies on the run's actual
+completion, not the shell line that started it. Same code, same hashes, re-started from fold 0 of
+N02 with zero prior progress.
+
+## Phase F (fine-grid) run finished; data files built (2026-11-14)
+
+run_finegrid.py (background task) finished all four conditions cleanly: ALL CONDITIONS DONE in the
+log, 68 rows per condition (4 folds x 15 models + 4 Stump-fair + 4 Stump-oracle), 16 fold checkpoints
+present under results/finegrid_ckpt/. No crash, no restart needed this time.
+
+Wrote finegrid_analysis.py (sha256 e4aa721829b47b34af20f354deb97aa456a19840704d5533093cfad8eb0e6fc3)
+to build the three PREREG_FINEGRID.md section-3 output files directly from run_finegrid.py's own
+columns (no refit needed: train_acc_noisy/train_acc_clean were already recorded by run_finegrid.py
+from the single fit each model received, and ACC there already is the test accuracy from that same
+fit since test labels are never flipped):
+
+* results/finegrid_runs.csv -- the four condition files concatenated unchanged, 272 rows.
+* results/finegrid_summary_table.csv -- identical column structure to phase_b_summary_table.csv (68
+  rows = 4 noise levels x 17 models incl. Stump-fair, main pool k=15 / sensitivity pool k=17, same
+  add_per_fold PF reconstruction and same rank_ACC_main15/rank_ACC_all17/rank_BACC_main15/
+  rank_BACC_all17 logic as phase_b_analysis.py). Stump-oracle is kept out of the pools (reference
+  only), matching how phase_b_analysis.load() treats it.
+* results/finegrid_train_gap.csv -- identical column structure AND row scope to the raw
+  phase_b_train_gap.csv (240 rows = 4 noise x 4 folds x 15 base models only; no Stump-fair/PF rows,
+  matching that this file's phase-B counterpart never had them either -- phase_b_analysis.py only
+  reconstructs PF's/Stump-fair's gap in memory for its claims text, never re-saving it to CSV).
+
+No new statistical test was run; no claim about "best" or "robust" was made or written anywhere
+(PREREG_FINEGRID.md section 5). Raw numbers for every model at every new noise level, unfiltered,
+reported to Vansh in chat for review. Nothing in paper.tex or the Claude Doc was touched.
+
+Not yet pushed to GitHub (PREREG_FINEGRID.md, run_finegrid.py, finegrid_analysis.py, and all
+results/finegrid_* files are local-only in this lab notebook) -- will ask before pushing, as usual.
+
+## Part 2: architecture + pipeline diagrams drafted and verified, NOT inserted (2026-11-14)
+
+Two diagrams built via a background workflow (draft agent + independent adversarial fact-check
+agent per diagram, neither sharing the other's reasoning). Every box's text was required to trace
+to a literal quoted sentence from paper.tex / REPORT.md handed to the draft agent as its only
+source; the verify agent re-checked each claimed quote against paper.tex directly and against the
+rendered PNG, with no fabrication and no missing required node found for either diagram. I then
+opened both PNGs myself and read them before reporting.
+
+* Diagram A -- EF-GBTSVM-PF architecture: paper_figures/make_diagram_pf_architecture.py ->
+  results/diagram_pf_architecture.png (138202 bytes) + .pdf (49654 bytes), 300dpi. Boxes: granular
+  ball generation -> purity-threshold splitting (tau) -> RVFL-style enhanced features -> Twin SVM
+  dual QP (two hyperplanes) -> per-fold variant selection (L8 vs J) -> prediction/decision rule.
+  Grounded in paper.tex Section 3 "Method" and Table 1; deliberately shows only L8/J as the two
+  per-fold candidates (not EF-GBTSVM/M/JM), per instruction.
+* Diagram B -- experiment pipeline: paper_figures/make_diagram_experiment_pipeline.py ->
+  results/diagram_experiment_pipeline.png (272220 bytes) + .pdf (52540 bytes), 300dpi. Boxes: NASA
+  PCoE data (4 cells, 636 cycles) -> label generation (SOH<0.80) -> label noise injection (train
+  only; fine-grid rho in {0.02,0.04,0.06,0.08} noted as a minor aside, same mechanism) -> LOBO outer
+  split + battery-grouped inner CV -> 15 models evaluated (k=17 sensitivity aside) -> metrics
+  (ACC/BACC/F1/AUC + overfitting check) -> statistical tests (Friedman -> Nemenyi -> Wilcoxon). No
+  numeric results (e.g. chi2=20.224) drawn on the figure itself.
+
+Both use the existing palette/serif-font style from paper_figures/make_diagnostic_figs2.py. Reported
+to Vansh with proposed captions, for his review. Nothing inserted into paper.tex or the Claude Doc.
+
+## Figures 11/12 inserted into the Claude Doc and built into the IEEE PDF; page count 12 -> 13 (2026-11-14)
+
+Uploaded both diagram PNGs as doc assets, registered as blobs (blob/c5310c82-e5bc architecture,
+blob/3558062a-7d40 pipeline), inserted as Figure 11 and Figure 12 right after Figure 10's caption
+and before the "Discussion and limitations" heading (rev 342 -> 343) -- the established rule of
+appending new figures at the end of the existing figure sequence, so no earlier figure number
+shifts. Re-exported the full doc XML (rev 343) to paper_figures/doc_latest.xml, added both blobs
+to build_ieee_tex.py's FIG_BLOBS/WIDE/FLEX_PLACE, copied both PNGs into paper_figures/, reran
+build_ieee_tex.py (check_tex_complete.py PASS, 652 parts, 15 Needs-human-review blocks skipped as
+always) and xelatex twice.
+
+Result: 13 pages, up from 12 (the page count Vansh accepted for Figures 8/9/10 last round). No
+overfull boxes (only ordinary Underfull hbox/vbox notices from two-column justification, same kind
+as always present, not a defect). pdftotext/pymupdf check: Figures 1-10's numbers and their
+in-prose "(Figure N)"/"discussed in Section 8" references are unchanged; Figure 11 and Figure 12
+both render correctly with their full captions, landing together with Figures 8-10 on pages 11-12
+(LaTeX float placement, not source order) and pushing roughly a page of the reference list from
+page 12 to a new page 13. Not yet decided whether to accept 13 pages or shrink/trim further --
+flagged to Vansh with the same options as the 11->12 page decision, per the project's standing
+practice of not deciding a page-budget tradeoff unilaterally.
+
+## Page-budget follow-up on Figures 11/12: tightened float placement, still 13 pages (2026-11-14)
+
+The first xelatex build (Figures 11/12 as figure* [!tbp], like Figures 4/5) left a large blank gap
+between the two new figures on page 12 -- a float-only page with no body text, where LaTeX stretches
+rubber space between floats to fill the page; not a content problem. Changed both to plain [!t]
+(matching Figures 1-3/6-9's placement) and rebuilt: the blank gap is gone (page 12 now packs both
+figures plus references [8]-[14] right below them), but the total page count is still 13, because
+references [15]-[32] alone fill all of page 13 -- the two new figures cost roughly 1.3-1.5 pages of
+real content (two landscape diagrams + full captions), not a few stray lines, so this is the same
+"real float content can't be shrunk away for free" situation as the earlier 11-page attempt before
+Vansh accepted 12. Flagging to Vansh rather than deciding unilaterally, with the same three options
+as that round.
+
+## 13 pages accepted; all 3 deliverables regenerated and consistent (2026-11-14)
+
+Vansh accepted 13 pages for the IEEE build (Figures 11/12 add real content, same precedent as the
+earlier 11->12 acceptance). Regenerated the other two deliverables from the same doc (rev 343) so
+all three stay consistent:
+* paper/EF-GBTSVM_Label_Noise_Paper_Vansh_Sachan.pdf -- plain Docs export, 33 pages (single-column;
+  not comparable to the IEEE two-column count), 0 pictures left out (notes: []).
+* paper/EF-GBTSVM_Label_Noise_Paper_Vansh_Sachan.docx -- re-exported, 0 pictures left out, verified
+  12 embedded images in word/media/ (Figures 1-12, all present).
+* paper/ieee/paper.pdf -- 13 pages, xelatex x2, check_tex_complete.py PASS, no overfull boxes.
+
+Nothing pushed to GitHub yet.
