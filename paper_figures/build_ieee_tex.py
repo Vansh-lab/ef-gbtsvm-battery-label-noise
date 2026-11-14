@@ -24,10 +24,17 @@ SRC = "paper_figures/doc_latest.xml"
 OUT = "paper/ieee"
 FIG_BLOBS = {"blob/c9f63a1a-5af7": "console_claims_main.png",
              "blob/0bab1c29-1b6e": "console_wilcoxon_main.png",
-             "blob/4f33e175-cf82": "console_train_gap.png"}
+             "blob/4f33e175-cf82": "console_train_gap.png",
+             "blob/3df64972-c84b": "fig1_noise_calibration.png",
+             "blob/aa56b5fd-ee09": "fig2_grid_comparison.png",
+             "blob/486d59b8-d49a": "fig1_noise_calibration.png",
+             "blob/c1407cd4-3f3c": "fig2_grid_comparison.png",
+             "blob/9f046676-3f00": "fig3_train_test_gap.png",
+             "blob/5e0d3663-2a71": "fig4_dlite_comparison.png",
+             "blob/653c3eb1-28e4": "fig5_class_prior.png"}
 EMBED_FIGS = {"node/d118714c-1932": "fig_acc_by_noise.pdf", "node/c3fabf0f-db18": "fig_ranks.pdf"}
 WIDE = {"console_claims_main.png", "console_train_gap.png",
-        "console_wilcoxon_main.png"}                                # figure* (both columns)
+        "console_wilcoxon_main.png", "fig3_train_test_gap.png"}     # figure* (both columns)
 SKIP_SECTIONS = {"Needs human review"}
 
 # ---- text -> LaTeX ---------------------------------------------------------------------------
@@ -207,10 +214,16 @@ def table_tex(xml, caption, label):
     return "\n".join(l for l in lines if l)
 
 
+# Single-column figures added in the diagnostic round may use bottom/float-page slots so the
+# figure-dense tail packs tighter; Figures 1-7 keep their reviewed top-only placement.
+FLEX_PLACE = {"fig4_dlite_comparison.png", "fig5_class_prior.png"}
+
+
 def figure_tex(fname, caption, label):
     env = "figure*" if fname in WIDE else "figure"
     width = r"\textwidth" if env == "figure*" else r"\columnwidth"
-    return (rf"\begin{{{env}}}[!t]" "\n" r"\centering" "\n"
+    place = "[!tbp]" if fname in FLEX_PLACE else "[!t]"
+    return (rf"\begin{{{env}}}{place}" "\n" r"\centering" "\n"
             rf"\includegraphics[width={width}]{{{fname}}}" "\n"
             rf"\caption{{{caption}}}" "\n" rf"\label{{{label}}}" "\n" rf"\end{{{env}}}")
 

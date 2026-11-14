@@ -1678,3 +1678,87 @@ boxes, check_tex_complete.py PASS (635 sentences, -1 for the removed byline). Do
 docx regenerated from the same doc state. Verified via pdftotext/docx-xml: the name, "B.Tech,
 Electrical Engineering (3rd Year)" and "Faculty of Technology, University of Delhi" appear zero
 times in any of the three deliverables; 95.25% and other key numbers unchanged.
+
+## Pushed to public repo (2026-11-13, Vansh: "Yes, push")
+
+Pushed REPORT.md and the build_ieee_tex.py byline fix as commit c388fdd (3abd562..c388fdd). Only
+those two files touched (+27/-2 lines); REPORT.md and the local lab notebook now agree.
+
+## Two diagnostic figures inserted into the paper (2026-11-13, Vansh: "Yes, insert both")
+
+Inserted as new Figure 6 (noise-estimate calibration, results/fig_noise_calibration.csv parsed from
+results/phys_phase_b.log) and Figure 7 (accuracy-vs-noise grid/variant comparison, from
+results/phase_b_summary_table.csv), after Vansh reviewed the PNGs. Images uploaded as doc assets,
+referenced via doc blobs; make_diagnostic_figs.py (paper_figures/) is the reproducible script, PNGs
+also copied into paper_figures/ for the IEEE build. build_ieee_tex.py's FIG_BLOBS extended with the
+two new blob ids.
+
+Caught and fixed a numbering bug before finishing: the first attempt placed the two new figures
+mid-document (after Table 1, and after the "family" paragraph in Section 6). LaTeX auto-numbers
+\caption by document order, so that push every later figure's rendered number by +2 -- Figure 4
+(Wilcoxon) rendered as "Fig. 6", Figure 5 (train gap) as "Fig. 7", while my new ones took over
+"Fig. 1"/"Fig. 2". The paper's own prose has several hardcoded literal figure-number mentions
+("(Figures 1 and 3)", "Figure 2 shows...", "(Figure 4)", "Figure 5 shows..."), all of which would
+then have pointed at the wrong image. Fixed by moving both new figures to the end of Section 7
+(right after Figure 5, before "8. Discussion and limitations"), so Figures 1-5 keep their original
+rendered numbers and mentions, and the two new ones become Figure 6 and 7 in sequence -- verified
+by pdftotext against every one of those four literal mentions after rebuilding.
+
+Page count: 11 -> 12 pages (the professor's stated limit is 10-11). Did not remove anything;
+flagged to Vansh with options, per the standing rule on this project. Rebuilt paper.tex, xelatex
+twice: 12 pages, no overfull boxes. check_tex_complete.py PASS (641 sentences/cells, +6 for the two
+new figures' media+caption blocks and in-text references). check_citations.py not re-run (no
+reference or citation touched by this change). Regenerated the Docs-export .pdf and .docx;
+confirmed Figure 6/7 captions and key numbers (e.g. 95.25%) appear in all three deliverables.
+
+No in-text "(Figure 6)"/"(Figure 7)" pointer sentence was added anywhere in the prose -- the two
+figures sit positioned next to the most topically relevant existing text (end of Section 7, right
+after the overfitting-check figure) but are not cross-referenced by a sentence the way Figures 1-5
+are. Flagged to Vansh; not added without being asked, to avoid further prose changes beyond what
+was approved.
+
+## Figures 6/7 shrunk to recover 11 pages (2026-11-13, Vansh: "Shrink the 2 new figures")
+
+paper.pdf had gone to 12 pages after inserting Figures 6-7; page 12 turned out to be almost empty
+(just the last ~2 reference entries spilled over). Reduced both figures' matplotlib figsize height
+(fig1: 3.1in -> 1.75in; fig2: 3.1in -> 1.95in, legend also moved from above-the-axes to inside the
+plot to reclaim space), same width (both stay \columnwidth in the IEEE build), no content removed,
+no number changed -- only the two PNGs got shorter/more compact. Re-uploaded both as new doc assets
+(blobs are immutable) and pointed the existing <media> elements at the new blob ids, so the Claude
+Docs copy and the IEEE LaTeX copy use the same (smaller) images. Rebuilt paper.tex, xelatex twice:
+back to 11 pages, no overfull boxes. check_tex_complete.py PASS (641, unchanged). Regenerated the
+Docs .pdf and .docx; verified Figure 6/7 captions and 95.25% appear in all three deliverables, same
+counts as before the resize.
+
+## Three more diagnostic figures inserted; paper now 12 pages (2026-11-13/14)
+
+Added Figure 8 (train-test overfitting gap, 2-panel full-width), Figure 9 (D-lite stress-test
+accuracy for a 6-model subset) and Figure 10 (per-battery-fold class-prior shift) to the paper doc,
+after Vansh reviewed the PNGs. Reproducible script: paper_figures/make_diagnostic_figs2.py. All data
+is from already-computed results; nothing re-run, nothing invented:
+* Fig 8: results/phase_b_train_gap.csv (gap_clean per model). EF-GBTSVM-PF's gap uses the published
+  per-fold variant mapping (B0005->L8, B0006->J, B0007->L8, B0018->L8) and reproduces the published
+  phase_b_claims.txt values 1.48/2.21/0.88; Stump-fair's gap uses phys_stump.stump_runs and
+  reproduces 2.11/3.96/1.31. Both checks were run inline before plotting.
+* Fig 9: results/dlite_summary_table.csv (ACC mean/SD over N30/N40/BND); shows EF-GBTSVM-PF,
+  EF-GBTSVM, Stump-fair and the three best baselines by pooled rank (RBF-SVM, random forest, RVFL),
+  with the caption pointing to Table 7 for all 17 models. Values match Table 7.
+* Fig 10: arithmetic aggregation of Table 2's published per-cell cycle/label counts (train split =
+  the other three cells pooled). B0006 train 36%/test 64% matches REPORT.md Task 1 exactly.
+
+build_ieee_tex.py: FIG_BLOBS extended with the five diagnostic-figure blob ids (incl. the shrunk
+fig1/fig2 blobs from the earlier round); fig3_train_test_gap.png added to WIDE (renders as figure*,
+both columns); figure_tex gained a FLEX_PLACE set so the two new single-column figures may use
+bottom/float-page slots while Figures 1-7 keep their reviewed top-only placement.
+
+Page count: 11 -> 12 pages. The three figures plus captions add ~0.65 page, and the captions are a
+fixed cost that does not shrink with figure height, so shrinking alone could not recover page 11
+(shrinking to ~1.3 in reclaims only ~0.25 page). Options were put to Vansh (drop one figure / accept
+12 / aggressive shrink+caption-trim). **Vansh chose: accept 12 pages** (2026-11-14), keeping all
+three figures at readable size with full source-citation captions. The professor's stated limit is
+10-11 pages; this is one over, by Vansh's decision.
+
+check_tex_complete.py PASS (650 sentence/cell/equation parts; 15 Needs-human-review blocks skipped).
+No overfull boxes. All three deliverables (IEEE PDF 12 pp, Docs-export PDF, docx) regenerated and
+cross-checked: Figures 8/9/10 captions, their source-file citations, and the figure numbers appear
+in each; the docx carries all 10 figure images. No number was changed anywhere.
