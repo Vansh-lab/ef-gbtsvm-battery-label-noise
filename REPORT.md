@@ -1905,3 +1905,65 @@ all three stay consistent:
 * paper/ieee/paper.pdf -- 13 pages, xelatex x2, check_tex_complete.py PASS, no overfull boxes.
 
 Nothing pushed to GitHub yet.
+
+## PREREG_FINEGRID2.md frozen: post-hoc extension 6.2-7.8% (2026-11-14)
+
+Vansh asked for 9 more noise levels (6.2, 6.4, 6.6, 6.8, 7.0, 7.2, 7.4, 7.6, 7.8%), explicitly
+because 6% was where EF-GBTSVM-PF ranked 1st/15 in Phase F (results/finegrid_summary_table.csv).
+PREREG_FINEGRID2.md records this plainly in its own section 0: this is a post-hoc / exploratory
+extension around an already-observed result, NOT a blind sweep like PREREG_FINEGRID.md, and any
+rank-1 finding here carries less evidentiary weight than one found blind, for the standard
+garden-of-forking-paths reason. All 11 frozen hashes re-verified unchanged before writing it.
+sha256 of PREREG_FINEGRID2.md: 7fb80852e2e0a0141fa62d8c51f7327b4742e115ca33f299a1a998977a0ac30b.
+run_finegrid2.py does not exist yet.
+
+## run_finegrid2.py written and hashed, launching (2026-11-14)
+
+sha256 e93ea6e55522725993a9a9bd531bf8f9c4129bc366e1558934da966d4cd26c39. Identical to run_finegrid.py
+except CONDITIONS/RATES (N062..N078, 0.062..0.078) and noise_pct stored as tenths of a percent
+(rate*1000 -> 62..78) instead of whole percent, documented in the module docstring, to keep the nine
+points distinct (rate*100 would round 6.2/6.4 and 6.6/6.8 to the same integer). Checkpoints under
+results/finegrid2_ckpt/. Launching as a single directly-tracked background command this time (no
+nohup/disown) -- the Phase F tracking mistake is not repeated.
+
+
+## Phase F2 run complete + analysis (2026-11-15)
+
+run_finegrid2.py (background task bdmtqea21) finished all 9 conditions (N062..N078, i.e. 6.2%-7.8%
+training-label noise) cleanly -- "ALL CONDITIONS DONE" printed, all 36 fold checkpoints present
+(9 conditions x 4 folds), all 9 results/finegrid2_N0{62,64,66,68,70,72,74,76,78}_runs.csv files
+written. Total wall-clock: launched 2026-11-14 18:53:04, finished 2026-11-15 ~14:12 (~19h19m
+elapsed; highly variable per-fold time, some folds ~9 min, others ~40 min, no stalls -- confirmed
+by watching worker-process CPU time increase live before the harness's completion notification
+arrived).
+
+finegrid2_analysis.py (sha256 8da6c7a8d78b3b41836fab4e5bd45bb43c60deeae5b68a211e65dab4cc57ef15)
+was written as the Phase F2 equivalent of finegrid_analysis.py -- same add_per_fold()/pool/rank
+logic, adapted for NOISES=[62,64,...,78] (tenths-of-a-percent units, per run_finegrid2.py's
+documented unit change) and the N062..N078 condition labels. It built:
+  - results/finegrid2_runs.csv (612 rows: 9 conditions x (15 models x 4 folds + Stump-fair +
+    Stump-oracle per condition))
+  - results/finegrid2_summary_table.csv (153 rows = 9 noise levels x 17 models; same column
+    structure as finegrid_summary_table.csv: *_mean/*_std per metric, in_main_pool,
+    rank_ACC_main15/all17, rank_BACC_main15/all17)
+  - results/finegrid2_train_gap.csv (540 rows = 9 x 4 x 15 base models; same column structure as
+    finegrid_train_gap.csv)
+
+Full unfiltered rank-1 (ACC, main pool of 15) result at each of the 9 new noise levels, reported to
+Vansh exactly as PREREG_FINEGRID2.md section 5 requires -- no omissions, no stopping early:
+  6.2%: RandomForest rank 1 (ACC=97.84); PF ACC=96.52, rank_main15=7, rank_all17=8
+  6.4%: EF-GBTSVM rank 1 (ACC=98.17); PF ACC=96.90, rank_main15=6, rank_all17=6
+  6.6%: SVM rank 1 (ACC=97.61); PF ACC=95.27, rank_main15=9, rank_all17=10
+  6.8%: EF-GBTSVM-PF rank 1 (ACC=97.69); PF ACC=97.69, rank_main15=1, rank_all17=1
+  7.0%: RandomForest rank 1 (ACC=97.46); PF ACC=93.59, rank_main15=11, rank_all17=12
+  7.2%: RandomForest rank 1 (ACC=97.46); PF ACC=84.85, rank_main15=15, rank_all17=17
+  7.4%: RandomForest rank 1 (ACC=97.31); PF ACC=82.18, rank_main15=15, rank_all17=17
+  7.6%: RandomForest rank 1 (ACC=97.31); PF ACC=86.13, rank_main15=15, rank_all17=16
+  7.8%: RandomForest rank 1 (ACC=97.46); PF ACC=95.01, rank_main15=6, rank_all17=7
+
+PF is rank 1 at exactly ONE of these nine post-hoc points (6.8%), and ranks as low as 15/15 (worst
+of the main pool) at 7.2% and 7.4%. This directly confirms PREREG_FINEGRID2.md section 0's warning:
+the earlier blind Phase F finding (PF rank 1 at 6%) does NOT generalize to nearby post-hoc points,
+and the garden-of-forking-paths caveat applies in full -- no "PF is reliable around 6-8%" claim is
+supported by this data, consistent with the section 5 claim rule. Paper, Claude Doc, and all
+existing tables/figures were NOT touched during this phase, per Vansh's explicit instruction.
