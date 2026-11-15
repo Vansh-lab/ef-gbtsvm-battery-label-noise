@@ -11,7 +11,7 @@ authors' repository is included; their reference code is at <https://github.com/
 
 ## Compact manuscript release
 
-The compact 13-page manuscript and its editable LaTeX source are available here:
+The compact 11-page manuscript and its editable LaTeX source are available here:
 [`paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf`](paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf) and [`paper/ieee/paper.tex`](paper/ieee/paper.tex). This manuscript reports benchmark plots for 0%, 6%, and 6.8% noise only; 6.8% is explicitly exploratory/post-hoc. The repository retains the complete earlier and additional-noise experiment outputs and preregistration records for reproducibility; they are not deleted or represented as part of this compact manuscript's reported conditions.
 ## Main findings
 
@@ -189,3 +189,4 @@ citation will be added when it is published.
 The code in this repository is MIT-licensed (see `LICENSE`). The NASA data, the XJTU Battery
 Dataset, and the original EF-GBTSVM code are not part of this repository and are not covered by
 this license.
+
