@@ -8,6 +8,11 @@ This repository holds the code, per-fold results and lab notebook behind the pap
 Label Noise* (Vansh Sachan, Faculty of Technology, University of Delhi). No file from the original
 authors' repository is included; their reference code is at <https://github.com/mtanveer1/EF-GBTSVM>.
 
+
+## Compact manuscript release
+
+The compact 13-page manuscript and its editable LaTeX source are available here:
+[`paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf`](paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf) and [`paper/ieee/paper.tex`](paper/ieee/paper.tex). This manuscript reports benchmark plots for 0%, 6%, and 6.8% noise only; 6.8% is explicitly exploratory/post-hoc. The repository retains the complete earlier and additional-noise experiment outputs and preregistration records for reproducibility; they are not deleted or represented as part of this compact manuscript's reported conditions.
 ## Main findings
 
 Four NASA cells (B0005, B0006, B0007, B0018; 636 discharge cycles, label = state of health below
