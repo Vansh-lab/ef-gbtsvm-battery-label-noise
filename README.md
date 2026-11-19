@@ -9,10 +9,36 @@ Label Noise* (Vansh Sachan, Faculty of Technology, University of Delhi). No file
 authors' repository is included; their reference code is at <https://github.com/mtanveer1/EF-GBTSVM>.
 
 
-## Compact manuscript release
+## Manuscript releases
 
-The compact 11-page manuscript and its editable LaTeX source are available here:
-[`paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf`](paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf) and [`paper/ieee/paper.tex`](paper/ieee/paper.tex). This manuscript reports benchmark plots for 0%, 6%, and 6.8% noise only; 6.8% is explicitly exploratory/post-hoc. The repository retains the complete earlier and additional-noise experiment outputs and preregistration records for reproducibility; they are not deleted or represented as part of this compact manuscript's reported conditions.
+**Current (journal revision).** A 14-page, two-column Elsevier-format revision is in
+[`paper/journal_upgrade/`](paper/journal_upgrade): the PDF is
+[`EF-GBTSVM_revised_0_6_6p8.pdf`](paper/journal_upgrade/EF-GBTSVM_revised_0_6_6p8.pdf) and the
+source is [`main.tex`](paper/journal_upgrade/main.tex) with
+[`references_40.tex`](paper/journal_upgrade/references_40.tex). It reports 0%, 6% and 6.8%
+training-label noise, with 6.8% labelled exploratory/post-hoc throughout, and shows all
+seventeen models at every condition. Everything in it regenerates from the frozen result
+summaries: `build_tables.py` writes the two results tables, `make_result_figures.py` the
+result figures, `make_diagrams.py` the workflow, cell-schematic and architecture diagrams,
+`make_deliverables.py` the two reviewer documents, and `check_final.py` runs the audit.
+Build with `pdflatex main.tex` twice.
+
+Three documents accompany it:
+[`NUMBER_PROVENANCE.md`](paper/journal_upgrade/NUMBER_PROVENANCE.md) traces every printed
+number to its CSV and column, [`REFERENCES_40.md`](paper/journal_upgrade/REFERENCES_40.md)
+lists the 40 references with their resolved DOIs, and
+[`verification_checklist.md`](paper/journal_upgrade/verification_checklist.md) records what
+was checked, what an independent audit found, and what is still outstanding.
+
+**Earlier.** The 11-page compact manuscript remains at
+[`paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf`](paper/EF-GBTSVM_Compact_21_Figures_0_6_6p8.pdf)
+with source [`paper/ieee/paper.tex`](paper/ieee/paper.tex).
+
+The repository keeps the complete experiment outputs and preregistration records, including
+noise levels that no manuscript reports (2/4/8/10/20%, the 6.2-7.8% exploratory grid, and the
+30%/40%/boundary stress conditions). Those are retained for reproducibility; they are not
+deleted, and they are not represented as part of any manuscript's reported conditions.
+
 ## Main findings
 
 Four NASA cells (B0005, B0006, B0007, B0018; 636 discharge cycles, label = state of health below

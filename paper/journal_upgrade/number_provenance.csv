@@ -1,0 +1,205 @@
+table,model,condition,metric,value_as_printed,rank_as_printed,source_csv,source_column
+T5 main ACC/BACC,EF-GBTSVM,0%,ACC,94.83 +- 3.68,16,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM,0%,BACC,94.97 +- 3.18,14,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM,6%,ACC,97.42 +- 1.46,6,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM,6%,BACC,97.67 +- 1.30,4,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM,6.8%,ACC,97.12 +- 3.29,5,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM,6.8%,BACC,96.67 +- 3.98,4,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,0%,ACC,95.73 +- 2.47,11,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,0%,BACC,94.56 +- 2.90,15,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,6%,ACC,94.95 +- 2.85,11,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,6%,BACC,94.82 +- 2.26,10,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,6.8%,ACC,94.24 +- 3.02,12,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-A,6.8%,BACC,94.11 +- 2.30,13,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,0%,ACC,95.25 +- 3.11,12,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,0%,BACC,95.24 +- 2.45,10,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,6%,ACC,93.76 +- 3.46,13,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,6%,BACC,90.84 +- 7.70,13,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,6.8%,ACC,93.52 +- 9.99,13,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L,6.8%,BACC,95.10 +- 6.56,9,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,0%,ACC,95.25 +- 3.11,12,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,0%,BACC,95.24 +- 2.45,10,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,6%,ACC,93.76 +- 3.46,13,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,6%,BACC,90.84 +- 7.70,13,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,6.8%,ACC,93.52 +- 9.99,13,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-W,6.8%,BACC,95.10 +- 6.56,9,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,0%,ACC,95.10 +- 2.97,15,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,0%,BACC,95.03 +- 2.32,13,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,6%,ACC,97.71 +- 1.77,4,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,6%,BACC,97.87 +- 1.76,2,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,6.8%,ACC,97.24 +- 1.31,4,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-L8,6.8%,BACC,97.05 +- 1.95,2,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,0%,ACC,97.21 +- 3.34,6,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,0%,BACC,97.23 +- 3.00,3,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,6%,ACC,97.61 +- 1.29,5,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,6%,BACC,97.84 +- 1.16,3,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,6.8%,ACC,96.92 +- 3.23,7,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-J,6.8%,BACC,96.94 +- 2.79,3,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,0%,ACC,95.25 +- 3.11,12,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,0%,BACC,95.24 +- 2.45,10,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,6%,ACC,98.01 +- 1.97,1,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,6%,BACC,98.10 +- 1.94,1,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,6.8%,ACC,97.69 +- 1.24,1,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-GBTSVM-PF,6.8%,BACC,97.67 +- 1.40,1,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,GBTSVM,0%,ACC,96.43 +- 2.53,10,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,GBTSVM,0%,BACC,94.44 +- 4.54,16,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,GBTSVM,6%,ACC,94.12 +- 8.21,12,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,GBTSVM,6%,BACC,93.31 +- 9.37,12,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,GBTSVM,6.8%,ACC,91.37 +- 5.51,15,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,GBTSVM,6.8%,BACC,90.31 +- 6.65,15,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,HF-GBTSVM,0%,ACC,96.47 +- 2.92,9,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,HF-GBTSVM,0%,BACC,95.76 +- 2.72,7,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,HF-GBTSVM,6%,ACC,96.52 +- 1.03,8,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,HF-GBTSVM,6%,BACC,95.53 +- 1.48,8,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,HF-GBTSVM,6.8%,ACC,95.78 +- 5.45,9,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,HF-GBTSVM,6.8%,BACC,94.90 +- 6.13,11,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-TSVM,0%,ACC,96.67 +- 1.16,8,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-TSVM,0%,BACC,95.34 +- 2.83,9,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-TSVM,6%,ACC,91.13 +- 9.04,15,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-TSVM,6%,BACC,89.87 +- 11.16,16,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,EF-TSVM,6.8%,ACC,95.44 +- 1.96,10,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,EF-TSVM,6.8%,BACC,94.71 +- 2.15,12,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,TSVM,0%,ACC,98.77 +- 0.81,1,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,TSVM,0%,BACC,98.67 +- 0.89,1,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,TSVM,6%,ACC,95.63 +- 4.21,9,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,TSVM,6%,BACC,94.83 +- 5.79,9,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,TSVM,6.8%,ACC,91.10 +- 11.95,16,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,TSVM,6.8%,BACC,88.01 +- 17.02,16,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,SVM,0%,ACC,86.61 +- 23.25,17,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,SVM,0%,BACC,88.29 +- 17.83,17,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,SVM,6%,ACC,89.68 +- 14.97,17,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,SVM,6%,BACC,90.53 +- 11.74,15,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,SVM,6.8%,ACC,97.27 +- 0.86,3,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,SVM,6.8%,BACC,96.50 +- 1.09,6,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RVFL,0%,ACC,97.75 +- 0.59,2,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RVFL,0%,BACC,97.45 +- 0.97,2,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RVFL,6%,ACC,90.08 +- 10.63,16,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RVFL,6%,BACC,89.45 +- 8.07,17,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RVFL,6.8%,ACC,88.89 +- 11.64,17,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RVFL,6.8%,BACC,87.79 +- 9.63,17,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RandomForest,0%,ACC,97.39 +- 1.48,5,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RandomForest,0%,BACC,96.15 +- 3.46,6,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RandomForest,6%,ACC,97.84 +- 0.95,2,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RandomForest,6%,BACC,96.91 +- 2.42,5,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,RandomForest,6.8%,ACC,97.61 +- 1.10,2,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,RandomForest,6.8%,BACC,96.60 +- 2.40,5,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,MLP,0%,ACC,97.61 +- 0.70,4,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,MLP,0%,BACC,96.62 +- 1.57,5,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,MLP,6%,ACC,97.84 +- 1.52,2,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,MLP,6%,BACC,96.66 +- 3.09,6,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,MLP,6.8%,ACC,97.09 +- 1.75,6,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,MLP,6.8%,BACC,95.56 +- 3.78,8,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,XGBoost,0%,ACC,97.69 +- 0.91,3,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,XGBoost,0%,BACC,96.70 +- 2.39,4,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,XGBoost,6%,ACC,97.09 +- 1.19,7,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,XGBoost,6%,BACC,95.94 +- 2.08,7,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,XGBoost,6.8%,ACC,96.86 +- 0.57,8,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,XGBoost,6.8%,BACC,95.64 +- 1.56,7,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,Stump-fair,0%,ACC,96.94 +- 1.97,7,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,Stump-fair,0%,BACC,95.47 +- 4.44,8,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,Stump-fair,6%,ACC,95.60 +- 3.65,10,finegrid_plus_phaseb_0_10_combined.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,Stump-fair,6%,BACC,94.49 +- 4.07,11,finegrid_plus_phaseb_0_10_combined.csv,BACC_mean / BACC_std / rank_BACC_all17
+T5 main ACC/BACC,Stump-fair,6.8%,ACC,95.16 +- 3.52,11,finegrid2_summary_table.csv,ACC_mean / ACC_std / rank_ACC_all17
+T5 main ACC/BACC,Stump-fair,6.8%,BACC,93.65 +- 4.41,14,finegrid2_summary_table.csv,BACC_mean / BACC_std / rank_BACC_all17
+TA1 appendix F1/AUC,EF-GBTSVM,0%,F1,93.29 +- 6.32,16,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM,0%,AUC,99.60 +- 0.76,11,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM,6%,F1,96.51 +- 2.40,6,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM,6%,AUC,99.99 +- 0.03,1,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM,6.8%,F1,96.34 +- 4.49,6,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM,6.8%,AUC,99.89 +- 0.22,8,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,0%,F1,94.35 +- 3.80,11,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,0%,AUC,99.98 +- 0.03,6,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,6%,F1,93.34 +- 5.82,11,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,6%,AUC,99.60 +- 0.76,11,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,6.8%,F1,92.67 +- 5.69,12,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-A,6.8%,AUC,99.60 +- 0.76,13,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,0%,F1,93.57 +- 6.03,12,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,0%,AUC,99.59 +- 0.75,13,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,6%,F1,90.35 +- 10.29,14,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,6%,AUC,99.96 +- 0.06,4,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,6.8%,F1,91.53 +- 13.45,14,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L,6.8%,AUC,99.96 +- 0.03,4,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,0%,F1,93.57 +- 6.03,12,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,0%,AUC,99.59 +- 0.75,13,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,6%,F1,90.35 +- 10.29,14,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,6%,AUC,99.95 +- 0.07,5,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,6.8%,F1,91.53 +- 13.45,14,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-W,6.8%,AUC,99.96 +- 0.03,4,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,0%,F1,93.45 +- 5.92,15,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,0%,AUC,99.60 +- 0.76,11,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,6%,F1,97.48 +- 2.18,2,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,6%,AUC,99.89 +- 0.22,7,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,6.8%,F1,96.78 +- 1.50,2,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-L8,6.8%,AUC,99.88 +- 0.17,9,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,0%,F1,97.19 +- 3.51,2,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,0%,AUC,99.98 +- 0.03,6,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,6%,F1,96.71 +- 2.36,4,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,6%,AUC,99.60 +- 0.76,11,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,6.8%,F1,96.73 +- 3.48,3,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-J,6.8%,AUC,99.83 +- 0.27,11,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,0%,F1,93.57 +- 6.03,12,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,0%,AUC,99.59 +- 0.75,13,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,6%,F1,97.71 +- 2.38,1,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,6%,AUC,99.89 +- 0.22,7,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,6.8%,F1,97.11 +- 1.78,1,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-GBTSVM-PF,6.8%,AUC,99.88 +- 0.17,9,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,0%,F1,94.69 +- 5.31,10,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,0%,AUC,99.96 +- 0.05,10,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,6%,F1,91.82 +- 11.96,12,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,6%,AUC,99.90 +- 0.14,6,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,6.8%,F1,88.71 +- 8.48,16,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,GBTSVM,6.8%,AUC,99.95 +- 0.05,6,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,0%,F1,95.79 +- 3.29,7,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,0%,AUC,99.99 +- 0.02,3,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,6%,F1,95.81 +- 1.20,9,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,6%,AUC,99.67 +- 0.62,10,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,6.8%,F1,94.86 +- 7.29,9,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,HF-GBTSVM,6.8%,AUC,99.98 +- 0.02,3,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,0%,F1,95.29 +- 3.50,8,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,0%,AUC,100.00 +- 0.01,1,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,6%,F1,91.48 +- 5.66,13,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,6%,AUC,95.66 +- 8.12,16,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,6.8%,F1,94.26 +- 2.66,10,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,EF-TSVM,6.8%,AUC,99.75 +- 0.45,12,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,0%,F1,98.37 +- 1.17,1,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,0%,AUC,100.00 +- 0.01,1,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,6%,F1,95.93 +- 3.06,8,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,6%,AUC,99.73 +- 0.51,9,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,6.8%,F1,92.60 +- 6.65,13,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,TSVM,6.8%,AUC,99.93 +- 0.08,7,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,0%,F1,83.18 +- 27.74,17,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,0%,AUC,99.12 +- 1.71,16,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,6%,F1,88.79 +- 14.30,16,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,6%,AUC,98.82 +- 2.32,13,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,6.8%,F1,96.67 +- 1.24,4,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,SVM,6.8%,AUC,99.99 +- 0.03,1,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,0%,F1,97.18 +- 0.99,3,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,0%,AUC,99.98 +- 0.02,6,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,6%,F1,87.94 +- 9.73,17,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,6%,AUC,97.18 +- 4.51,15,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,6.8%,F1,85.74 +- 11.75,17,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RVFL,6.8%,AUC,96.07 +- 6.09,16,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,0%,F1,96.11 +- 3.92,6,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,0%,AUC,99.99 +- 0.01,3,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,6%,F1,96.88 +- 2.70,3,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,6%,AUC,99.97 +- 0.03,3,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,6.8%,F1,96.61 +- 2.70,5,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,RandomForest,6.8%,AUC,99.99 +- 0.02,1,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,0%,F1,96.72 +- 1.96,5,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,0%,AUC,99.99 +- 0.02,3,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,6%,F1,96.56 +- 3.50,5,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,6%,AUC,99.98 +- 0.03,2,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,6.8%,F1,95.47 +- 4.53,8,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,MLP,6.8%,AUC,99.24 +- 1.48,14,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,0%,F1,96.77 +- 2.61,4,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,0%,AUC,99.97 +- 0.04,9,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,6%,F1,95.99 +- 2.68,7,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,6%,AUC,98.66 +- 1.53,14,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,6.8%,F1,95.71 +- 2.23,7,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,XGBoost,6.8%,AUC,98.93 +- 0.92,15,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,0%,F1,95.25 +- 5.19,9,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,0%,AUC,95.47 +- 4.44,17,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,6%,F1,94.18 +- 4.85,10,finegrid_plus_phaseb_0_10_combined.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,6%,AUC,94.49 +- 4.07,17,finegrid_plus_phaseb_0_10_combined.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,6.8%,F1,93.22 +- 5.24,11,finegrid2_summary_table.csv,F1_mean / F1_std / rank recomputed from F1_mean (min tie rule)
+TA1 appendix F1/AUC,Stump-fair,6.8%,AUC,93.65 +- 4.41,17,finegrid2_summary_table.csv,AUC_mean / AUC_std / rank recomputed from AUC_mean (min tie rule)
