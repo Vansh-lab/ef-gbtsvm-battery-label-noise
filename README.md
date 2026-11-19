@@ -23,6 +23,15 @@ result figures, `make_diagrams.py` the workflow, cell-schematic and architecture
 `make_deliverables.py` the two reviewer documents, and `check_final.py` runs the audit.
 Build with `pdflatex main.tex` twice.
 
+A Word version of the same manuscript is at
+[`EF-GBTSVM_revised_0_6_6p8.docx`](paper/journal_upgrade/EF-GBTSVM_revised_0_6_6p8.docx).
+It is single-column, as submission systems expect, and is built from the same LaTeX
+source rather than retyped: `docx_assets.py` rasterises the figures and typesets each
+display equation into its own image, `docx_extract.py` turns `main.tex` into a content
+model (resolving cross-references from `main.aux`, so the table and figure numbers match
+the PDF), and `docx_build.js` writes the file. Rebuild with those three in that order;
+the intermediate `docx_assets/` directory is regenerated and is not tracked.
+
 Three documents accompany it:
 [`NUMBER_PROVENANCE.md`](paper/journal_upgrade/NUMBER_PROVENANCE.md) traces every printed
 number to its CSV and column, [`REFERENCES_40.md`](paper/journal_upgrade/REFERENCES_40.md)
