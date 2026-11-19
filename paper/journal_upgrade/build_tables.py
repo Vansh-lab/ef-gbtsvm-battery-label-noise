@@ -120,7 +120,7 @@ def write(name, text):
 
 
 write("tab_main.tex", metric_pair_table(["ACC", "BACC"], "T5 main ACC/BACC"))
-write("tab_appendix.tex", metric_pair_table(["F1", "AUC"], "TA1 appendix F1/AUC"))
+write("tab_appendix.tex", metric_pair_table(["F1", "AUC"], "T6 F1 and AUC"))
 
 # remove tables from the earlier all-noise-levels draft so no stale file can be \input
 for stale in ["tab_main_ACC.tex", "tab_main_BACC.tex", "tab_main_F1.tex",

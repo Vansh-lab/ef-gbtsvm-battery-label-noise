@@ -55,7 +55,8 @@ every rendered page and an independent multi-lens audit of the final build.
 - No overlap: every page was rendered and inspected. Diagram boxes auto-shrink their
   text to fit (`fit()` in `make_diagrams.py`).
 - Tables: no overflow. Results are given as one ACC/BACC table in the body and one
-  F1/AUC table in the appendix, each 17 rows × 6 value columns.
+  F1/AUC table, both in Section 4.1, each 17 rows × 6 value columns. The paper has no
+  appendix: all four metrics are reported in the results section.
 - Wide figures span both columns; Figs. 8, 13 and 14 sit in one column.
 - The proposed row is shaded and labelled "(proposed)" in both results tables.
 

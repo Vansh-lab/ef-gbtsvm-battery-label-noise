@@ -185,6 +185,11 @@ Table~\ref{tab:main} gives the mean accuracy and balanced accuracy of all sevent
 
 Two cautions apply to every row. First, the standard deviations are large next to the differences between models --- commonly two to six percentage points over four cells, and far more for the least stable baselines --- so a gap of one or two points between adjacent ranks is not a meaningful separation. Second, several baselines are unstable rather than uniformly weak: RBF-SVM carries a standard deviation of 23.25 points at 0\nz\ and is last of seventeen there, yet it is third at 6.8\nz\ with 97.27\nz. A single collapsing fold, not a consistent deficit, produces that pattern.
 
+Table~\ref{tab:appendix} completes the picture with the F1 score and the area under the ROC curve for the same seventeen models at the same three conditions, so that every measured value behind this section is printed. Ranks there are computed from the means shown, by the same rule used in Table~\ref{tab:main}. The two measures behave differently. F1 tracks accuracy closely, because both respond to the same decisions. AUC separates the models much less sharply, because it measures how well a model orders the cycles rather than where it puts the decision boundary: \proposed\ holds an AUC between 99.59 and 99.89\nz\ across the three conditions even at the condition where its accuracy rank is twelfth. Several models that differ by three or four accuracy points sit within a tenth of a point of each other on AUC, which is a further reason to read the accuracy ranks as descriptive.
+\begin{table*}[!t]\centering\scriptsize\setlength{\tabcolsep}{5.5pt}
+\caption{Mean F1 score and AUC (\%) $\pm$ standard deviation over the four held-out cells, with rank among the seventeen models in parentheses. Ranks are computed from the means shown, since the result summaries store ranks only for accuracy and balanced accuracy.}\label{tab:appendix}
+\input{tables/tab_appendix.tex}\end{table*}
+
 \subsection{Noise response and rank stability}
 Fig.~\ref{fig:mainsweep} presents the same two measures as heatmaps with ranks, which makes the instability of the ordering visible. Three groups emerge. Some models fall steeply as labels are corrupted: TSVM goes from 98.77\nz\ to 95.63\nz\ to 91.10\nz, moving from first to ninth to sixteenth, and RVFL from 97.75\nz\ to 90.08\nz\ to 88.89\nz, from second to last. Others barely move: random forest stays between 97.39 and 97.84\nz\ and MLP between 97.09 and 97.84\nz\ across all three conditions. One moves the other way, RBF-SVM climbing from 86.61\nz\ to 97.27\nz. The granular-ball family is itself split: plain EF-GBTSVM improves from 94.83\nz\ to 97.42\nz\ and 97.12\nz, while the fixed wide-purity variants L and W fall from 95.25\nz\ to 93.76\nz\ and 93.52\nz.
 \begin{figure*}[!t]\centering\includegraphics[width=.99\textwidth]{figR1_main_sweep.pdf}
@@ -251,13 +256,6 @@ NASA PCoE data are available from the \href{https://www.nasa.gov/intelligent-sys
 No competing financial interests or personal relationships are declared.
 \section*{Acknowledgments}
 NASA PCoE provides the battery data repository used in this study.
-
-\appendix
-\section{Additional metrics}\label{app:metrics}
-Table~\ref{tab:appendix} gives the F1 score and the area under the ROC curve for the same seventeen models at the same three conditions, so that every measured value behind Section~\ref{sec:results} is printed. Ranks are computed from the means shown, by the same rule used in Table~\ref{tab:main}. AUC separates the models less sharply than accuracy does, because it measures ranking quality rather than decisions at a fixed operating point: \proposed\ holds an AUC between 99.59 and 99.89\nz\ across the three conditions even where its accuracy rank is twelfth.
-\begin{table*}[!t]\centering\scriptsize\setlength{\tabcolsep}{5.5pt}
-\caption{Mean F1 score and AUC (\%) $\pm$ standard deviation over the four held-out cells, with rank among the seventeen models in parentheses.}\label{tab:appendix}
-\input{tables/tab_appendix.tex}\end{table*}
 
 \input{references_40.tex}
 \end{document}
